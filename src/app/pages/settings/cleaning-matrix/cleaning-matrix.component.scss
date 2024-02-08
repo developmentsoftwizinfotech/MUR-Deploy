@@ -1,0 +1,79 @@
+// .table-container {
+//   display: inline-block;
+//   border: 1px solid #ccc;
+//   padding: 10px;
+
+//   table {
+//     width: 100%;
+//     border-collapse: collapse;
+
+//     th, td {
+//       border: 1px solid #ccc;
+//       padding: 5px;
+//       text-align: left;
+//     }
+//   }
+
+//   .drag-handle {
+//     display: inline-block;
+//     width: 10px;
+//     height: 10px;
+//     background-color: #ccc;
+//     margin-right: 4px;
+//     cursor: move;
+//   }
+// }
+
+
+// .table-container {
+//   display: inline-block;
+//   border: 1px solid #ccc;
+//   padding: 10px;
+
+//   table {
+//     width: 100%;
+//     border-collapse: collapse;
+
+//     th, td {
+//       border: 1px solid #ccc;
+//       padding: 5px;
+//       text-align: left;
+//     }
+//   }
+
+//   .drag-handle {
+//     display: inline-block;
+//     width: 10px;
+//     height: 10px;
+//     background-color: #ccc;
+//     margin-right: 4px;
+//     cursor: move;
+//   }
+// }
+
+
+.table-container {
+  display: inline-block;
+  border: 1px solid #ccc;
+  padding: 10px;
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 5px;
+      text-align: left;
+    }
+
+    .drag-handle {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      background-color: #ccc;
+      margin-right: 4px;
+      cursor: move;
+    }
+  }
+}

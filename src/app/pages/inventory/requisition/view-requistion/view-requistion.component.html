@@ -1,0 +1,94 @@
+<nb-card>
+    <p-dialog id="dailogClose"  class="px-3 container" header="Requisition Details" [resizable]="false"    [maximizable]="true" appendTo="body" (onHide)="onDialogHide()"  [(visible)]="dialogVisible" [style]="{width: '75vw'}" [contentStyle]="{height: '300px'}">
+
+    <nb-card-body >
+        <div class="row justify-content-between align-items-center">
+
+            <div class="col-md-4 col-lg-4  ">
+                <label><strong>Vendor Name</strong></label>
+                <p>{{selectedItem.VendorName}}</p>
+
+            </div>
+            <div class="col-md-4 col-lg-4  ">
+                <label><strong>Vessel Name</strong></label>
+            <p>{{selectedItem.VesselName}}</p>
+
+
+        </div>
+        <div class="col-md-4 col-lg-4  ">
+            <label><strong>Supply Date </strong></label>
+            <p>{{selectedItem.SupplyDate | date:'dd/MM/yyyy'}}</p>
+
+        </div>
+
+
+        <div class="col-md-4 col-lg-4  ">
+            <label><strong>MUR Fixture No</strong></label>
+            <p>{{selectedItem.Fixture}}</p>
+
+        </div>
+
+        <div class="col-md-4 col-lg-4  ">
+            <label><strong>Port Name</strong></label>
+            <p>{{selectedItem.PortName}}</p>
+
+        </div>
+        <div class="col-md-4 col-lg-4  ">
+            <label><strong>Supply Type Name</strong></label>
+            <p>{{selectedItem.SupplyTypeName}}</p>
+
+        </div>
+    </div> 
+    </nb-card-body>
+    <div class="">
+        <div >
+            <p-table [tableStyle]="{ 'width': '100%' }" [value]="requisitionData" dataKey="EquipmentCategoryName"
+                rowGroupMode="subheader" groupRowsBy="EquipmentCategoryName" expandableRowGroups="true"
+               >
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Equipment</th>
+                        <th>Unit</th>
+                        <th>Qty Required</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="groupheader" let-customer let-rowIndex="rowIndex" let-expanded="expanded">
+                    <tr>
+                        <td colspan="5">
+                            <span type="button" [pRowToggler]="customer"><i class="" style="font-size: 0.8rem"
+                                    [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>
+                                <span class="p-text-bold p-ml-2 ml-2 mb-1">{{ customer.EquipmentCategoryName
+                                    }}</span></span>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="rowexpansion" let-rowData let-product let-editing="editing">
+                    <tr *ngFor="let data of product.EquipmentList">
+                        <td>
+                            {{ data.EquipmentName }}
+                        </td>
+                        <td>
+                            {{ data.UnitName }}
+                        </td>
+                        <td [pEditableColumn]="data.MinOrderQty" pEditableColumnField="MinOrderQty">
+                            <p-cellEditor>
+                                <!-- [formControl]="updateListForm.get('MinOrderQty')" -->
+                                <ng-template pTemplate="input">
+                                    <input nbInput type="text" fullWidth [(ngModel)]="data.MinOrderQty"  (blur)="onMinOrderQtyChange(data)"/>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{ data.MinOrderQty}}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+    <ng-template pTemplate="footer">
+        <button type="button" pButton pRipple icon="pi pi-times" (click)="close()"   (click)="dialogVisible=false" label="Dismiss" class="p-button-text"></button>
+    </ng-template>
+  </p-dialog> 
+</nb-card>
+

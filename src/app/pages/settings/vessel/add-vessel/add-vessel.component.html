@@ -1,0 +1,112 @@
+<p-toast></p-toast>
+<nb-card class="px-3 container" 
+[nbSpinner]="loading" nbSpinnerStatus="primary"
+nbSpinnerSize="large" nbSpinnerMessage="">
+    <form [formGroup]="nbForm" (ngSubmit)="submit()">
+        <nb-card-header class="row  align-items-center justify-content-between">
+            <div>
+                <h5>{{formTitle}} Vessel Details</h5>
+            </div>
+            <div>
+                <button type="button" nbButton status="danger" (click)="close()" class="mr-2">Cancel</button>
+                <button type="button" nbButton status="basic" (click)="clearForm()"  class=" mr-2">Clear Form</button>
+                <button type="submit" nbButton status="primary" class=" mr-2">Submit</button>
+            </div>
+        </nb-card-header>
+        <nb-card-body class="example-items-rows">
+
+            <div class="row px-2">
+                <div class="mb-3 col-6">
+                    <label for="VesselName" class="form-label">Vessel Name<span style="color: red;">*</span></label>
+                    <input type="text" formControlName="VesselName" nbInput fullWidth fieldSize="medium"
+                        placeholder=" Vessel Name">
+                    <small
+                        *ngIf="nbForm.get('VesselName')?.invalid && (nbForm.get('VesselName')?.touched || nbForm.get('VesselName')?.dirty)">
+                        <nb-hint style="color: red;" *ngIf=" nbForm.get('VesselName')?.errors?.['required']">Required</nb-hint>
+                        <nb-hint style="color: red;" *ngIf="  nbForm.get('VesselName')?.errors?.['maxlength']">
+                            Vessel Name should have at most 50 characters</nb-hint>
+                        <nb-hint style="color: red;"
+                            *ngIf=" nbForm.get('VesselName')?.dirty && nbForm.get('VesselName')?.touched && nbForm.get('VesselName')?.errors?.['minlength']">Vessel
+                            Name should have at least 3 characters</nb-hint>
+                            <nb-hint style="color: red;"
+                            *ngIf=" nbForm.get('VesselName')?.dirty && nbForm.get('VesselName')?.touched && nbForm.get('VesselName')?.errors?.duplicateValue">Vessel Name
+                             is duplicate</nb-hint>
+
+                    </small>
+
+                </div>
+                <div class="mb-3 col-6">
+                    <label for="IMONumber" class="form-label">IMO Number<span style="color: red;">*</span></label>
+                    <input type="number" formControlName="IMONumber" nbInput fullWidth fieldSize="medium"
+                        placeholder=" IMO Number">
+                    <small
+                        *ngIf="nbForm.get('IMONumber')?.invalid && (nbForm.get('IMONumber')?.touched || nbForm.get('IMONumber')?.dirty)">
+                        <nb-hint style="color: red;" *ngIf="nbForm.get('IMONumber')?.errors?.['required']">Required</nb-hint>
+                        <nb-hint style="color: red;" *ngIf="nbForm.get('IMONumber')?.touched  && nbForm.get('IMONumber')?.errors?.['pattern']">IMO Number is Fixed 7 digit</nb-hint>
+                        <nb-hint style="color: red;"
+                        *ngIf=" nbForm.get('IMONumber')?.dirty && nbForm.get('IMONumber')?.touched && nbForm.get('IMONumber')?.errors?.duplicateValue">IMO Number
+                         is duplicate</nb-hint>
+                    </small>
+                </div>
+                <div class="mb-3 col-6">
+                    <label for="FleetTypeId" class="form-label">Select Fleet Type<span style="color: red;">*</span></label>
+
+                    <ng-select  class="dropdown-top" [appendTo]="'body'"  (keyup)="getDropdownList(1,100,$event.target.value)" formControlName="FleetTypeId" placeholder="Select Fleet Type" fullWidth
+                        fieldSize="medium">
+                        <ng-option *ngFor="let option of dropDownFleetType" [value]="option.FleetTypeId">
+                            {{option.FleetTypeName }}</ng-option>
+
+                    </ng-select>
+                    <small
+                        *ngIf="nbForm.get('FleetTypeId')?.invalid && (nbForm.get('FleetTypeId')?.touched || nbForm.get('FleetTypeId')?.dirty)">
+                        <nb-hint style="color: red;" *ngIf="nbForm.get('FleetTypeId')?.errors?.['required']">Required</nb-hint>
+                    </small>
+                </div>
+                <div class="mb-3 col-6">
+                    <label for="FleetId"  class="form-label">Select Fleet Name<span style="color: red;">*</span></label>
+                    <ng-select class="dropdown-top" (keyup)="getDropdownList(1,100,$event.target.value)" [appendTo]="'body'"  formControlName="FleetId" placeholder="Select Fleet Name" fullWidth fieldSize="medium">
+                        <ng-option *ngFor="let option of dropdownFleetList" [value]="option.FleetId">
+                            {{ option.FleetName}}</ng-option>
+
+                    </ng-select>
+                    <small
+                        *ngIf="nbForm.get('FleetId')?.invalid && (nbForm.get('FleetId')?.touched || nbForm.get('FleetId')?.dirty)">
+                        <nb-hint style="color: red;" *ngIf="nbForm.get('FleetId')?.errors?.['required']">Required</nb-hint>
+                    </small>
+                </div>
+                <div class="mb-3 col-6">
+                    <label for="DWT_T" class="form-label">DWT(T)<span style="color: red;">*</span></label>
+                    <input formControlName="DWT_T" type="text" nbInput fullWidth fieldSize="medium"
+                        placeholder=" DWT(T)">
+                    <small
+                        *ngIf="nbForm.get('DWT_T')?.invalid && (nbForm.get('DWT_T')?.touched || nbForm.get('DWT_T')?.dirty)">
+                        <nb-hint style="color: red;" *ngIf=" nbForm.get('DWT_T')?.errors?.['required']">Required</nb-hint>
+
+
+                        <nb-hint style="color: red;" *ngIf="nbForm.get('DWT_T')?.touched  && nbForm.get('DWT_T')?.errors?.['pattern']">
+                            DWT(T) must have 4 to 6 digits</nb-hint>
+                    </small>
+                </div>
+                <div class="mb-3 col-6">
+                    <label for="NoOfHold" class="form-label">Number of Hold<span style="color: red;">*</span></label>
+                    <input formControlName="NoOfHold" type="text" nbInput fullWidth fieldSize="medium"
+                        placeholder="Number of Hold">
+                    <small
+                        *ngIf="nbForm.get('NoOfHold')?.invalid && (nbForm.get('NoOfHold')?.touched || nbForm.get('NoOfHold')?.dirty)">
+                        <nb-hint style="color: red;" *ngIf=" nbForm.get('NoOfHold')?.errors?.['required']">Required</nb-hint>
+
+
+                        <nb-hint style="color: red;" *ngIf="nbForm.get('NoOfHold')?.touched  && nbForm.get('NoOfHold')?.errors?.['pattern']">
+                            Number of Hold must have 1 to 2 digits</nb-hint>
+                    </small>
+                </div>
+
+
+
+
+
+            </div>
+
+        </nb-card-body>
+    </form>
+</nb-card>

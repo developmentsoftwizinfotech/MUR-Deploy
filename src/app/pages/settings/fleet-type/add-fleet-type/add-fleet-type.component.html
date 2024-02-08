@@ -1,0 +1,38 @@
+<p-toast></p-toast>
+<nb-card class="px-3 container" 
+[nbSpinner]="loading" nbSpinnerStatus="primary"
+nbSpinnerSize="large" nbSpinnerMessage="">    <form [formGroup]="nbForm" (ngSubmit)="submit()">
+        <nb-card-header class="row  align-items-center justify-content-between">
+            <div>
+                <h5>{{formTitle}} Fleet Type</h5>
+
+            </div>
+            <div>
+                <button type="button" nbButton status="danger" (click)="close()" class="mr-2">Cancel</button>
+                <button type="button" nbButton status="basic" type="reset" class=" mr-2">Clear Form</button>
+                <button type="submit" nbButton status="primary" class=" mr-2">Submit</button>
+            </div>
+        </nb-card-header>
+        <nb-card-body class="example-items-rows">
+
+                <div class=" col">
+                    <label for="FleetTypeName" class="form-label">Fleet Type<span style="color: red;">*</span></label>
+                    <input type="text" formControlName="FleetTypeName" nbInput fullWidth fieldSize="medium" placeholder=" Fleet Type">
+                    <small
+                    *ngIf="nbForm.get('FleetTypeName')?.invalid && (nbForm.get('FleetTypeName')?.touched || nbForm.get('FleetTypeName')?.dirty)">
+                    <nb-hint style="color: red;" *ngIf=" nbForm.get('FleetTypeName')?.errors?.['required']">Required</nb-hint>
+                    <nb-hint style="color: red;" *ngIf="  nbForm.get('FleetTypeName')?.errors?.['maxlength']">
+                        Fleet Type should have at most 100 characters</nb-hint>
+                    <nb-hint style="color: red;"
+                        *ngIf=" nbForm.get('FleetTypeName')?.dirty && nbForm.get('FleetTypeName')?.touched && nbForm.get('FleetTypeName')?.errors?.['minlength']">
+                        Fleet Typer should have at least 3 characters</nb-hint>
+                        <nb-hint style="color: red;"
+                        *ngIf=" nbForm.get('FleetTypeName')?.dirty && nbForm.get('FleetTypeName')?.touched && nbForm.get('FleetTypeName')?.errors?.duplicateValue">FleetType Name
+                         is duplicate</nb-hint>
+                </small>
+                </div>
+
+
+        </nb-card-body>
+    </form>
+</nb-card>

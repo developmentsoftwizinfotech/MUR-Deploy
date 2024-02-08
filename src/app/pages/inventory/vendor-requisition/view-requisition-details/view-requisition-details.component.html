@@ -1,0 +1,197 @@
+<nb-card class="px-2">
+  <nb-card-header>
+    <div class="row align-items-end justify-content-between">
+
+      <div class="col-12 mb-3">
+        <div class="row justify-content-between align-items-center">
+        <div class="col-11">
+          <h4 class="col-12 py-4" style="font-weight: 600; text-transform: capitalize;">
+            {{requisitionOrderDetails.VesselName}}</h4>
+        </div>
+        <div class="col-1">
+          <div
+            *ngIf="modeByRequisition==='RequisitionView' &&(requisitionOrderDetails?.RequisitionStatus==='Received Full'||requisitionOrderDetails?.RequisitionStatus==='Received Partial')">
+            <button type="button" nbButton status="basic" (click)="close('backToRequisition')"
+              class="mr-2">Back</button>
+          </div>
+          <div
+            *ngIf="modeByRequisition!=='RequisitionView' &&(requisitionOrderDetails?.RequisitionStatus==='Received Full'||requisitionOrderDetails?.RequisitionStatus==='Received Partial')">
+            <button type="button" nbButton status="basic" (click)="close('vendorRequisition')"
+              class="mr-2">Back</button>
+          </div>
+        </div>
+      </div>
+        <div class="row col-6  py-2 ">
+          <h6 class="col-12 py-4" style="font-weight: 600">Order Details</h6>
+          <div class="col-6" style="font-weight: 200;">Invoice No. :</div>
+          <div class="col-6 text-left">ABC12345</div>
+        </div>
+        <div class="col-6">
+          <hr class="my-2" style="border-top: 2px solid #00000029;">
+        </div>
+        <div class="row px-3">
+          <div class="col-3">Supply Port :</div>
+          <div class="col-9 text-left">{{requisitionOrderDetails.PortName}}</div>
+          <div class="col-3">Supply Date :</div>
+          <div class="col-9 text-left">{{requisitionOrderDetails.SupplyDate | date : 'dd/MM/yyyy'}}</div>
+          <div class="col-3">Attachment :</div>
+          <div class="col-9 text-left">
+            <a href="{{imageURL}}" *ngIf="imageURL!==null" target="_blank">View Uploaded
+              Invoice & Delivery Challan</a>
+            <span *ngIf="imageURL===null">No Image Uploaded</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 mb-3">
+
+        <div class="row col-6  py-2 ">
+          <h6 class="col-12" style="font-weight: 600">Agent Details</h6>
+        </div>
+        <div class="col-6">
+          <hr class="my-2" style="border-top: 2px solid #00000029;">
+        </div>
+        <div class="row px-3">
+          <div class="col-3">Agent Address :</div>
+          <div class="col-9 text-left">{{requisitionOrderDetails.AgentAddress}}</div>
+          <!-- <div class="col-3" >Contact Number :</div>
+          <div class="col-9 text-left">{{requisitionOrderDetails.Contact}}</div> -->
+        </div>
+      </div>
+
+      <!-- <h4 class="col-12 pt-5  py-3 text-center" style="font-weight: 600;">Equipment Details</h4> -->
+      <div class="col-12 mt-4 mb-4">
+        <div class="card">
+          <p-table [tableStyle]="{ 'width': '100%' }" [value]="requisitionData" dataKey="EquipmentCategoryName">
+            <ng-template pTemplate="header">
+              <tr>
+                <th>Equipment</th>
+                <th>Unit</th>
+                <th>Qty Required</th>
+                <th *ngIf="modeByRequisition!=='RequisitionView'">Owner Remarks</th>
+                <th *ngIf="modeByRequisition==='RequisitionView'">Remarks</th>
+                <th>
+                  Qty Received</th>
+
+                <th>Qty Available</th>
+                <th>Price Per Unit (USD)</th>
+                <th>Sub Total (USD)</th>
+                <th>Delivery Charges</th>
+                <th>Custom/Other Charges</th>
+                <th>Tax</th>
+                <th>Total Price (USD)</th>
+                <th>Vendor Maker</th>
+                <th *ngIf="modeByRequisition==='RequisitionView'">Vendor Remarks</th>
+                <th *ngIf="modeByRequisition!=='RequisitionView'">Remarks</th>
+
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-expanded="expanded">
+              <tr class="data-table">
+                <td colspan="13" style="font-weight: 600;">{{ rowData.EquipmentCategoryName }}</td>
+              </tr>
+              <tr *ngFor="let data of rowData.EquipmentList">
+                <td>
+                  {{ data.EquipmentName }}
+                </td>
+                <td>
+                  {{ data.UnitName }}
+                </td>
+                <td>
+                  {{ data.MinOrderQty }}
+                </td>
+                <!-- <td [pEditableColumn]="data.MinOrderQty" pEditableColumnField="MinOrderQty">
+                              <p-cellEditor>
+                                  <ng-template pTemplate="input">
+                                      <input nbInput type="text" fullWidth [(ngModel)]="data.MinOrderQty"  (blur)="onMinOrderQtyChange(data)"/>
+                                  </ng-template>
+                                  <ng-template pTemplate="output">
+                                      {{ data.MinOrderQty}}
+                                  </ng-template>
+                              </p-cellEditor>
+                          </td> -->
+                <td [pEditableColumn]="data.RequisitionRemarks" pEditableColumnField="RequisitionRemarks">
+
+                  <ng-container> {{ data.RequisitionRemarks}}</ng-container>
+                </td>
+                <td [pEditableColumn]="data.QtyReceived" pEditableColumnField="QtyReceived">
+
+                  {{ data.QtyReceived}}
+                </td>
+
+                <td [pEditableColumn]="data.QtyAvailable" pEditableColumnField="QtyAvailable">
+
+                  <ng-container> {{ data.QtyAvailable}}</ng-container>
+                </td>
+                <td [pEditableColumn]="data.PricePerUnit" pEditableColumnField="PricePerUnit">
+
+                  <ng-container> {{ data.PricePerUnit}}</ng-container>
+                </td>
+                <!-- <td [pEditableColumn]="data.Subtotal" pEditableColumnField="Subtotal">
+                              <p-cellEditor>
+                                  <ng-template pTemplate="input">
+                                      <input nbInput type="text" fullWidth  [(ngModel)]="data.Subtotal" (ngModelChange)="onSubChange()"   (blur)="onMinOrderQtyChange(data)"/>
+                                  </ng-template>
+                                  <ng-template pTemplate="output">
+                                     {{ data.Subtotal}}
+                                  </ng-template>
+                              </p-cellEditor>
+                          </td> -->
+                <td>
+                  {{ data.Subtotal }}
+                </td>
+                <td [pEditableColumn]="data.Subtotal" pEditableColumnField="DeliveryCharges">
+
+                  <ng-container> {{ data.DeliveryCharges}}</ng-container>
+                </td>
+                <td [pEditableColumn]="data.Subtotal" pEditableColumnField="OtherCharges">
+
+                  <ng-container> {{ data.OtherCharges}}</ng-container>
+                </td>
+                <td [pEditableColumn]="data.Subtotal" pEditableColumnField="Tax">
+
+                  <ng-container> {{ data.Tax}}</ng-container>
+                </td>
+
+                <!-- <td [pEditableColumn]="data.Total" pEditableColumnField="Total">
+                              <p-cellEditor>
+                                  <ng-template pTemplate="input">
+                                      <input nbInput type="text" fullWidth [(ngModel)]="data.Total"  (blur)="onMinOrderQtyChange(data)"/>
+                                  </ng-template>
+                                  <ng-template pTemplate="output">
+                                      {{ data.Tax*data.Subtotal/100}}
+                                  </ng-template>
+                              </p-cellEditor>
+                          </td> -->
+                <td>
+                  {{ +data.Total}}
+                </td>
+                <td [pEditableColumn]="data.VendorMaker" pEditableColumnField="VendorMaker">
+
+                  <ng-container> {{ data.VendorMaker}}</ng-container>
+                </td>
+                <td [pEditableColumn]="data.Remarks" pEditableColumnField="Remarks">
+
+                  <ng-container> {{ data.Remarks}}</ng-container>
+                </td>
+
+              </tr>
+            </ng-template>
+          </p-table>
+
+
+
+
+
+
+        </div>
+      </div>
+
+    </div>
+
+
+
+    <!-- <div>
+          <button nbButton (click)="addRequisition()">Add Requisition</button>
+      </div> -->
+  </nb-card-header>
+</nb-card>

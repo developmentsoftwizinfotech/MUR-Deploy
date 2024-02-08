@@ -1,0 +1,24 @@
+nb-card {
+    // Base styles for nb-card
+    width: 70vw;
+    max-height: 90vh;
+    overflow-y: auto;
+  
+    // Responsive styles using media queries
+    @media screen and (max-width: 768px) {
+      // Adjust styles for smaller screens
+      width: 90vw;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+  
+    @media screen and (max-width: 480px) {
+      // Adjust styles for even smaller screens
+      width: 100vw;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+  }
+::-webkit-scrollbar {
+    width: 8px ;
+  }

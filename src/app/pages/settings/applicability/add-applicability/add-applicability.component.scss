@@ -1,0 +1,66 @@
+// Your global styles
+
+nb-card {
+  // Base styles for nb-card
+  width: 50vw;
+
+  // Media query for responsiveness
+  @media screen and (max-width: 768px) {
+    width: 90vw;
+  }
+}
+
+nb-card-header {
+  // Flex container for the header content
+  display: flex;
+  justify-content: space-between;
+}
+
+div.buttons-container {
+  // Flex container for buttons
+  display: flex;
+  flex-wrap: wrap; // Allow buttons to wrap to a new line if needed
+  justify-content: flex-end; // Right align buttons on large screens
+  align-items: center; // Vertically center the buttons within the container
+  margin-top: 10px;
+
+  // Media query for responsiveness
+  @media screen and (max-width: 768px) {
+    justify-content: center; // Center buttons on small screens
+  }
+
+  // Styling for buttons
+  button {
+    margin-right: 10px; // Add some spacing between buttons
+
+    // Media query for responsiveness
+    @media screen and (max-width: 576px) {
+      display: block; // Stack buttons vertically on extra-small screens
+      margin-bottom: 10px; // Add spacing between stacked buttons
+    }
+
+    // Make the buttons smaller
+    height: 30px;
+    padding: 5px 10px;
+    font-size: 12px; // Adjust font size to make buttons smaller
+  }
+}
+
+// Additional styles to ensure buttons fit within the container on smaller screens
+@media screen and (max-width: 360px) {
+  div.buttons-container {
+    flex-direction: column; // Stack buttons vertically on smaller screens
+    align-items: flex-start; // Align buttons to the left on smaller screens
+  }
+
+  button {
+    width: 100%; // Make buttons take full width of the container
+    margin-bottom: 5px; // Add spacing between stacked buttons on smaller screens
+  }
+}
+::-webkit-scrollbar {
+  width: 8px ;
+}
+
+
+  

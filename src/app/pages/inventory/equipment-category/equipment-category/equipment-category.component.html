@@ -1,0 +1,123 @@
+<nb-card class="px-2">
+    <nb-card-header class="row align-items-center justify-content-between">
+      <div>
+        <h5>Equipment Category Management</h5>
+      </div>
+      <div>
+        <button nbButton (click)="openWithoutBackdrop()">Add Equipment Category</button>
+      </div>
+    </nb-card-header>
+  </nb-card>
+
+  <div class="card mt-4">
+    <p-table
+      #dt1
+      [value]="equipmentCategory"
+    dataKey="id"
+    [rows]="5"
+    [showCurrentPageReport]="true"
+    [paginator]="checkListRecord===true ? true : false"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [globalFilterFields]="['EquipmentCategoryName', 'UnitName', 'ConsumptionType']"
+    [tableStyle]="{ 'min-width': '50rem' }"
+
+    [showCurrentPageReport]="true"
+
+   >
+
+      <ng-template pTemplate="caption">
+        <div class="d-flex">
+            <!-- <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(dt1)"></button> -->
+            <span class=" ml-auto">
+                <!-- <i class="pi pi-search"></i> -->
+                <input  type="text"  nbInput (input)="dt1.filterGlobal($event.target.value, 'contains')" placeholder="Search keyword" />
+
+            </span>
+        </div>
+      </ng-template>
+
+
+
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+
+          <!-- <th *ngFor="let col of columns" pReorderableColumn  [pSortableColumn]="[col.field]">
+            {{ col.header }} <p-sortIcon [field]="[col.field]"></p-sortIcon>
+          </th> -->
+
+
+
+
+
+          <th  pSortableColumn="EquipmentCategoryName">
+            Equipment Category Name <p-sortIcon field="EquipmentCategoryName" ></p-sortIcon>
+
+
+          </th>
+          <th  pSortableColumn="UnitName">
+            Unit Name <p-sortIcon field="UnitName"></p-sortIcon>
+          </th>
+          <th  pSortableColumn="ConsumptionType">
+            Consumption Type <p-sortIcon field="ConsumptionType"></p-sortIcon>
+          </th>
+
+          <th style="width: 10%;">Action</th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex" let-product
+        let-editing="editing">
+        <tr [pReorderableRow]="index" [pEditableRow]="product">
+          <!-- <td *ngFor="let col of columns">
+            {{ rowData[col.field] }}
+          </td> -->
+          <td >
+
+            <div [ngClass]="checkListRecord===false ? 'd-none' : ''">
+              {{ rowData.EquipmentCategoryName }}
+            </div>
+            <ngx-skeleton-loader [ngClass]="checkListRecord===true ? 'd-none' : ''" count="1" appearance="line"
+              animation="pulse">
+            </ngx-skeleton-loader>
+
+          </td>
+          <td >
+            <div [ngClass]="checkListRecord===false ? 'd-none' : ''">
+              {{ rowData.UnitName }}
+            </div>
+            <ngx-skeleton-loader [ngClass]="checkListRecord===true ? 'd-none' : ''" count="1" appearance="line"
+              animation="pulse">
+            </ngx-skeleton-loader>
+
+          </td>
+          <td >
+            <div [ngClass]="checkListRecord===false ? 'd-none' : ''">
+              {{ rowData.ConsumptionType }}
+            </div>
+            <ngx-skeleton-loader [ngClass]="checkListRecord===true ? 'd-none' : ''" count="1" appearance="line"
+              animation="pulse">
+            </ngx-skeleton-loader>
+
+          </td>
+          <td>
+            <div [ngClass]="checkListRecord===false ? 'd-none' : 'd-flex border-none'" class=""
+                style="border-width: 0px 0px 0px 0px !important;">
+                <button pButton pRipple icon="pi pi-pencil" nbTooltip="Edit" nbTooltipPlacement="top"
+                    class=" p-button-primary  mr-2" (click)="editDetails(product)"></button>
+                <button pButton nbTooltip="Delete" nbTooltipPlacement="top" pRipple icon="pi pi-trash"
+                    class=" p-button-primary" (click)="deleteDetails(product)"></button>
+            </div>
+            <ngx-skeleton-loader [ngClass]="checkListRecord===true ? 'd-none' : ''" count="1" appearance="line"
+                animation="pulse">
+            </ngx-skeleton-loader>
+        </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+            <td colspan="7">{{emptymessage}}</td>
+        </tr>
+    </ng-template>
+    </p-table>
+  </div>
+  <p-toast></p-toast>

@@ -1,0 +1,196 @@
+<nb-card class="px-3 container"[nbSpinner]="loading" nbSpinnerStatus="primary"
+nbSpinnerSize="large" nbSpinnerMessage="" >
+    <form [formGroup]="nbForm" (ngSubmit)="submit()">
+        <nb-card-header class="row  align-items-center justify-content-between">
+            <div>
+                <h5>{{formTitle}} Vendor Form</h5>
+            </div>
+            <div>
+                <button type="button" nbButton status="danger" (click)="close()" class="mr-2">Cancel</button>
+                <button type="button" nbButton status="basic" type="reset" class=" mr-2">Clear Form</button>
+                <button type="submit" nbButton status="primary" class=" mr-2">Submit</button>
+            </div>
+        </nb-card-header>
+        <nb-card-body class="example-items-rows">
+
+            <div class="row px-2">
+                <div class="mb-3 col-md-6 col-lg-6 col-sm-12">
+
+                    <label for="VendorName" class="form-label">Vendor Name<span style="color: red;">*</span></label>
+                    <input type="text" formControlName="VendorName" nbInput fullWidth fieldSize="medium"
+                        placeholder=" Vendor Name">
+                    <small
+                        *ngIf="nbForm.get('VendorName')?.invalid && (nbForm.get('VendorName')?.touched || nbForm.get('VendorName')?.dirty)">
+                        <nb-hint style="color: red;" *ngIf=" nbForm.get('VendorName')?.errors?.['required']">
+                            Required</nb-hint>
+                        <nb-hint style="color: red;" *ngIf="  nbForm.get('VendorName')?.errors?.['maxlength']">
+                            Vendor Name should have at most 50 characters</nb-hint>
+                        <nb-hint style="color: red;"
+                            *ngIf=" nbForm.get('VendorName')?.dirty && nbForm.get('VendorName')?.touched && nbForm.get('VendorName')?.errors?.['minlength']">
+                            Vendor Name should have at least 3 characters</nb-hint>
+                        <nb-hint style="color: red;"
+                            *ngIf=" nbForm.get('VendorName')?.dirty && nbForm.get('VendorName')?.touched && nbForm.get('VendorName')?.errors?.duplicateValue">Vendor
+                            Name
+                            is duplicate</nb-hint>
+
+                    </small>
+                </div>
+
+                <div class="mb-3 col-md-6 col-lg-6 col-sm-12">
+                    <label for="VendorAddress" class="form-label">Vendor Address<span
+                            style="color: red;">*</span></label>
+                    <input type="text" formControlName="VendorAddress" nbInput fullWidth fieldSize="medium"
+                        placeholder="Vendor Address">
+
+
+                    <small
+                        *ngIf="nbForm.get('VendorAddress')?.invalid && (nbForm.get('VendorAddress')?.touched || nbForm.get('VendorAddress')?.dirty)">
+                        <nb-hint style="color: red;" *ngIf=" nbForm.get('VendorAddress')?.errors?.['required']">
+                            Required</nb-hint>
+                            <nb-hint style="color: red;" *ngIf="  nbForm.get('VendorAddress')?.errors?.['maxlength']">
+                              Vendor Address should have at most 250 characters</nb-hint>
+                          <nb-hint style="color: red;"
+                              *ngIf=" nbForm.get('VendorAddress')?.dirty && nbForm.get('VendorAddress')?.touched && nbForm.get('VendorAddress')?.errors?.['minlength']">
+                              Vendor Address should have at least 2 characters</nb-hint>
+
+                    </small>
+                </div>
+
+
+
+                <div class=" col-md-6 col-lg-6 col-sm-12 mb-3">
+                    <label for="CountryId" class="form-label">Vendor Country<span style="color: red;">*</span></label>
+
+                    <ng-select fullWidth formControlName="CountryId"  (keyup)="getDropdownList(1,100,$event.target.value)" placeholder="Select Vendor Country">
+                        <ng-option *ngFor="let option of dropDownCountrylist" [value]="option.CountryId">{{
+                            option.CountryName }}</ng-option>
+
+                    </ng-select>
+                    <small
+                        *ngIf="nbForm.get('CountryId')?.invalid && (nbForm.get('CountryId')?.touched || nbForm.get('CountryId')?.dirty)">
+                        <nb-hint style="color: red;" *ngIf=" nbForm.get('CountryId')?.errors?.['required']">
+                            Required</nb-hint>
+
+
+                    </small>
+
+
+
+
+                </div>
+
+
+                <div class="mb-3 col-md-6 col-lg-6 col-sm-12">
+                    <label for="VendorPrimaryEmail" class="form-label">Vendor Primary Email<span
+                            style="color: red;">*</span></label>
+                    <input type="email" formControlName="VendorPrimaryEmail" nbInput fullWidth fieldSize="medium"
+                        placeholder="Vendor Primary Email" nbEmailValidator>
+                    <small
+                        *ngIf="nbForm.get('VendorPrimaryEmail')?.invalid && (nbForm.get('VendorPrimaryEmail')?.touched || nbForm.get('VendorPrimaryEmail')?.dirty)">
+                        <nb-hint style="color: red;" *ngIf=" nbForm.get('VendorPrimaryEmail')?.errors?.['required']">
+                            Required</nb-hint>
+
+                        <nb-hint style="color: red;"
+                            *ngIf=" nbForm.get('VendorPrimaryEmail')?.touched && nbForm.get('VendorPrimaryEmail')?.errors?.['email']">
+                            Please enter a valid email address.</nb-hint>
+                    </small>
+
+
+                </div>
+
+                <div class="mb-3 col-12">
+                    <label for="VendorSecondaryEmail" class="form-label">Vendor Secondary Email</label>
+                    <input type="text" formControlName="VendorSecondaryEmail" nbInput fullWidth fieldSize="medium"
+                        placeholder="Vendor Secondary Email">
+
+                </div>
+
+
+                <div class="mb-3 col-12">
+                    <label for="VendorPhonelines" class="form-label">Vendor Phone Lines</label>
+                    <input type="text" formControlName="VendorPhonelines" nbInput fullWidth fieldSize="medium"
+                        placeholder="0000000000,0000000000,0000000000">
+                </div>
+                <div class="mb-3 col-12">
+                    <label for="VendorPIC" class="form-label">PIC Name<span style="color: red;">*</span></label>
+                    <input type="text" formControlName="VendorPIC" nbInput fullWidth fieldSize="medium"
+                        placeholder=" PIC Name">
+
+                    <small
+                        *ngIf="nbForm.get('VendorPIC')?.invalid && (nbForm.get('VendorPIC')?.touched || nbForm.get('VendorPIC')?.dirty)">
+                        <nb-hint style="color: red;" *ngIf=" nbForm.get('VendorPIC')?.errors?.['required']">
+                            Required</nb-hint>
+                        <nb-hint style="color: red;" *ngIf="  nbForm.get('VendorPIC')?.errors?.['maxlength']">
+                            PIC Name should have at most 50 characters</nb-hint>
+                        <nb-hint style="color: red;"
+                            *ngIf=" nbForm.get('VendorPIC')?.dirty && nbForm.get('VendorPIC')?.touched && nbForm.get('VendorPIC')?.errors?.['minlength']">
+                            PIC Name should have at least 3 characters</nb-hint>
+
+                    </small>
+                </div>
+                <div class="mb-3 col-md-6 col-lg-6 col-sm-12">
+
+                  <label for="Password" class="form-label">Password<span style="color: red;">*</span></label>
+                  <nb-form-field>
+                    <input placeholder="Enter Password" fullWidth fieldSize="medium" formControlName="Password" [type]="getInputType()" nbInput>
+                    <button nbSuffix nbButton ghost type="button" (click)="toggleShowPassword()">
+                      <nb-icon [icon]="showPassword ? 'eye-outline' : 'eye-off-2-outline'"
+                               pack="eva"
+                               [attr.aria-label]="showPassword ? 'hide password' : 'show password'">
+                      </nb-icon>
+                    </button>
+                  </nb-form-field>
+                  <!-- <input type="password" formControlName="Password" nbInput fullWidth fieldSize="medium"
+                      placeholder="Enter Password"> -->
+                  <!-- <small
+                      *ngIf="nbForm.get('VendorName')?.invalid && (nbForm.get('VendorName')?.touched || nbForm.get('VendorName')?.dirty)">
+                      <nb-hint style="color: red;" *ngIf=" nbForm.get('VendorName')?.errors?.['required']">
+                          Required</nb-hint>
+                      <nb-hint style="color: red;" *ngIf="  nbForm.get('VendorName')?.errors?.['maxlength']">
+                          Vendor Name should have at most 50 characters</nb-hint>
+                      <nb-hint style="color: red;"
+                          *ngIf=" nbForm.get('VendorName')?.dirty && nbForm.get('VendorName')?.touched && nbForm.get('VendorName')?.errors?.['minlength']">
+                          Vendor Name should have at least 3 characters</nb-hint>
+                      <nb-hint style="color: red;"
+                          *ngIf=" nbForm.get('VendorName')?.dirty && nbForm.get('VendorName')?.touched && nbForm.get('VendorName')?.errors?.duplicateValue">Vendor
+                          Name
+                          is duplicate</nb-hint>
+
+                  </small> -->
+              </div>
+                <div class="mb-3 col-md-6 col-lg-6 col-sm-12">
+                  <label for="Password"  class="form-label">Confirm Password<span style="color: red;">*</span></label>
+                  <nb-form-field>
+                    <input fullWidth placeholder="Enter Password" fieldSize="medium" [type]="getInputType()" nbInput>
+                    <button nbSuffix nbButton ghost type="button" (click)="toggleShowPassword()">
+                      <nb-icon [icon]="showPassword ? 'eye-outline' : 'eye-off-2-outline'"
+                               pack="eva"
+                               [attr.aria-label]="showPassword ? 'hide password' : 'show password'">
+                      </nb-icon>
+                    </button>
+                  </nb-form-field>
+                  <!-- <small
+                      *ngIf="nbForm.get('VendorName')?.invalid && (nbForm.get('VendorName')?.touched || nbForm.get('VendorName')?.dirty)">
+                      <nb-hint style="color: red;" *ngIf=" nbForm.get('VendorName')?.errors?.['required']">
+                          Required</nb-hint>
+                      <nb-hint style="color: red;" *ngIf="  nbForm.get('VendorName')?.errors?.['maxlength']">
+                          Vendor Name should have at most 50 characters</nb-hint>
+                      <nb-hint style="color: red;"
+                          *ngIf=" nbForm.get('VendorName')?.dirty && nbForm.get('VendorName')?.touched && nbForm.get('VendorName')?.errors?.['minlength']">
+                          Vendor Name should have at least 3 characters</nb-hint>
+                      <nb-hint style="color: red;"
+                          *ngIf=" nbForm.get('VendorName')?.dirty && nbForm.get('VendorName')?.touched && nbForm.get('VendorName')?.errors?.duplicateValue">Vendor
+                          Name
+                          is duplicate</nb-hint>
+
+                  </small> -->
+              </div>
+
+            </div>
+
+
+
+        </nb-card-body>
+    </form>
+</nb-card>
+<p-toast></p-toast>

@@ -1,0 +1,119 @@
+<nb-card class="px-2">
+  <nb-card-header class="row align-items-center justify-content-between">
+    <div>
+      <h5>Voyage Merge</h5>
+    </div>
+
+    <div>
+      <button nbButton (click)="backToList()">Back To List</button>
+      <button nbButton status="primary"  class="ml-3"  (click)="mergeVoyage()">Merge Voyage</button>
+    </div>
+  </nb-card-header>
+</nb-card>
+<nb-card>
+  <nb-card-header class="row align-items-center justify-content-between">
+    <div class="col-9">
+      <h5 class="mb-0" style="font-weight: 700; text-transform: uppercase;">Voyage Merge Right To Left</h5>
+    </div>
+
+    <div class="col-3">
+      <label for="VesselId" class="form-label">Vessel<span style="color: red;">*</span></label>
+      <ng-select class="dropdown-top" (change)="vesselNameget($event)"  (keyup)="getVesselListRecords(1,100,$event.target.value)"  [appendTo]="'body'"
+      placeholder="Select Vessel" fullWidth fieldSize="medium">
+      <ng-option *ngFor="let option of vesselDropdown" [value]="option.VesselName">
+        {{option.VesselName }}</ng-option>
+
+      </ng-select>
+    </div>
+  </nb-card-header>
+  <nb-card-body class="row">
+    <!-- <div class="col-9  py-3 pt-0">
+      <h5 class="mb-0" style="font-weight: 700; text-transform: uppercase;">Voyage Merge Right To Left</h5>
+
+    </div>
+    <div class="mb-3 col-md-3  py-3 pt-0 col-lg-3 col-sm-12">
+      <label for="VesselId" class="form-label">Vessel<span style="color: red;">*</span></label>
+      <ng-select class="dropdown-top"  (keyup)="getVesselListRecords(1,100,$event.target.value)" formControlName="VesselId" [appendTo]="'body'"
+      placeholder="Select Vessel" fullWidth fieldSize="medium">
+      <ng-option *ngFor="let option of vesselDropdown" [value]="option.VesselId">
+        {{option.VesselName }}</ng-option>
+
+      </ng-select>
+
+    </div> -->
+    <hr>
+    <div class="col-6">
+      <h6 class="text-center" style="font-weight: 700; text-transform: uppercase;">Voyage Web Office</h6>
+      <p-table
+        [value]="voyageWeb"
+        selectionMode="single"
+        [(selection)]="selectedVoyageWeb"
+        dataKey="VoyageId"
+        [tableStyle]="{ 'min-width': '100%' }"
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Vessel</th>
+            <th>Voyage Commence Date</th>
+            <th>Voyage Number</th>
+            <th>Fixture</th>
+            <th>Load Port</th>
+            <th>Discharge Port</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-product>
+          <tr [pSelectableRow]="product">
+              <td>{{product.VesselName}}</td>
+              <td>{{product.VoyageCommenceDate | date : 'dd/MM/yyyy'}}</td>
+              <td>{{product.VayageNo}}</td>
+              <td>{{product.Fixture}}</td>
+              <td>{{product.LoadToPort}}</td>
+              <td>{{product.DischargePort}}</td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage" *ngIf="!voyageDesktop || voyageDesktop.length === 0">
+          <tr>
+            <td colspan="6">{{emptymessage1}}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+    <div class="col-6 mergeTable">
+      <h6 class="text-center" style="font-weight: 700; text-transform: uppercase;">Voyage Desktop </h6>
+      <p-table
+        [value]="voyageDesktop"
+        selectionMode="single"
+        [(selection)]="selectedVoyageDesktop"
+        dataKey="VoyageId"
+        [tableStyle]="{ 'min-width': '100%' }"
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Vessel</th>
+            <th>Voyage Commence Date</th>
+            <th>Voyage Number</th>
+            <th>Fixture</th>
+            <th>Load Port</th>
+            <th>Discharge Port</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-product>
+          <tr [pSelectableRow]="product">
+            <td>{{product.VesselName}}</td>
+            <td>{{product.VoyageCommenceDate | date : 'dd/MM/yyyy'}}</td>
+            <td>{{product.VoyageNumber}}</td>
+            <td>{{product.Fixture}}</td>
+            <td>{{product.LoadPort}}</td>
+            <td>{{product.DischargePort}}</td>
+        </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage" *ngIf="!voyageDesktop || voyageDesktop.length === 0">
+          <tr>
+            <td colspan="6">{{emptymessage2}}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </nb-card-body>
+</nb-card>
+<p-toast></p-toast>

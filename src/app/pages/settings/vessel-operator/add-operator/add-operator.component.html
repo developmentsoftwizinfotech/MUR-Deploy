@@ -1,0 +1,39 @@
+<p-toast></p-toast>
+<nb-card class="px-3 container" 
+[nbSpinner]="loading" nbSpinnerStatus="primary"
+nbSpinnerSize="large" nbSpinnerMessage="">
+    <form [formGroup]="nbForm" (ngSubmit)="submit()">
+        <nb-card-header class="row  align-items-center justify-content-between">
+            <div>
+                <h5>{{formTitle}} Vessel Operator</h5>
+            </div>
+            <div>
+                <button type="button" nbButton status="danger" (click)="close()" class="mr-2">Cancel</button>
+                <button type="button" nbButton status="basic" type="reset" class=" mr-2">Clear Form</button>
+                <button type="submit" nbButton status="primary" class=" mr-2">Submit</button>
+            </div>
+        </nb-card-header>
+        <nb-card-body class="example-items-rows">
+
+                <div class=" col">
+                    <label for="VesselOperatorName" class="form-label">Vessel Operator Name<span style="color: red;">*</span></label>
+                    <input type="text" formControlName="VesselOperatorName" nbInput fullWidth fieldSize="medium" placeholder=" Operator Name">
+                    <small
+                    *ngIf="nbForm.get('VesselOperatorName')?.invalid && (nbForm.get('VesselOperatorName')?.touched || nbForm.get('VesselOperatorName')?.dirty)">
+                    <nb-hint style="color: red;" *ngIf=" nbForm.get('VesselOperatorName')?.errors?.['required']">Required</nb-hint>
+                    <nb-hint style="color: red;" *ngIf="  nbForm.get('VesselOperatorName')?.errors?.['maxlength']">
+                        Vessel Operator should have at most 100 characters</nb-hint>
+                    <nb-hint style="color: red;"
+                        *ngIf=" nbForm.get('VesselOperatorName')?.dirty && nbForm.get('VesselOperatorName')?.touched && nbForm.get('VesselOperatorName')?.errors?.['minlength']">
+                        Vessel Operator should have at least 3 characters</nb-hint>
+                        <nb-hint style="color: red;"
+                        *ngIf=" nbForm.get('VesselOperatorName')?.dirty && nbForm.get('VesselOperatorName')?.touched && nbForm.get('VesselOperatorName')?.errors?.duplicateValue">Vessel Operator Name
+                         is duplicate</nb-hint>
+
+                </small>
+                </div>
+                
+            
+        </nb-card-body>
+    </form>
+</nb-card>

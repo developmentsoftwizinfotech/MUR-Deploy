@@ -1,0 +1,20 @@
+export interface Circular {
+    CircularId: number,
+    CategoryId: number,
+    ApplicableId: number,
+    VesselName: string,
+    CargoName: string,
+    PortName: string,
+    Text: string,
+    Title: string,
+    AutoArchiveDate:Date,
+    CreatedDate:Date,
+    UpdatedDate:Date,
+    DeletedDate:Date,
+    Attechment: string,
+    FilePath: string,
+    CircularCategoryName: string,
+    ApplicableName: string
+    Active: boolean,
+    IsArchived: boolean,
+  }

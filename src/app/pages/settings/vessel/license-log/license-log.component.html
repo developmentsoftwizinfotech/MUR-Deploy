@@ -1,0 +1,82 @@
+<div class="card">
+<nb-card class="mb-0 container" >
+    <nb-card-header class="d-flex justify-content-between align-items-center"><h5>Licence Log List</h5> <div>
+        <button pButton pRipple icon="pi pi-times" nbTooltip="close" nbTooltipPlacement="bottom" class="surface-200 mr-2" (click)="close()"></button>
+    </div></nb-card-header>
+    <nb-card-body class="">
+    <p-table dataKey="id" editMode="row" [value]="license" [columns]="cols" [reorderableColumns]="true" #dt1
+        [rows]="5" [showCurrentPageReport]="true"   [paginator]="checkListRecord===true ? true : false"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [globalFilterFields]="['LicenseStartDate', 'LicenseEndDate']" [tableStyle]="{ 'min-width': '50rem' }">
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+
+                <th pSortableColumn="LicenseStartDate" >Licence Start Date <p-sortIcon field="LicenseStartDate"></p-sortIcon>
+                </th>
+                <th pSortableColumn="LicenseEndDate">
+                    Licence End Date
+                    <p-sortIcon field="LicenseEndDate"></p-sortIcon>
+                </th>
+
+            </tr>
+        </ng-template>
+
+
+        <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex" let-product
+            let-editing="editing">
+            <tr [pReorderableRow]="index" [pEditableRow]="product">
+
+                <td>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+
+                            <input pInputText type="text" [(ngModel)]="product.LicenseStartDate">
+                        </ng-template>
+                        <ng-template pTemplate="output">
+
+                            <div [ngClass]="checkListRecord===false ? 'd-none' : ''">
+                                {{ product.LicenseStartDate|date :'dd-MMM-yyyy' }}
+                              </div>
+                              <ngx-skeleton-loader [ngClass]="checkListRecord === true ? 'd-none' : ''" count="1" appearance="line"
+                                animation="pulse">
+                              </ngx-skeleton-loader>
+                        </ng-template>
+
+
+
+
+
+
+                    </p-cellEditor>
+                </td>
+                <td>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <input pInputText type="text" [(ngModel)]="product.LicenseEndDate" required />
+                        </ng-template>
+                        <ng-template pTemplate="output">
+
+                            <div [ngClass]="checkListRecord === false ? 'd-none' : ''">
+                                {{ product.LicenseEndDate | date :'dd-MMM-yyyy'}}
+                              </div>
+                              <ngx-skeleton-loader [ngClass]="checkListRecord === true ? 'd-none' : ''" count="1" appearance="line"
+                                animation="pulse">
+                              </ngx-skeleton-loader>
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+
+
+            </tr>
+        </ng-template>
+
+
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="7">{{emptymessage}}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+    </nb-card-body>
+</nb-card>
+</div>

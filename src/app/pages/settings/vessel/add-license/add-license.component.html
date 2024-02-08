@@ -1,0 +1,55 @@
+<p-toast></p-toast>
+<nb-card class="px-3 container" 
+[nbSpinner]="loading" nbSpinnerStatus="primary"
+nbSpinnerSize="large" nbSpinnerMessage="">
+    <form [formGroup]="nbForm" (ngSubmit)="submit()">
+        <nb-card-header class="row  align-items-center justify-content-between">
+            <div>
+                <h5>{{formTitle}} Licence Details</h5>
+            </div>
+            <div>
+                <button type="button" nbButton status="danger" (click)="close()" class="mr-2">Cancel</button>
+                <button type="button" nbButton status="basic" type="reset" class=" mr-2">Clear Form</button>
+                <button type="submit" nbButton status="primary" class=" mr-2">Submit</button>
+            </div>
+        </nb-card-header>
+        <nb-card-body class="example-items-rows">
+
+            <div class="row px-2">
+                <div class="mb-3 col-6">
+                    <label for="LicenseStartDate" class="form-label">Licence Start Date<span style="color: red;">*</span></label>
+                    <input [nbDatepicker]="datepicker"  nbInput formControlName="LicenseStartDate"  placeholder=" Licence Start Date" fullWidth fieldSize="medium"><br>
+                    <nb-datepicker #datepicker></nb-datepicker>
+                    <small
+                        *ngIf="nbForm.get('LicenseStartDate')?.invalid && (nbForm.get('LicenseStartDate')?.touched || nbForm.get('LicenseStartDate')?.dirty)">
+                        <nb-hint style="color: red;" *ngIf=" nbForm.get('LicenseStartDate')?.errors?.['required']">Required</nb-hint>
+
+
+
+                    </small>
+                </div>
+                <div class="mb-3 col-6">
+                    <label for="LicenseEndDate" class="form-label">Licence End Date<span style="color: red;">*</span></label>
+                    <input [nbDatepicker]="datepicker1" nbInput formControlName="LicenseEndDate"  placeholder=" Licence End Date" fullWidth fieldSize="medium"><br>
+                    <nb-datepicker #datepicker1></nb-datepicker>
+                    <small
+                    *ngIf="nbForm.get('LicenseEndDate')?.invalid && (nbForm.get('LicenseEndDate')?.touched || nbForm.get('LicenseEndDate')?.dirty)">
+                    <nb-hint style="color: red;" *ngIf="nbForm.get('LicenseEndDate')?.errors?.['required']">Required</nb-hint>
+
+
+                    <nb-hint style="color: red;" *ngIf=" nbForm.get('LicenseEndDate')?.errors.invalidDateRange">End Date must be greater than Start Date</nb-hint>
+                </small>
+
+                </div>
+
+
+
+
+
+
+
+            </div>
+
+        </nb-card-body>
+    </form>
+</nb-card>

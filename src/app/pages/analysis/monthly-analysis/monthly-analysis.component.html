@@ -1,0 +1,170 @@
+<nb-card class="px-2">
+  <nb-card-header class="row align-items-center justify-content-between">
+    <div class="col-md-8 text-start">
+      <h5 style="font-weight: 600">MIS Summary</h5>
+    </div>
+
+    <div class="col-md-4 pr-0 row p-0 m-0 justify-content-center align-items-center">
+      <div class="col-6 p-1">
+        <ng-select class="dropdown-top" [(ngModel)]="analysisType" class="fixed-dropdown-size" (change)="getFormValue()"
+          [appendTo]="'body'" placeholder="Select Status" fullWidth fieldSize="medium" [clearable]="false">
+          <ng-option value="MTD">Monthly Analysis</ng-option>
+          <ng-option value="QTD">Quaterly Analysis</ng-option>
+        </ng-select>
+      </div>
+      <form [formGroup]="nbForm" class="col-6 p-1">
+        <div class="p-1">
+          <p-calendar formControlName="YearDate" view="year" (ngModelChange)="getFormValue()" dateFormat="yy"
+            placeholder="Select Year" [readonlyInput]="true"></p-calendar>
+          <!-- <nb-calendar [(date)]="date" [boundingMonth]="true"></nb-calendar> -->
+        </div>
+      </form>
+    </div>
+  </nb-card-header>
+</nb-card>
+
+<nb-card>
+  <nb-card-body class="mb-4">
+    <div class="row justify-content-between">
+      <div class="col-12">
+        <div class="row justify-content-between align-content-center">
+          <h6 class="my-3 col-6" style="font-weight: 600">
+            MTD Analysis Monthly ({{ viewListTable === "amount" ? "$" : "%" }})
+          </h6>
+          <div class="my-3 col-6" style="font-weight: 600">
+            <nb-radio-group class="d-flex justify-content-end"   (ngModelChange)="changeToGraph($event)" [(ngModel)]="viewListTable">
+              <nb-radio *ngFor="let option of options"  [value]="option.value">
+                {{ option.label }}
+              </nb-radio>
+            </nb-radio-group>
+          </div>
+        </div>
+        <p-table class="p-datatable p-component p-datatable-sm" #dt1 [value]="monthlyAnalysis?.AnualBudget"
+          dataKey="CleaningType" [showCurrentPageReport]="true"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+          [globalFilterFields]="['CleaningType']" [tableStyle]="{ 'min-width': '40rem' }" [columns]="cols">
+          <ng-template pTemplate="header" style="border-bottom: none; border: 2px solid" let-columns>
+            <tr>
+              <th rowspan="2">Cost Heads</th>
+              <th rowspan="2">{{ monthlyAnalysis?.Year }}-Budget</th>
+              <th colspan="12" class="text-center">
+                {{
+                monthlyAnalysis?.MonthlySummaries
+                ? "Monthly - Actual "
+                : "Quarterly - Actual"
+                }}
+                {{ viewListTable === "amount" ? "$" : "%" }}
+              </th>
+            </tr>
+            <tr>
+              <ng-container *ngFor="let item of analysisDetails">
+                <th colspan="1" class="text-center">
+                  {{ item?.MonthName ? item.MonthName :'Q-' + item?.Quarter}}
+                </th>
+              </ng-container>
+
+
+              <!-- <th style="width: 2%; color"></th> -->
+            </tr>
+          </ng-template>
+
+          <!-- ... (previous code) ... -->
+
+          <ng-template pTemplate="body" let-rowData let-columns="columns">
+            <tr>
+              <td>{{rowData?.CostHead}}</td>
+              <!-- <td *ngIf="rowData?.CleaningType === 'TCC'">
+                Total Cleaning Costs
+              </td>
+              <td *ngIf="rowData?.CleaningType === 'HCB'">
+                Additional Crew Bonus
+              </td>
+              <td *ngIf="rowData?.CleaningType === 'ITD'">
+                Idle Time Days For Cleaning
+              </td>
+              <td *ngIf="rowData?.CleaningType === 'SHA'">
+                Hold Advisory by Shore & Roving Supdt Cost
+              </td>
+              <td *ngIf="rowData?.CleaningType === 'ITC'">
+                Idle Time Cost (Fixture Costs)
+              </td>
+              <td *ngIf="rowData?.CleaningType === 'HCE'">
+                Hold Cleaning Equipment
+              </td>
+              <td *ngIf="rowData?.CleaningType === 'ITB'">
+                Idle Time Bunker $ (LSF+LSG)
+              </td>
+              <td *ngIf="rowData?.CleaningType === 'HCC'">
+                Hold Cleaning Chemicals
+              </td>
+              <td *ngIf="rowData?.CleaningType === 'SCG'">
+                Shore Cleaning Gang
+              </td>
+              <td *ngIf="rowData?.CleaningType === 'HCX'">
+                Hold Cleaning Consumables
+              </td> -->
+
+              <!-- <td>{{ rowData?.TotalPrice }}</td> -->
+              <ng-container>
+                <td>
+                  <div [ngClass]="checkListRecord === false ? 'd-none' : ''">
+                    ${{ rowData?.TotalCost }}
+                  </div>
+
+                  <ngx-skeleton-loader [ngClass]="checkListRecord === true ? 'd-none' : ''" count="1" appearance="line"
+                    animation="pulse">
+                  </ngx-skeleton-loader>
+                </td>
+              </ng-container>
+              <ng-container *ngFor="let month of analysisDetails">
+                <ng-container *ngIf="getMonthlyBudget(month, rowData)">
+                  <td>
+                    <div *ngIf="viewListTable === 'amount'" [ngClass]="checkListRecord === false ? 'd-none' : ''">
+                      ${{ getMonthlyBudget(month, rowData)?.Amount }}
+                    </div>
+                    <div *ngIf="viewListTable === 'percentage'" [ngClass]="checkListRecord === false ? 'd-none' : ''">
+                      {{ getMonthlyBudget(month, rowData)?.Percentage }}%
+                    </div>
+                    <ngx-skeleton-loader [ngClass]="checkListRecord === true ? 'd-none' : ''" count="1"
+                      appearance="line" animation="pulse">
+                    </ngx-skeleton-loader>
+                  </td>
+                </ng-container>
+                <ng-container *ngIf="!getMonthlyBudget(month, rowData)">
+                  <td colspan="3">N/A</td>
+                </ng-container>
+              </ng-container>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>
+
+<nb-card>
+  <nb-card-body id="barChart" style="height: 30vh">
+    <div class="row justify-content-between align-content-center">
+      <h6 class="my-3 col-9" style="font-weight: 600">
+        {{costHeadSelected}} ({{ viewListTable === "amount" ? "$" : "%" }})
+      </h6>
+      <div class="my-3 col-3" style="font-weight: 600">
+        <ng-select class="dropdown-top col" class="fixed-dropdown-size" [clearable]="false" [(ngModel)]="costHeadSelected" (change)="filterGraph($event)"
+          [appendTo]="'body'" placeholder="Select Cost Head" fullWidth fieldSize="medium">
+          <ng-option *ngFor="let option of costHeading" [value]="option.costHead">{{ option.costHead
+            }}</ng-option>
+        </ng-select>
+        <!-- <nb-radio-group
+          class="d-flex justify-content-end"
+          [(ngModel)]="viewListTable"
+        >
+          <nb-radio *ngFor="let option of options" [value]="option.value">
+            {{ option.label }}
+          </nb-radio>
+        </nb-radio-group> -->
+      </div>
+    </div>
+    <chart type="bar" [data]="data" [options]="chartOptions"></chart>
+    <!-- <ngx-chartjs-line></ngx-chartjs-line> -->
+  </nb-card-body>
+</nb-card>

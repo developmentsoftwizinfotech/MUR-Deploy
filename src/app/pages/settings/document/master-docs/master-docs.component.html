@@ -1,0 +1,111 @@
+<nb-card class="px-2">
+  <nb-card-header class="row align-items-center justify-content-between">
+    <div>
+      <h5>Import/Export Management</h5>
+    </div>
+  </nb-card-header>
+  <div class="d-flex justify-content-between py-3">
+    <div>
+      <button nbButton [status]="activeIndex === 0 ? 'primary' : 'control'"
+        [ngClass]="activeIndex === 0 ? '' : 'button-table'" class="mr-2" (click)="changeDocs('Import')" label="">
+        Import
+      </button>
+      <button nbButton [status]="activeIndex === 1 ? 'primary' : 'control'"
+        [ngClass]="activeIndex === 1 ? '' : 'button-table'" (click)="changeDocs('Export')" label="">
+        Export
+      </button>
+    </div>
+  </div>
+</nb-card>
+
+<nb-card class="mt-4 px-3" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large" nbSpinnerMessage="">
+  <form [formGroup]="nbForm">
+    <nb-card-body class="example-items-rows">
+     
+      <div class="col-4 uploader-wrapper px-2 py-3" >
+        <!-- <ngx-awesome-uploader
+              [adapter]="adapter"
+              [enableCropper]="true"
+              [fileMaxSize]="20000"
+              (uploadSuccess)="onFileSelected($event)"
+              (validationError)="onValidationError($event)"
+            >
+            </ngx-awesome-uploader> -->
+        <label class="form-label">Select Import<span style="color: red">*</span></label>
+        <nb-radio-group class="d-flex" (click)="checkImportFile()" formControlName="selectImportFile">
+
+          <nb-radio value="fileImport"> File</nb-radio>
+          <nb-radio value="fileAttachment"> Attachment</nb-radio>
+        </nb-radio-group>
+
+      </div>
+      <div class="col-4 pl-0 mb-3" *ngIf="activeIndex === 1 && isAttachment">
+        <label class="form-label">Select Vessel Name<span style="color: red">*</span></label>
+        <br />
+        <ng-select (keyup)="getVesselListRecords(1,25,$event.target.value)" formControlName="VesselName" fullWidth
+          [appendTo]="'body'" placeholder="Select List">
+          <ng-option *ngFor="let option of vesselList" [value]="option.VesselId">{{ option.VesselName
+            }}</ng-option>
+        </ng-select>
+        <nb-rangepicker #formpicker></nb-rangepicker>
+      </div>
+      <div class="col-4 pl-0 mb-3" *ngIf="activeIndex === 1 && !isAttachment">
+        <label class="form-label">Select Circular Name<span style="color: red">*</span></label>
+        <br />
+        <ng-select (keyup)="getVesselListRecords(1,25,$event.target.value)" formControlName="CircularName" fullWidth
+          [appendTo]="'body'" placeholder="Select List">
+          <ng-option *ngFor="let option of circularList" [value]="option.CircularCategoryId">{{ option.CircularCategoryName
+            }}</ng-option>
+        </ng-select>
+        <nb-rangepicker #formpicker></nb-rangepicker>
+      </div>
+      <div class="col-4 pl-0 mb-3" *ngIf="activeIndex === 1">
+        <label class="form-label">Select Date Range<span style="color: red">*</span></label>
+        <br />
+        <!-- <input formControlName="RangeDate" nbInput fullWidth placeholder="Pick Date Range" [nbDatepicker]="formpicker">
+        <nb-rangepicker #formpicker></nb-rangepicker> -->
+        <div class="d-flex">
+          <input [nbDatepicker]="datepicker1" class="mr-2" nbInput placeholder="Pick Start Date " fullWidth
+            formControlName="StartDate"> 
+          <nb-datepicker #datepicker1></nb-datepicker>
+          <input [nbDatepicker]="datepicker" nbInput placeholder="Pick End Date" fullWidth formControlName="EndDate">
+          <nb-datepicker #datepicker></nb-datepicker>
+        </div>
+      </div>
+
+      <div *ngIf="activeIndex === 0" class="col-4 uploader-wrapper mb-3 px-2 py-3">
+        <!-- <ngx-awesome-uploader
+              [adapter]="adapter"
+              [enableCropper]="true"
+              [fileMaxSize]="20000"
+              (uploadSuccess)="onFileSelected($event)"
+              (validationError)="onValidationError($event)"
+            >
+            </ngx-awesome-uploader> -->
+        <label class="form-label">{{!isAttachment?'Attachment':'File'}} Import<span
+            style="color: red">*</span></label><br />
+
+        <input type="file" *ngIf="isAttachment" formControlName="ImportFile" (change)="onFileSelected($event)"
+          accept=".xlsx" />
+        <input type="file" *ngIf="!isAttachment" formControlName="ImportFile" (change)="onFileSelected($event)"
+          accept=".zip,.rar,.7zip" />
+      </div>
+
+      <div class="col-12 pl-0">
+        <button *ngIf="isAttachment" nbButton class="mr-3" status="primary"
+          (click)="activeIndex === 1 ? exportData('text') : importData('text')">
+          {{ activeIndex === 1 ? "Export File" : "Import File" }}
+        </button>
+        <button *ngIf="!isAttachment" nbButton status="primary" (click)="
+            activeIndex === 1
+              ? exportData('attachment')
+              : importData('attachment')
+          ">
+          {{ activeIndex === 1 ? "Export Attachment" : "Import Attachment" }}
+        </button>
+        <!-- <button nbButton status="primary"(click)="exportData()">Export</button> -->
+      </div>
+    </nb-card-body>
+  </form>
+</nb-card>
+<p-toast></p-toast>

@@ -1,0 +1,332 @@
+<nb-card class="px-2">
+  <nb-card-header class="row align-items-center justify-content-between">
+    <div>
+      <h5>Voyage Merge List Management</h5>
+    </div>
+    <div>
+      <button nbButton (click)="mergeVoyage()">Add Voyage Merge</button>
+    </div>
+  </nb-card-header>
+</nb-card>
+
+<nb-card>
+  <p-table #dt1 [value]="voyageMergeList" dataKey="id" [rows]="10" [showCurrentPageReport]="true"
+      [paginator]="checkListRecord===true ? true : false"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+      [globalFilterFields]="['CircularCategoryName','ApplicableName','VesselName','CreatedDate']"
+      [tableStyle]="{ 'min-width': '50rem' }" >
+      <ng-template pTemplate="caption">
+          <div class="d-flex">
+              <span class=" ml-auto">
+                  <input nbInput type="text" (input)="dt1.filterGlobal($event.target.value, 'contains')"
+                      placeholder="Search keyword" />
+              </span>
+          </div>
+      </ng-template>
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th pSortableColumn="VesselName">
+            Vessel Name <p-sortIcon field="VesselName"></p-sortIcon>
+          </th>
+          <th pSortableColumn="StatusName">
+            Status Name <p-sortIcon field="StatusName"></p-sortIcon>
+          </th>
+          <th pSortableColumn="VoyageCommenceDate" style="min-width: 120px">
+            Voyage Commence date<p-sortIcon
+              field="VoyageCommenceDate"
+            ></p-sortIcon>
+          </th>
+          <th
+            pSortableColumn="VesselVoyageCompletingDate"
+            style="min-width: 120px"
+          >
+            Voyage Completed date<p-sortIcon
+              field="VesselVoyageCompletingDate"
+            ></p-sortIcon>
+          </th>
+          <th pSortableColumn="Fixture">
+            Fixture<p-sortIcon field="Fixture"></p-sortIcon>
+          </th>
+          <th pSortableColumn="LoadToPortName">
+            Load Port<p-sortIcon field="LoadToPortName"></p-sortIcon>
+          </th>
+          <th pSortableColumn="CargoToLoadName">
+            Cargo to Load<p-sortIcon field="CargoToLoadName"></p-sortIcon>
+          </th>
+          <th pSortableColumn="PreviousCargoName">
+            Previous Cargo<p-sortIcon field="PreviousCargoName"></p-sortIcon>
+          </th>
+          <th pSortableColumn="ITDBudget">
+            ITD (days)<p-sortIcon field="ITDBudget"></p-sortIcon>
+          </th>
+          <th pSortableColumn="ITCBudget">
+            ITC (USD)<p-sortIcon field="ITCBudget"></p-sortIcon>
+          </th>
+          <th pSortableColumn="ITBBudget">
+            ITB (USD)<p-sortIcon field="ITNBudget"></p-sortIcon>
+          </th>
+          <th pSortableColumn="SCGBudget">
+            SCG (USD)<p-sortIcon field="SCGBudget"></p-sortIcon>
+          </th>
+          <th pSortableColumn="SHABudget">
+            SHA (USD)<p-sortIcon field="SHABudget"></p-sortIcon>
+          </th>
+          <th pSortableColumn="HCEBudget">
+            HCE (USD)<p-sortIcon field="HCEBudget"></p-sortIcon>
+          </th>
+          <th pSortableColumn="HCCBudget">
+            HCC (USD)<p-sortIcon field="HCCBudget"></p-sortIcon>
+          </th>
+          <th pSortableColumn="HCXBudget">
+            HCX (USD)<p-sortIcon field="HCXBudget"></p-sortIcon>
+          </th>
+          <th pSortableColumn="HCBBudget">
+            HCB (USD)<p-sortIcon field="HCBBudget"></p-sortIcon>
+          </th>
+          <th>Action</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex" let-product
+          let-editing="editing">
+          <tr [pEditableRow]="product">
+            <td>
+              <div [ngClass]="checkListRecord === false ? 'd-none' : ''">
+                {{ rowData.VesselName }}
+              </div>
+              <ngx-skeleton-loader
+                [ngClass]="checkListRecord === true ? 'd-none' : ''"
+                count="1"
+                appearance="line"
+                animation="pulse"
+              >
+              </ngx-skeleton-loader>
+            </td>
+            <td>
+              <div [ngClass]="checkListRecord === false ? 'd-none' : ''">
+                {{ rowData.StatusName }}
+              </div>
+              <ngx-skeleton-loader
+                [ngClass]="checkListRecord === true ? 'd-none' : ''"
+                count="1"
+                appearance="line"
+                animation="pulse"
+              >
+              </ngx-skeleton-loader>
+            </td>
+            <td>
+              <div [ngClass]="checkListRecord === false ? 'd-none' : ''">
+                {{ rowData.VoyageCommenceDate | date : "dd-MMM-yyyy" }}
+              </div>
+              <ngx-skeleton-loader
+                [ngClass]="checkListRecord === true ? 'd-none' : ''"
+                count="1"
+                appearance="line"
+                animation="pulse"
+              >
+              </ngx-skeleton-loader>
+            </td>
+            <td>
+              <div [ngClass]="checkListRecord === false ? 'd-none' : ''">
+                {{ rowData.VesselVoyageCompletedDate | date : "dd-MMM-yyyy" }}
+              </div>
+              <ngx-skeleton-loader
+                [ngClass]="checkListRecord === true ? 'd-none' : ''"
+                count="1"
+                appearance="line"
+                animation="pulse"
+              >
+              </ngx-skeleton-loader>
+            </td>
+            <td>
+              <div [ngClass]="checkListRecord === false ? 'd-none' : ''">
+                {{ rowData.Fixture }}
+              </div>
+              <ngx-skeleton-loader
+                [ngClass]="checkListRecord === true ? 'd-none' : ''"
+                count="1"
+                appearance="line"
+                animation="pulse"
+              >
+              </ngx-skeleton-loader>
+            </td>
+            <td>
+              <div [ngClass]="checkListRecord === false ? 'd-none' : ''">
+                {{ rowData.LoadToPort }}
+              </div>
+              <ngx-skeleton-loader
+                [ngClass]="checkListRecord === true ? 'd-none' : ''"
+                count="1"
+                appearance="line"
+                animation="pulse"
+              >
+              </ngx-skeleton-loader>
+            </td>
+            <td>
+              <div [ngClass]="checkListRecord === false ? 'd-none' : ''">
+                {{ rowData.CargotoLoad }}
+              </div>
+              <ngx-skeleton-loader
+                [ngClass]="checkListRecord === true ? 'd-none' : ''"
+                count="1"
+                appearance="line"
+                animation="pulse"
+              >
+              </ngx-skeleton-loader>
+            </td>
+            <td>
+              <div [ngClass]="checkListRecord === false ? 'd-none' : ''">
+                {{ rowData.PreviousCargo }}
+              </div>
+              <ngx-skeleton-loader
+                [ngClass]="checkListRecord === true ? 'd-none' : ''"
+                count="1"
+                appearance="line"
+                animation="pulse"
+              >
+              </ngx-skeleton-loader>
+            </td>
+            <td>
+              <div [ngClass]="checkListRecord === false ? 'd-none' : ''">
+                {{ rowData.ITDBudget - rowData.ITDActual }}
+              </div>
+              <ngx-skeleton-loader
+                [ngClass]="checkListRecord === true ? 'd-none' : ''"
+                count="1"
+                appearance="line"
+                animation="pulse"
+              >
+              </ngx-skeleton-loader>
+            </td>
+            <td>
+              <div [ngClass]="checkListRecord === false ? 'd-none' : ''">
+                {{ rowData.ITCBudget - rowData.ITCActual }}
+              </div>
+              <ngx-skeleton-loader
+                [ngClass]="checkListRecord === true ? 'd-none' : ''"
+                count="1"
+                appearance="line"
+                animation="pulse"
+              >
+              </ngx-skeleton-loader>
+            </td>
+            <td>
+              <div [ngClass]="checkListRecord === false ? 'd-none' : ''">
+                {{ rowData.ITBBudget - rowData.ITBActual }}
+              </div>
+              <ngx-skeleton-loader
+                [ngClass]="checkListRecord === true ? 'd-none' : ''"
+                count="1"
+                appearance="line"
+                animation="pulse"
+              >
+              </ngx-skeleton-loader>
+            </td>
+            <td>
+              <div [ngClass]="checkListRecord === false ? 'd-none' : ''">
+                {{ rowData.SCGBudget - rowData.SCGActual }}
+              </div>
+              <ngx-skeleton-loader
+                [ngClass]="checkListRecord === true ? 'd-none' : ''"
+                count="1"
+                appearance="line"
+                animation="pulse"
+              >
+              </ngx-skeleton-loader>
+            </td>
+            <td>
+              <div [ngClass]="checkListRecord === false ? 'd-none' : ''">
+                {{ rowData.SHABudget - rowData.SHAActual }}
+              </div>
+              <ngx-skeleton-loader
+                [ngClass]="checkListRecord === true ? 'd-none' : ''"
+                count="1"
+                appearance="line"
+                animation="pulse"
+              >
+              </ngx-skeleton-loader>
+            </td>
+            <td>
+              <div [ngClass]="checkListRecord === false ? 'd-none' : ''">
+                {{ rowData.HCEBudget - rowData.HCEActual }}
+              </div>
+              <ngx-skeleton-loader
+                [ngClass]="checkListRecord === true ? 'd-none' : ''"
+                count="1"
+                appearance="line"
+                animation="pulse"
+              >
+              </ngx-skeleton-loader>
+            </td>
+            <td>
+              <div [ngClass]="checkListRecord === false ? 'd-none' : ''">
+                {{ rowData.HCCBudget - rowData.HCCActual }}
+              </div>
+              <ngx-skeleton-loader
+                [ngClass]="checkListRecord === true ? 'd-none' : ''"
+                count="1"
+                appearance="line"
+                animation="pulse"
+              >
+              </ngx-skeleton-loader>
+            </td>
+            <td>
+              <div [ngClass]="checkListRecord === false ? 'd-none' : ''">
+                {{ rowData.HCXBudget - rowData.HCXActual }}
+              </div>
+              <ngx-skeleton-loader
+                [ngClass]="checkListRecord === true ? 'd-none' : ''"
+                count="1"
+                appearance="line"
+                animation="pulse"
+              >
+              </ngx-skeleton-loader>
+            </td>
+            <td>
+              <div [ngClass]="checkListRecord === false ? 'd-none' : ''">
+                {{ rowData.HCBBudget - rowData.HCBActual }}
+              </div>
+              <ngx-skeleton-loader
+                [ngClass]="checkListRecord === true ? 'd-none' : ''"
+                count="1"
+                appearance="line"
+                animation="pulse"
+              >
+              </ngx-skeleton-loader>
+            </td>
+            <td>
+              <div
+                [ngClass]="
+                  checkListRecord === false ? 'd-none' : 'd-flex border-none'
+                "
+                class=""
+                style="border-width: 0px 0px 0px 0px !important"
+              >
+                <ngx-skeleton-loader
+                  [ngClass]="checkListRecord === true ? 'd-none' : ''"
+                  count="1"
+                  appearance="line"
+                  animation="pulse"
+                >
+                </ngx-skeleton-loader>
+
+                <button
+                  pButton
+                  pRipple
+                  icon="pi pi-trash"
+                  class="p-button-primary"
+                  nbTooltip="Delete"
+                  nbTooltipPlacement="top"
+                  (click)="deleteDetails(rowData)"
+                ></button>
+              </div>
+            </td>
+          </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+          <tr>
+              <td colspan="18">{{emptymessage}}</td>
+          </tr>
+      </ng-template>
+  </p-table>
+</nb-card>
+<p-toast></p-toast>

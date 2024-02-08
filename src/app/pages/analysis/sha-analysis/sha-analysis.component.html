@@ -1,0 +1,318 @@
+<nb-card class="px-2">
+  <nb-card-header class="row align-items-center justify-content-center">
+    <div class="col-md-6 text-start">
+      <h5 style="font-weight: 600">SHA Wise Analysis ({{ viewListTable === "amount" ? "$" : "%" }})</h5>
+    </div>
+    <div class="col-md-6 text-right">
+      <button nbButton status="danger" type="reset" (click)="resetForm()" class="mr-2">Reset</button>
+      <button type="button" nbButton status="primary" (click)="searchFilter()" type="button"
+        class=" mr-2">Search</button>
+    </div>
+    <!-- <div class="col-md-12 pr-0 row p-0 m-0 justify-content-end "> -->
+    <!-- <div class="col-6 p-1">
+          <ng-select class="dropdown-top" [(ngModel)]="analysisType" class="fixed-dropdown-size" (change)="getFormValue()"
+            [appendTo]="'body'" placeholder="Select Status" fullWidth fieldSize="medium">
+            <ng-option value="MTD">Monthly Analysis</ng-option>
+            <ng-option value="QTD">Quaterly Analysis</ng-option>
+          </ng-select>
+        </div> -->
+    <form [formGroup]="nbForm" class="col-md-12 mt-3 row p-0 justify-content-center">
+      <div class="col-md-12 mt-3 row p-0 justify-content-center">
+        <div class="p-1" class="col p-0 px-1 my-1">
+
+          <ng-select [items]="vesselListDropDown" (change)="selectAll('VesselListIds',vesselListDropDown,'one',7,1)"
+            [clearSearchOnAdd]="true" [closeOnSelect]="false" labelForId="state" [multiple]="true"
+            placeholder="Select Vessel Name" clearAllText="unselectAll('VesselListIds')" formControlName="VesselListIds"
+            [bindLabel]="'VesselName'">
+            <ng-template ng-header-tmp>
+              <button size="tiny" nbButton (click)="selectAll('VesselListIds',vesselListDropDown,'all',7,1)"
+                status="basic" class="btn btn-sm mr-2">Select all</button>
+              <button size="tiny" nbButton (click)="unselectAll('VesselListIds')" status="basic"
+                class="btn btn-sm ">Unselect all</button>
+            </ng-template>
+            <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+              <div class="row">
+                <input id="item-{{index}}" class="mr-2" type="checkbox" [ngModel]="item$.selected"
+                  [ngModelOptions]="{standalone: true}" />
+                {{item['VesselName']}}
+              </div>
+            </ng-template>
+            <ng-template ng-multi-label-tmp let-items="items">
+              <div class="ng-value" *ngFor="let item of items | slice:0:1">
+                {{item['VesselName']}}
+              </div>
+              <div class="ng-value" *ngIf="items.length > 1">
+                <span class="ng-value-label">{{items.length - 1}} more...</span>
+              </div>
+            </ng-template>
+          </ng-select>
+
+
+        </div>
+        <div class="p-1" class="col p-0 px-1 my-1">
+          <input nbInput placeholder="Date Range" (keydown)="dateFilter($event, 'commence')" fullWidth
+            formControlName="DateCommenceRangeControl" [nbDatepicker]="commencePicker" />
+          <nb-rangepicker #commencePicker (rangeChange)="dateFilter($event, 'commence')"></nb-rangepicker>
+          <!-- <p-calendar  formControlName="VoyageCommenceDate" view="month" (ngModelChange)="getFormValue()" dateFormat="mm/yy" placeholder="Voyage Commence Date" [readonlyInput]="true"></p-calendar> -->
+          <!-- <nb-calendar [(date)]="date" [boundingMonth]="true"></nb-calendar> -->
+        </div>
+
+        <div class="p-1" class="col p-0 px-1 my-1">
+          <ng-select (change)="selectNameAll('LoadToPortsListIds',portListDropDown?.LoadToPorts,'one',7,1)"
+            [items]="portListDropDown?.LoadToPorts" [clearSearchOnAdd]="true" [closeOnSelect]="false" labelForId="state"
+            [multiple]="true" placeholder="Select Load Port" clearAllText="Clear" formControlName="LoadToPortsListIds"
+            [bindLabel]="'LoadtoPort'">
+            <ng-template ng-header-tmp>
+              <button size="tiny" nbButton
+                (click)="selectNameAll('LoadToPortsListIds',portListDropDown?.LoadToPorts,'all',7,1)" status="basic"
+                class="btn btn-sm mr-2">Select all</button>
+              <button size="tiny" nbButton (click)="unselectAll('LoadToPortsListIds')" status="basic"
+                class="btn btn-sm ">Unselect all</button>
+            </ng-template>
+            <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+              <div class="row">
+                <input id="item-{{index}}" class="mr-2" type="checkbox" [ngModel]="item$.selected"
+                  [ngModelOptions]="{standalone: true}" />
+                {{item['LoadToPort']}}
+              </div>
+            </ng-template>
+            <ng-template ng-multi-label-tmp let-items="items">
+              <div class="ng-value" *ngFor="let item of items | slice:0:1">
+                {{item['LoadToPort']}}
+              </div>
+              <div class="ng-value" *ngIf="items.length > 1">
+                <span class="ng-value-label">{{items.length - 1}} more...</span>
+              </div>
+            </ng-template>
+          </ng-select>
+        </div>
+        <div class="p-1" class="col p-0 px-1 my-1">
+          <ng-select [items]="portListDropDown?.DischargePorts"
+            (change)="selectNameAll('DischargePortsListIds',portListDropDown?.DischargePorts,'one',7,1)"
+            [clearSearchOnAdd]="true" [closeOnSelect]="false" labelForId="state" [multiple]="true"
+            placeholder="Select Discharge Port" clearAllText="Clear" formControlName="DischargePortsListIds"
+            [bindLabel]="'StatusName'">
+            <ng-template ng-header-tmp>
+              <button size="tiny" nbButton
+                (click)="selectNameAll('DischargePortsListIds',portListDropDown?.DischargePorts,'all',7,1)"
+                status="basic" class="btn btn-sm mr-2">Select all</button>
+              <button size="tiny" nbButton (click)="unselectAll('DischargePortsListIds')" status="basic"
+                class="btn btn-sm ">Unselect all</button>
+            </ng-template>
+            <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+              <div class="row">
+                <input id="item-{{index}}" class="mr-2" type="checkbox" [ngModel]="item$.selected"
+                  [ngModelOptions]="{standalone: true}" />
+                {{item['DischargePort']}}
+              </div>
+            </ng-template>
+            <ng-template ng-multi-label-tmp let-items="items">
+              <div class="ng-value" *ngFor="let item of items | slice:0:1">
+                {{item['DischargePort']}}
+              </div>
+              <div class="ng-value" *ngIf="items.length > 1">
+                <span class="ng-value-label">{{items.length - 1}} more...</span>
+              </div>
+            </ng-template>
+          </ng-select>
+        </div>
+        <div class="p-1" class="col p-0 px-1 my-1">
+          <ng-select (change)="selectNameAll('SHAVendorsListIds',portListDropDown?.ShaVendors,'one',7,1)"
+            [items]="portListDropDown?.ShaVendors" [clearSearchOnAdd]="true" [closeOnSelect]="false" labelForId="state"
+            [multiple]="true" placeholder="Select SHA Vendor Name" clearAllText="Clear"
+            formControlName="SHAVendorsListIds" [bindLabel]="'SHAVendor'">
+            <ng-template ng-header-tmp>
+              <button size="tiny" nbButton
+                (click)="selectNameAll('SHAVendorsListIds',portListDropDown?.ShaVendors,'all',7,1)" status="basic"
+                class="btn btn-sm mr-2">Select all</button>
+              <button size="tiny" nbButton (click)="unselectAll('SHAVendorsListIds')" status="basic"
+                class="btn btn-sm ">Unselect all</button>
+            </ng-template>
+            <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+              <div class="row">
+                <input id="item-{{index}}" class="mr-2" type="checkbox" [ngModel]="item$.selected"
+                  [ngModelOptions]="{standalone: true}" />
+                {{item['SHAVendor']}}
+              </div>
+            </ng-template>
+            <ng-template ng-multi-label-tmp let-items="items">
+              <div class="ng-value" *ngFor="let item of items | slice:0:1">
+                {{item['SHAVendor']}}
+              </div>
+              <div class="ng-value" *ngIf="items.length > 1">
+                <span class="ng-value-label">{{items.length - 1}} more...</span>
+              </div>
+            </ng-template>
+          </ng-select>
+        </div>
+        <!--  -->
+      </div>
+    </form>
+    <!-- </div> -->
+  </nb-card-header>
+</nb-card>
+
+
+<nb-card>
+  <nb-card-body id="barChart" style="height: 30vh">
+    <div class="row justify-content-between align-content-center">
+      <h6 class="my-3 col-9" style="font-weight: 600">
+        SHA {{ viewListTable === "amount" ? "($)" : "" }}
+      </h6>
+      <div class="my-3 col-3" style="font-weight: 600">
+        <nb-radio-group class="d-flex justify-content-end" [(ngModel)]="viewListTable">
+          <nb-radio *ngFor="let option of options" [value]="option.value">
+            {{ option.label }}
+          </nb-radio>
+        </nb-radio-group>
+        <!-- <nb-radio-group
+            class="d-flex justify-content-end"
+            [(ngModel)]="viewListTable"
+          >
+            <nb-radio *ngFor="let option of options" [value]="option.value">
+              {{ option.label }}
+            </nb-radio>
+          </nb-radio-group> -->
+      </div>
+    </div>
+    <ng-container *ngIf="viewListTable === 'amount'">
+    <chart type="bar" [data]="data" [options]="chartOptions"></chart> <br>
+    </ng-container>
+    <ng-container *ngIf="viewListTable !== 'amount'">
+
+      
+      <chart type="bar" [data]="countData" [options]="chartOptions"></chart> <br>
+      <!-- <chart type="bar" [data]="cargoData" [options]="chartOptions"></chart> -->
+      <!-- <ngx-chartjs-line></ngx-chartjs-line> -->
+    </ng-container>
+    </nb-card-body>
+  </nb-card>
+  
+<nb-card>
+  <nb-card-body class="mb-4">
+    <div class="row justify-content-between">
+      <div class="col-12">
+        <div class="row justify-content-between align-content-center">
+          <h6 class="my-3 col-6" style="font-weight: 600">
+            SHA Analysis ({{ viewListTable === "amount" ? "$" : "%" }})
+          </h6>
+          <div class="my-3 col-6" style="font-weight: 600">
+            <!-- <nb-radio-group class="d-flex justify-content-end" [(ngModel)]="viewListTable">
+                <nb-radio *ngFor="let option of options" [value]="option.value">
+                  {{ option.label }}
+                </nb-radio>
+              </nb-radio-group> -->
+          </div>
+        </div>
+        <div class="row justify-content-between align-content-center">
+          <div class=" col-lg-6 col-md-12 mt-md-3">
+            <p-table #dt1 [value]="SHAAnalysis?.SHAAnalysis" dataKey="id" class="p-datatable p-component p-datatable-sm"
+              [showCurrentPageReport]="true"
+              currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+              [globalFilterFields]="['CargoName']" [tableStyle]="{ 'min-width': '10rem' }" [columns]="cols">
+              <ng-template pTemplate="header" let-columns>
+                <tr>
+                  <th class="text-center">
+                    Grand Total
+                    <!-- <p-sortIcon field="ActualSum"></p-sortIcon> -->
+                  </th>
+                  <th class="text-center">
+                    {{SHAAnalysis?.GrandTotalSumOfActuals}}
+                    <!-- <p-sortIcon field="Difference"></p-sortIcon> -->
+                  </th>
+                <tr>
+                  <th class="text-center" pSortableColumn="ActualSum">
+                    Cargo To Load
+                    <!-- <p-sortIcon field="ActualSum"></p-sortIcon> -->
+                  </th>
+                  <th class="text-center" pSortableColumn="Difference">
+                    Sum Of SHA Actual
+                    <!-- <p-sortIcon field="Difference"></p-sortIcon> -->
+                  </th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-product>
+                <tr [pEditableRow]="product">
+                  <td>
+                    <div [ngClass]="checkListRecord === false ? 'd-none' : ''">
+                      {{ product?.CargotoLoad }}
+                    </div>
+                    <ngx-skeleton-loader [ngClass]="checkListRecord === true ? 'd-none' : ''" count="1"
+                      appearance="line" animation="pulse">
+                    </ngx-skeleton-loader>
+                  </td>
+                  <td>
+                    <div [ngClass]="checkListRecord === false ? 'd-none' : ''">
+                      {{ product?.SumOfSHAActual }}
+                    </div>
+                    <ngx-skeleton-loader [ngClass]="checkListRecord === true ? 'd-none' : ''" count="1"
+                      appearance="line" animation="pulse">
+                    </ngx-skeleton-loader>
+                  </td>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="emptymessage">
+                <tr>
+                  <td colspan="7">{{ emptymessage }}</td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </div>
+          <div class=" col-lg-6 col-md-12 mt-md-3" >
+            <p-table #dt1 [value]="SHAAnalysis?.SHAAnalysis" dataKey="id" class="p-datatable p-component p-datatable-sm"
+              [showCurrentPageReport]="true"
+              currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+              [globalFilterFields]="['CargoName']" [tableStyle]="{ 'min-width': '10rem' }" [columns]="cols">
+              <ng-template pTemplate="header" let-columns>
+                <tr>
+                  <th class="text-center">
+                    Grand Total
+                    <!-- <p-sortIcon field="ActualSum"></p-sortIcon> -->
+                  </th>
+                  <th class="text-center">
+                    {{SHAAnalysis?.GrandTotalSumOfActuals}}
+                    <!-- <p-sortIcon field="Difference"></p-sortIcon> -->
+                  </th>
+                <tr>
+                  <th class="text-center" pSortableColumn="ActualSum">
+                    Cargo To Load
+                    <!-- <p-sortIcon field="ActualSum"></p-sortIcon> -->
+                  </th>
+                  <th class="text-center" pSortableColumn="Difference">
+                    Count Of SHA Actual
+                    <!-- <p-sortIcon field="Difference"></p-sortIcon> -->
+                  </th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-product>
+                <tr [pEditableRow]="product">
+                  <td>
+                    <div [ngClass]="checkListRecord === false ? 'd-none' : ''">
+                      {{ product?.CargotoLoad }}
+                    </div>
+                    <ngx-skeleton-loader [ngClass]="checkListRecord === true ? 'd-none' : ''" count="1"
+                      appearance="line" animation="pulse">
+                    </ngx-skeleton-loader>
+                  </td>
+                  <td>
+                    <div [ngClass]="checkListRecord === false ? 'd-none' : ''">
+                      {{ product?.CountOfCargotoLoad }}
+                    </div>
+                    <ngx-skeleton-loader [ngClass]="checkListRecord === true ? 'd-none' : ''" count="1"
+                      appearance="line" animation="pulse">
+                    </ngx-skeleton-loader>
+                  </td>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="emptymessage">
+                <tr>
+                  <td colspan="7">{{ emptymessage }}</td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>

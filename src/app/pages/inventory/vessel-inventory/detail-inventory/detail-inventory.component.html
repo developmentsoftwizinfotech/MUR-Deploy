@@ -1,0 +1,178 @@
+<nb-card class="px-4 py-2">
+  <nb-card-header class="row align-items-center justify-content-between">
+    <div>
+      <h5>{{requisitionData[0].VesselName}} Inventory Details</h5>
+    </div>
+    <div>
+      <div>
+        <button nbButton (click)="close()">
+          Back
+        </button>
+      </div>
+    </div>
+  </nb-card-header>
+  <!-- <nb-card-header> -->
+  <div class="row align-items-end justify-content-between">
+    <!-- <h4 class="col-12 pt-5  py-3 text-center" style="font-weight: 600;">Equipment Details</h4> -->
+    <div class="col-12 mt-4 mb-4">
+      <div class="card">
+        <p-table [tableStyle]="{ width: '100%' }" [value]="requisitionData" dataKey="EquipmentCategoryName">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Equipment</th>
+              <th>Consumtion Type</th>
+              <th>Units</th>
+              <th>Min order Qty</th>
+              <th>Last ROB (as per Ship)</th>
+              <th>Ship ROB update date</th>
+              <th>ROB</th>
+
+              <!-- <th>
+                Maker
+              
+              </th>
+              <th>Date Received</th> -->
+
+              <!-- <th>Port Supplied</th> -->
+              <th>Cost Per Unit</th>
+              <!-- <th>Date of Expiry</th> -->
+
+              <th>Total Cost <br> (ROB * Per Unit)</th>
+              <th style="width: 25%;">Consumption Log</th>
+              <!-- <th>Total Price (USD)</th> -->
+              <!-- <th>Vendor Maker</th> -->
+              <!-- <th *ngIf="modeByRequisition==='RequisitionView'">Vendor Remarks</th>
+                <th *ngIf="modeByRequisition!=='RequisitionView'">Remarks</th> -->
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-rowData let-expanded="expanded">
+            <tr class="data-table">
+              <td colspan="13" style="font-weight: 600">
+                {{ rowData.EquipmentCategoryName }}
+              </td>
+            </tr>
+            <tr *ngFor="let data of rowData.EquipmentListForItem">
+              <td>
+                {{ data.EquipmentName}}
+              </td>
+              <td>
+                {{ data.ConsumptionType }}
+              </td>
+              <td>
+                {{ data.UnitName }}
+              </td>
+              <td>
+                {{ data.MinimumOrderQty }}
+               
+              </td>
+              <td>
+                {{ data.DesktopROB }}
+               
+              </td>
+              <td>
+                {{ data.LastImportedDate==='0001-01-01T00:00:00'?'NA': data.LastImportedDate | date : "dd-MMM-yyyy" }}
+              </td>
+              <td>
+                {{ data.ROB }}
+              </td>
+              <!-- <td>
+                {{ data.MakerName }}
+              </td> -->
+              <!-- <td [pEditableColumn]="data.MinOrderQty" pEditableColumnField="MinOrderQty">
+                              <p-cellEditor>
+                                  <ng-template pTemplate="input">
+                                      <input nbInput type="text" fullWidth [(ngModel)]="data.MinOrderQty"  (blur)="onMinOrderQtyChange(data)"/>
+                                  </ng-template>
+                                  <ng-template pTemplate="output">
+                                      {{ data.MinOrderQty}}
+                                  </ng-template>
+                              </p-cellEditor>
+                          </td> -->
+              <!-- <td [pEditableColumn]="data.RequisitionRemarks" pEditableColumnField="RequisitionRemarks"
+                 >
+
+                  <ng-container > {{ data.RequisitionRemarks}}</ng-container>
+                </td> -->
+              <!-- <td [pEditableColumn]="data.DateSupplied" pEditableColumnField="DateSupplied">
+                {{ data.DateOfReceived | date :'dd-MMM-yyyy'}}
+              </td> -->
+
+              <!-- <td
+                [pEditableColumn]="data.PortSupplied"
+                pEditableColumnField="PortSupplied"
+              >
+                <ng-container> {{ data.PortSupplied }}</ng-container>
+              </td> -->
+              <td [pEditableColumn]="data.CostPerUnit" pEditableColumnField="PricePerUnit">
+                <ng-container>{{ data.CostPerUnit | currency:'USD':'symbol':'1.2-2' }}</ng-container>
+
+              </td>
+              <!-- <td [pEditableColumn]="data.Subtotal" pEditableColumnField="Subtotal">
+                              <p-cellEditor>
+                                  <ng-template pTemplate="input">
+                                      <input nbInput type="text" fullWidth  [(ngModel)]="data.Subtotal" (ngModelChange)="onSubChange()"   (blur)="onMinOrderQtyChange(data)"/>
+                                  </ng-template>
+                                  <ng-template pTemplate="output">
+                                     {{ data.Subtotal}}
+                                  </ng-template>
+                              </p-cellEditor>
+                          </td> -->
+              <!-- <td>
+                {{ data.DateOfExpiry | date :'dd-MMM-yyyy'}}
+              </td> -->
+
+
+             
+              <td>
+                USD {{ (data?.ROB * data?.CostPerUnit) | currency:'USD':'symbol':'1.2-2' }}
+
+              </td>
+
+              <td>
+                <div class="d-flex justify-content-center" style="border-width: 0px 0px 0px 0px !important;">
+                  <button pButton pRipple nbTooltip="View" nbTooltipPlacement="top" class=" p-button-primary   mr-2"
+                    (click)="viewSupplyLog(data.EquipmentId,data.IMONumber,product)"> Supply Log </button>
+                  <button pButton pRipple nbTooltip="View" nbTooltipPlacement="top" class=" p-button-primary   mr-2"
+                    (click)="viewConsumptionLog(data.EquipmentId,product)"> Consumption Log </button>
+
+                </div>
+                <!-- <ngx-skeleton-loader [ngClass]="checkListRecord===true ? 'd-none' : ''" count="1" appearance="line"
+                    animation="pulse">
+                </ngx-skeleton-loader> -->
+              </td>
+
+              <!-- <td [pEditableColumn]="data.Total" pEditableColumnField="Total">
+                              <p-cellEditor>
+                                  <ng-template pTemplate="input">
+                                      <input nbInput type="text" fullWidth [(ngModel)]="data.Total"  (blur)="onMinOrderQtyChange(data)"/>
+                                  </ng-template>
+                                  <ng-template pTemplate="output">
+                                      {{ data.Tax*data.Subtotal/100}}
+                                  </ng-template>
+                              </p-cellEditor>
+                          </td> -->
+              <!-- <td>
+                  {{ +data.Total}}
+                </td> -->
+              <!-- <td [pEditableColumn]="data.VendorMaker" pEditableColumnField="VendorMaker"
+                 >
+
+                  <ng-container > {{ data.VendorMaker}}</ng-container>
+                </td>
+                <td [pEditableColumn]="data.Remarks" pEditableColumnField="Remarks"
+                 >
+
+                  <ng-container > {{ data.Remarks}}</ng-container>
+                </td> -->
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+  </div>
+
+  <!-- <div>
+          <button nbButton (click)="addRequisition()">Add Requisition</button>
+      </div> -->
+  <!-- </nb-card-header> -->
+</nb-card>

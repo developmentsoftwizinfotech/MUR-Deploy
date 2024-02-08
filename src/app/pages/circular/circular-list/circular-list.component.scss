@@ -1,0 +1,19 @@
+// :host ::ng-deep .p-tabview .p-tabview-nav {
+//     display: none;
+//   }
+  
+//   :host ::ng-deep .p-tabview .p-tabview-panels {
+//     padding: 0;
+//     border: none;
+  
+//   }
+
+  ::ng-deep .fixed-dropdown-size {
+    .ng-select-container {
+        width: 200px !important; // Set your desired fixed width here
+    }
+}
+
+.table-row {
+  background-color: #ffffff; /* Change this color to your original color */
+}

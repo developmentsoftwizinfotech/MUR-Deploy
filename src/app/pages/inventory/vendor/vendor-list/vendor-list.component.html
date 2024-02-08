@@ -1,0 +1,123 @@
+<nb-card class="px-2">
+    <nb-card-header class="row align-items-center justify-content-between">
+        <div>
+            <h5>Vendor Management</h5>
+        </div>
+        <div class="d-flex justify-content-between">
+
+        </div>
+        <div>
+            <button nbButton (click)="openWithoutBackdrop()">Add Vendor</button>
+        </div>
+    </nb-card-header>
+
+</nb-card>
+<p-toast></p-toast>
+
+
+
+<nb-card>
+    <nb-card-body>
+        <div class="row  p-3 justify-content-end align-items-center">
+          
+          <div class="col-3 p-0 text-right"><input fullWidth type="text" (keyup)="filterBy($event)" placeholder="Search By Vendor Name" nbInput
+              [(ngModel)]="filterTableValue" /></div>
+        </div>
+    <p-table #dt1 [value]="vendor" dataKey="id" [rows]="5" [showCurrentPageReport]="true"
+       
+       
+        [tableStyle]="{ 'min-width': '50rem' }" [columns]="cols"
+        [showCurrentPageReport]="true">
+       
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th pSortableColumn="VendorName">
+                    Vendor Name<p-sortIcon field="VendorName"></p-sortIcon>
+                </th>
+                <th pSortableColumn="CountryName">
+                    Vendor Country<p-sortIcon field="CountryName"></p-sortIcon>
+                </th>
+                <th pSortableColumn="VendorPrimaryEmail">
+                    Vendor Primary Email<p-sortIcon field="VendorPrimaryEmail"></p-sortIcon>
+                </th>
+                <th pSortableColumn="VendorPIC">
+                    Vendor PIC<p-sortIcon field="VendorPIC"></p-sortIcon>
+                </th>
+                <th style="width:10%">Action</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex" let-product
+            let-editing="editing">
+            <tr [pReorderableRow]="index" [pEditableRow]="product">
+                <td>
+                    <div [ngClass]="checkListRecord===false ? 'd-none' : ''">
+                        {{ rowData.VendorName }}
+                    </div>
+                    <ngx-skeleton-loader [ngClass]="checkListRecord===true ? 'd-none' : ''" count="1" appearance="line"
+                        animation="pulse">
+                    </ngx-skeleton-loader>
+
+                </td>
+                <td>
+
+                    <div [ngClass]="checkListRecord===false ? 'd-none' : ''">
+                        {{ rowData.CountryName }}
+                    </div>
+                    <ngx-skeleton-loader [ngClass]="checkListRecord===true ? 'd-none' : ''" count="1" appearance="line"
+                        animation="pulse">
+                    </ngx-skeleton-loader>
+                </td>
+                <td>
+
+                    <div [ngClass]="checkListRecord===false ? 'd-none' : ''">
+                        {{ rowData.VendorPrimaryEmail }}
+                    </div>
+                    <ngx-skeleton-loader [ngClass]="checkListRecord===true ? 'd-none' : ''" count="1" appearance="line"
+                        animation="pulse">
+                    </ngx-skeleton-loader>
+                </td>
+                <td>
+                    <div [ngClass]="checkListRecord===false ? 'd-none' : ''">
+                        {{ rowData.VendorPIC }}
+                    </div>
+                    <ngx-skeleton-loader [ngClass]="checkListRecord===true ? 'd-none' : ''" count="1" appearance="line"
+                        animation="pulse">
+                    </ngx-skeleton-loader>
+
+                </td>
+
+
+                <td>
+                    <div [ngClass]="checkListRecord===false ? 'd-none' : 'd-flex border-none'" class=""
+                        style="border-width: 0px 0px 0px 0px !important;">
+                        <button pButton pRipple icon="pi pi-eye" nbTooltip="View" nbTooltipPlacement="top"
+                            class=" p-button-primary  mr-2" (click)="viewLog(product)"></button>
+                        <button pButton pRipple icon="pi pi-pencil" nbTooltip="Edit" nbTooltipPlacement="top"
+                            class=" p-button-primary  mr-2" (click)="editDetials(product)"></button>
+                        <button pButton nbTooltip="Delete" nbTooltipPlacement="top" pRipple icon="pi pi-trash"
+                            class=" p-button-primary" (click)="deleteDetails(product)"></button>
+                    </div>
+                    <ngx-skeleton-loader [ngClass]="checkListRecord===true ? 'd-none' : ''" count="1" appearance="line"
+                        animation="pulse">
+                    </ngx-skeleton-loader>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="7">{{emptymessage}}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+    <div class="row align-items-center justify-content-center ">
+        <span style="color: --card-text-color; font-family: Poppins, sans-serif; font-weight: normal; font-size: 0.8125rem;">Showing {{firstCount}} to {{nextCount}} of {{totalCount}} entries</span>
+        <p-paginator   [rows]="selectedRows"  [totalRecords]="totalCount" (onPageChange)="paginate($event)"></p-paginator>
+        <nb-select placeholder="" (selectedChange)="getChangeRows($event)" [(selected)]="selectedRows">
+          <nb-option  value="25">25</nb-option>
+          <nb-option value="50">50</nb-option>
+          <nb-option value="100">100</nb-option>
+        </nb-select>
+      </div>
+    </nb-card-body>
+
+</nb-card>

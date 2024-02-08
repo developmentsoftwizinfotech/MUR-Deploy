@@ -1,0 +1,573 @@
+<nb-card class="px-3 mb-0 border-bottom-0 container">
+  <!-- <div>
+    <nb-card-header class="row  align-items-center justify-content-between">
+      <div>
+        <h5> Voyage Details</h5>
+      </div>
+      <div>
+        <button pButton pRipple icon="pi pi-times" nbTooltip="close" nbTooltipPlacement="bottom"
+          class="surface-200 mr-2" (click)="close()"></button>
+      </div>
+    </nb-card-header>
+    <nb-card-body class="example-items-rows container">
+      <div class="row justify-content-between align-items-center">
+
+
+
+        <div class="col-4">
+          <label><strong>Vessel Name</strong></label>
+          <p>{{selectedItem.VesselName}}</p>
+
+        </div>
+        <div class="col-4">
+          <label><strong>LTC/MUR Name</strong></label>
+          <p>{{ selectedItem.LTCMURName }}</p>
+
+        </div>
+        <div class="col-4">
+          <label><strong>Owner Name</strong></label>
+          <p>{{ selectedItem.OwnerName }}</p>
+        </div>
+        <div class="col-4">
+          <label><strong>Trade Area Name</strong></label>
+          <p>{{ selectedItem.TradeAreaName }}</p>
+        </div>
+        <div class="col-4">
+          <label><strong>Vayage Number </strong></label>
+          <p>{{ selectedItem.VayageNo }}</p>
+        </div>
+        <div class="col-4">
+          <label><strong>Voyage Commence Date</strong></label>
+          <p>{{selectedItem.VoyageCommenceDate | date:'dd/MM/yyyy'}}</p>
+
+        </div>
+        <div class="col-4">
+          <label><strong>Vessel Voyage Completed Date</strong></label>
+          <p>{{selectedItem.VesselVoyageCompletedDate | date:'dd/MM/yyyy'}}</p>
+
+        </div>
+        <div class="col-4">
+          <label><strong>Vessen Entry Date</strong></label>
+          <p>{{selectedItem.VesselVoyageCompletingDate | date:'dd/MM/yyyy'}}</p>
+
+        </div>
+     
+       
+        <div class="col-4">
+          <label><strong>Fixture</strong></label>
+          <p>{{selectedItem.Fixture}}</p>
+
+        </div>
+        <div class="col-4">
+          <label><strong>Opr</strong></label>
+          <p>{{selectedItem.OprTypeName}}</p>
+
+        </div>
+        <div class="col-4">
+          <label><strong>Load To Port Name</strong></label>
+          <p>{{selectedItem.LoadToPortName}}</p>
+
+        </div>
+        <div class="col-4">
+          <label><strong>Discharge Port Name</strong></label>
+          <p>{{selectedItem.DischargePortName}}</p>
+
+        </div>
+        <div class="col-4">
+          <label><strong>Cargo To Load Name</strong></label>
+          <p>{{selectedItem.CargoToLoadName}}</p>
+
+        </div>
+        <div class="col-4">
+          <label><strong>Previous Cargo Name</strong></label>
+          <p>{{selectedItem.PreviousCargoName}}</p>
+
+        </div>
+        <div class="col-4">
+          <label><strong>Hold Pass Name</strong></label>
+          <p>{{selectedItem.HoldPassName}}</p>
+
+        </div>
+        <div class="col-4">
+          <label><strong>TCC Budget USD</strong></label>
+          <p>{{selectedItem.TCCBudgetUSD}}</p>
+
+        </div>
+        <div class="col-4">
+          <label><strong>TCC Actual</strong></label>
+          <p>{{selectedItem.TCCActual}}</p>
+
+        </div>
+        <div class="col-4">
+          <label><strong>TCC Difference</strong></label>
+          <p>{{selectedItem.TCCBudgetUSD- selectedItem.TCCActual}}</p>
+
+        </div>
+
+        <div class="col-4">
+          <label><strong>ITD Status</strong></label>
+          <p>{{selectedItem.PlanStatusName}}</p>
+
+        </div>
+
+        <div class="col-4">
+          <label><strong>ITD Budget</strong></label>
+          <p>{{selectedItem.ITDBudget}}</p>
+
+        </div>
+        <div class="col-4">
+          <label><strong>ITD Actual</strong></label>
+          <p>{{selectedItem.ITDActual}}</p>
+
+        </div>
+        <div class="col-4">
+          <label><strong>ITD Difference</strong></label>
+          <p>{{selectedItem.ITDBudget - selectedItem.ITDActual}}</p>
+
+        </div>
+
+
+        <div class="col-4">
+          <label><strong>ITC Budget </strong></label>
+          <p>{{selectedItem.ITCBudget}}</p>
+
+        </div>
+        <div class="col-4">
+          <label><strong>ITC Actual</strong></label>
+          <p>{{selectedItem.ITCActual}}</p>
+
+        </div>
+        <div class="col-4">
+          <label><strong>ITC Difference</strong></label>
+          <p>{{selectedItem.ITCBudget- selectedItem.ITCActual}}</p>
+
+        </div>
+
+        <div class="col-4">
+          <label><strong>ITB Budget </strong></label>
+          <p>{{selectedItem.ITBBudget}}</p>
+
+        </div>
+        <div class="col-4">
+          <label><strong>ITB Actual</strong></label>
+          <p>{{selectedItem.ITBActual}}</p>
+
+        </div>
+        <div class="col-4">
+          <label><strong>ITB Difference</strong></label>
+          <p>{{selectedItem.ITBBudget- selectedItem.ITBActual}}</p>
+
+        </div>
+
+        <div class="col-4">
+          <label><strong>HCB Budget </strong></label>
+          <p>{{selectedItem.HCBBudget}}</p>
+
+        </div>
+        <div class="col-4">
+          <label><strong>HCB Actual</strong></label>
+          <p>{{selectedItem.HCBActual}}</p>
+
+        </div>
+        <div class="col-4">
+          <label><strong>HCB Difference</strong></label>
+          <p>{{selectedItem.HCBBudget- selectedItem.HCBActual}}</p>
+
+        </div>
+
+
+        <div class="col-4">
+          <label><strong>SCG Status</strong></label>
+          <p>{{selectedItem.PlanStatusName}}</p>
+
+        </div>
+
+        <div class="col-4">
+          <label><strong>SCG Budget</strong></label>
+          <p>{{selectedItem.SCGBudget}}</p>
+
+        </div>
+        <div class="col-4">
+          <label><strong>SCG Actual</strong></label>
+          <p>{{selectedItem.SCGActual}}</p>
+
+        </div>
+        <div class="col-4">
+          <label><strong>SCG Difference</strong></label>
+          <p>{{selectedItem.SCGBudget - selectedItem.SCGActual}}</p>
+
+        </div>
+
+        <div class="col-4">
+          <label><strong>SHA Budget </strong></label>
+          <p>{{selectedItem.SHABudget}}</p>
+
+        </div>
+        <div class="col-4">
+          <label><strong>SHA Actual</strong></label>
+          <p>{{selectedItem.SHAActual}}</p>
+
+        </div>
+        <div class="col-4">
+          <label><strong>SHA Difference</strong></label>
+          <p>{{selectedItem.SHABudget- selectedItem.SHAActual}}</p>
+
+        </div>
+
+        <div class="col-4">
+          <label><strong>HCE Budget </strong></label>
+          <p>{{selectedItem.HCEBudget}}</p>
+
+        </div>
+        <div class="col-4">
+          <label><strong>HCE Actual</strong></label>
+          <p>{{selectedItem.HCEActual}}</p>
+
+        </div>
+        <div class="col-4">
+          <label><strong>HCE Difference</strong></label>
+          <p>{{selectedItem.HCEBudget- selectedItem.HCEActual}}</p>
+
+        </div>
+
+        <div class="col-4">
+          <label><strong>HCC Budget </strong></label>
+          <p>{{selectedItem.HCCBudget}}</p>
+
+        </div>
+        <div class="col-4">
+          <label><strong>HCC Actual</strong></label>
+          <p>{{selectedItem.HCCActual}}</p>
+
+        </div>
+        <div class="col-4">
+          <label><strong>HCC Difference</strong></label>
+          <p>{{selectedItem.HCCBudget- selectedItem.HCCActual}}</p>
+
+        </div>
+
+        <div class="col-4">
+          <label><strong>HCX Budget </strong></label>
+          <p>{{selectedItem.HCXBudget}}</p>
+
+        </div>
+        <div class="col-4">
+          <label><strong>HCX Actual</strong></label>
+          <p>{{selectedItem.HCXActual}}</p>
+
+        </div>
+        <div class="col-4">
+          <label><strong>HCX Difference</strong></label>
+          <p>{{selectedItem.HCXBudget- selectedItem.HCXActual}}</p>
+
+        </div>
+
+        <div class="col-6" *ngIf="selectedItem.Remark !== ''">
+          <label><strong>As per Capt Shailey mail -Budgeted details date</strong></label>
+          <p>{{selectedItem.BudgetedDetailsDate}}</p>
+
+        </div>
+        
+       
+        <div class="col-12" *ngIf="selectedItem.Remark !== ''">
+          <label><strong>Remarks</strong></label>
+          <p>{{selectedItem.Remark}}</p>
+
+        </div>
+        <div class="col-12" *ngIf="selectedItem.FinalRemarks !== ''">
+          <label><strong>Final Remarks</strong></label>
+          <p>{{selectedItem.FinalRemarks}}</p>
+
+        </div>
+      </div>
+    </nb-card-body>
+  </div>  -->
+
+
+
+   <!-- <div class="flex justify-content-center">
+    <button type="button" (click)="showDialog()" pButton icon="pi pi-external-link" label="View"></button>
+  </div> -->
+  <!-- <p-dialog header="Voyage Details" [resizable]="false" [modal]="true" [maximizable]="true" appendTo="body" [(visible)]="dialogVisible" [style]="{width: '75vw'}" [contentStyle]="{height: '300px'}">
+    <div class="row justify-content-between align-items-center">
+
+
+
+      <div class="col-4">
+        <label><strong>Vessel Name</strong></label>
+        <p>{{selectedItem.VesselName}}</p>
+
+      </div>
+      <div class="col-4">
+        <label><strong>LTC/MUR Name</strong></label>
+        <p>{{ selectedItem.LTCMURName }}</p>
+
+      </div>
+      <div class="col-4">
+        <label><strong>Owner Name</strong></label>
+        <p>{{ selectedItem.OwnerName }}</p>
+      </div>
+      <div class="col-4">
+        <label><strong>Trade Area Name</strong></label>
+        <p>{{ selectedItem.TradeAreaName }}</p>
+      </div>
+      <div class="col-4">
+        <label><strong>Vayage Number </strong></label>
+        <p>{{ selectedItem.VayageNo }}</p>
+      </div>
+      <div class="col-4">
+        <label><strong>Voyage Commence Date</strong></label>
+        <p>{{selectedItem.VoyageCommenceDate | date:'dd/MM/yyyy'}}</p>
+
+      </div>
+      <div class="col-4">
+        <label><strong>Vessel Voyage Completed Date</strong></label>
+        <p>{{selectedItem.VesselVoyageCompletedDate | date:'dd/MM/yyyy'}}</p>
+
+      </div>
+      <div class="col-4">
+        <label><strong>Vessen Entry Date</strong></label>
+        <p>{{selectedItem.VesselVoyageCompletingDate | date:'dd/MM/yyyy'}}</p>
+
+      </div>
+      <div class="col-4">
+        <label><strong>Status</strong></label>
+        <p>{{selectedItem.StatusName}}</p>
+
+      </div>
+      <div class="col-4">
+        <label><strong>Vessel Operator</strong></label>
+        <p>{{selectedItem.VesselOperatorName}}</p>
+
+      </div>
+      <div class="col-4">
+        <label><strong>Charterer Name</strong></label>
+        <p>{{selectedItem.ChartererName}}</p>
+
+      </div>
+      <div class="col-4">
+        <label><strong>Fixture</strong></label>
+        <p>{{selectedItem.Fixture}}</p>
+
+      </div>
+      <div class="col-4">
+        <label><strong>Opr</strong></label>
+        <p>{{selectedItem.OprTypeName}}</p>
+
+      </div>
+      <div class="col-4">
+        <label><strong>Load To Port Name</strong></label>
+        <p>{{selectedItem.LoadToPortName}}</p>
+
+      </div>
+      <div class="col-4">
+        <label><strong>Discharge Port Name</strong></label>
+        <p>{{selectedItem.DischargePortName}}</p>
+
+      </div>
+      <div class="col-4">
+        <label><strong>Cargo To Load Name</strong></label>
+        <p>{{selectedItem.CargoToLoadName}}</p>
+
+      </div>
+      <div class="col-4">
+        <label><strong>Previous Cargo Name</strong></label>
+        <p>{{selectedItem.PreviousCargoName}}</p>
+
+      </div>
+      <div class="col-4">
+        <label><strong>Hold Pass Name</strong></label>
+        <p>{{selectedItem.HoldPassName}}</p>
+
+      </div>
+      <div class="col-4">
+        <label><strong>TCC Budget USD</strong></label>
+        <p>{{selectedItem.TCCBudgetUSD}}</p>
+
+      </div>
+      <div class="col-4">
+        <label><strong>TCC Actual</strong></label>
+        <p>{{selectedItem.TCCActual}}</p>
+
+      </div>
+      <div class="col-4">
+        <label><strong>TCC Difference</strong></label>
+        <p>{{selectedItem.TCCBudgetUSD- selectedItem.TCCActual}}</p>
+
+      </div>
+
+      <div class="col-4">
+        <label><strong>ITD Status</strong></label>
+        <p>{{selectedItem.PlanStatusName}}</p>
+
+      </div>
+
+      <div class="col-4">
+        <label><strong>ITD Budget</strong></label>
+        <p>{{selectedItem.ITDBudget}}</p>
+
+      </div>
+      <div class="col-4">
+        <label><strong>ITD Actual</strong></label>
+        <p>{{selectedItem.ITDActual}}</p>
+
+      </div>
+      <div class="col-4">
+        <label><strong>ITD Difference</strong></label>
+        <p>{{selectedItem.ITDBudget - selectedItem.ITDActual}}</p>
+
+      </div>
+
+
+      <div class="col-4">
+        <label><strong>ITC Budget </strong></label>
+        <p>{{selectedItem.ITCBudget}}</p>
+
+      </div>
+      <div class="col-4">
+        <label><strong>ITC Actual</strong></label>
+        <p>{{selectedItem.ITCActual}}</p>
+
+      </div>
+      <div class="col-4">
+        <label><strong>ITC Difference</strong></label>
+        <p>{{selectedItem.ITCBudget- selectedItem.ITCActual}}</p>
+
+      </div>
+
+      <div class="col-4">
+        <label><strong>ITB Budget </strong></label>
+        <p>{{selectedItem.ITBBudget}}</p>
+
+      </div>
+      <div class="col-4">
+        <label><strong>ITB Actual</strong></label>
+        <p>{{selectedItem.ITBActual}}</p>
+
+      </div>
+      <div class="col-4">
+        <label><strong>ITB Difference</strong></label>
+        <p>{{selectedItem.ITBBudget- selectedItem.ITBActual}}</p>
+
+      </div>
+
+      <div class="col-4">
+        <label><strong>HCB Budget </strong></label>
+        <p>{{selectedItem.HCBBudget}}</p>
+
+      </div>
+      <div class="col-4">
+        <label><strong>HCB Actual</strong></label>
+        <p>{{selectedItem.HCBActual}}</p>
+
+      </div>
+      <div class="col-4">
+        <label><strong>HCB Difference</strong></label>
+        <p>{{selectedItem.HCBBudget- selectedItem.HCBActual}}</p>
+
+      </div>
+
+
+      <div class="col-4">
+        <label><strong>SCG Status</strong></label>
+        <p>{{selectedItem.PlanStatusName}}</p>
+
+      </div>
+
+      <div class="col-4">
+        <label><strong>SCG Budget</strong></label>
+        <p>{{selectedItem.SCGBudget}}</p>
+
+      </div>
+      <div class="col-4">
+        <label><strong>SCG Actual</strong></label>
+        <p>{{selectedItem.SCGActual}}</p>
+
+      </div>
+      <div class="col-4">
+        <label><strong>SCG Difference</strong></label>
+        <p>{{selectedItem.SCGBudget - selectedItem.SCGActual}}</p>
+
+      </div>
+
+      <div class="col-4">
+        <label><strong>SHA Budget </strong></label>
+        <p>{{selectedItem.SHABudget}}</p>
+
+      </div>
+      <div class="col-4">
+        <label><strong>SHA Actual</strong></label>
+        <p>{{selectedItem.SHAActual}}</p>
+
+      </div>
+      <div class="col-4">
+        <label><strong>SHA Difference</strong></label>
+        <p>{{selectedItem.SHABudget- selectedItem.SHAActual}}</p>
+
+      </div>
+
+      <div class="col-4">
+        <label><strong>HCE Budget </strong></label>
+        <p>{{selectedItem.HCEBudget}}</p>
+
+      </div>
+      <div class="col-4">
+        <label><strong>HCE Actual</strong></label>
+        <p>{{selectedItem.HCEActual}}</p>
+
+      </div>
+      <div class="col-4">
+        <label><strong>HCE Difference</strong></label>
+        <p>{{selectedItem.HCEBudget- selectedItem.HCEActual}}</p>
+
+      </div>
+
+      <div class="col-4">
+        <label><strong>HCC Budget </strong></label>
+        <p>{{selectedItem.HCCBudget}}</p>
+
+      </div>
+      <div class="col-4">
+        <label><strong>HCC Actual</strong></label>
+        <p>{{selectedItem.HCCActual}}</p>
+
+      </div>
+      <div class="col-4">
+        <label><strong>HCC Difference</strong></label>
+        <p>{{selectedItem.HCCBudget- selectedItem.HCCActual}}</p>
+
+      </div>
+
+      <div class="col-4">
+        <label><strong>HCX Budget </strong></label>
+        <p>{{selectedItem.HCXBudget}}</p>
+
+      </div>
+      <div class="col-4">
+        <label><strong>HCX Actual</strong></label>
+        <p>{{selectedItem.HCXActual}}</p>
+
+      </div>
+      <div class="col-4">
+        <label><strong>HCX Difference</strong></label>
+        <p>{{selectedItem.HCXBudget- selectedItem.HCXActual}}</p>
+
+      </div>
+
+      <div class="col-12" *ngIf="selectedItem.Remark !== ''">
+        <label><strong>Remarks</strong></label>
+        <p>{{selectedItem.Remark}}</p>
+
+      </div>
+      <div class="col-12" *ngIf="selectedItem.FinalRemarks !== ''">
+        <label><strong>Final Remarks</strong></label>
+        <p>{{selectedItem.FinalRemarks}}</p>
+
+      </div>
+    </div>
+    <ng-template pTemplate="footer">
+        <button type="button" pButton pRipple icon="pi pi-times" (click)="dialogVisible=false" label="Dismiss" class="p-button-text"></button>
+    </ng-template>
+  </p-dialog>  -->
+</nb-card>
+

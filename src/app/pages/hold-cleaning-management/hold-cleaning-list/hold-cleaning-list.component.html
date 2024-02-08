@@ -1,0 +1,469 @@
+<nb-card class="px-2">
+  <nb-card-header>
+    <div class="row align-items-center">
+      <div class="col-3">
+        <h5>Hold Cleaning Management</h5>
+      </div>
+
+      <div class="row col-9 align-items-center">
+        <div class="col-3">
+          <!-- <ng-select class="dropdown-top" class="fixed-dropdown-size"
+                    (change)="dt.filterGlobal($event, 'contains')" [appendTo]="'body'"  placeholder="VESSEL" fullWidth
+                    fieldSize="medium">
+                    <ng-option *ngFor="let option of vesselDropdown"
+                        [value]="option.VesselName">{{option.VesselName}}</ng-option>
+                </ng-select> -->
+          <!-- (keyup)="filterBy($event)" -->
+          <!-- (keyup)="getVesselList(1, 100, $event.target.value)" -->
+          <ng-select class="dropdown-top" (change)="dt.filterGlobal($event, 'contains')"
+            (keyup)="holdCleaningList(1, 100, $event.target.value)" [appendTo]="'body'" placeholder="VESSEL" fullWidth
+            fieldSize="medium">
+            <ng-option *ngFor="let option of vesselDropdown" [value]="option.VesselName">{{ option.VesselName
+              }}</ng-option>
+          </ng-select>
+        </div>
+
+        <div class="p-1">
+          <input nbInput (keydown)="clearDateRange($event)" placeholder="YOY. DATE RANGE" [nbDatepicker]="formpicker" />
+          <nb-rangepicker (rangeChange)="dateFilter($event)" #formpicker></nb-rangepicker>
+        </div>
+        <div class="col-3">
+          <ng-select class="dropdown-top" class="fixed-dropdown-size" (change)="dt.filterGlobal($event, 'contains')"
+            [appendTo]="'body'" placeholder="LOAD PORT" fullWidth fieldSize="medium">
+            <ng-option *ngFor="let option of port" [value]="option.PortName">{{
+              option.PortName
+              }}</ng-option>
+          </ng-select>
+        </div>
+        <div class="col-3">
+          <ng-select class="dropdown-top" class="fixed-dropdown-size" (change)="dt.filterGlobal($event, 'contains')"
+            [appendTo]="'body'" placeholder="CARGO" fullWidth fieldSize="medium">
+            <ng-option *ngFor="let option of cargo" [value]="option.CargoName">{{ option.CargoName }}</ng-option>
+          </ng-select>
+        </div>
+        <!-- <div class="p-1">
+                <ng-select class="dropdown-top" class="fixed-dropdown-size"
+                    (change)="dt.filterGlobal($event, 'contains')" [appendTo]="'body'" placeholder="STATUS" fullWidth
+                    fieldSize="medium">
+                    <ng-option *ngFor="let option of status"
+                        [value]="option.StatusName">{{option.StatusName}}</ng-option>
+                </ng-select>
+            </div> -->
+      </div>
+    </div>
+  </nb-card-header>
+
+  <div class="d-flex justify-content-between py-3">
+    <div>
+      <button nbButton [status]="activeIndex === 0 ? 'primary' : 'control'"
+        [ngClass]="activeIndex === 0 ? '' : 'button-table'" class="mr-2" (click)="changeVoyageList('ONGOING')" label="">
+        ONGOING
+      </button>
+      <button nbButton [status]="activeIndex === 1 ? 'primary' : 'control'"
+        [ngClass]="activeIndex === 1 ? '' : 'button-table'" (click)="changeVoyageList('Completed')" label="">
+        COMPLETED VOYAGES
+      </button>
+    </div>
+    <div>
+      <button type="button" pButton pRipple icon="pi pi-file" (click)="dt.exportCSV()" class="mr-2" nbTooltip="CSV"
+        nbTooltipPlacement="top"></button>
+      <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()"
+        class="p-button-success mr-2" nbTooltip="XLS" nbTooltipPlacement="top"></button>
+    </div>
+  </div>
+</nb-card>
+
+<nb-card>
+  <p-table #dt [value]="holdCleaningVoyage" dataKey="id" [rows]="10" [showCurrentPageReport]="true"
+    [paginator]="checkListRecord === true ? true : false"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [globalFilterFields]="[
+      'LoadToPort',
+      'CargoToLoad',
+      'VesselName',
+      'VoyageCommenceDate'
+    ]" [tableStyle]="{ 'min-width': '50rem' }" [columns]="cols">
+    <ng-template pTemplate="caption">
+      <div class="d-flex">
+        <span class="ml-auto">
+          <input nbInput type="text" (input)="dt1.filterGlobal($event.target.value, 'contains')"
+            placeholder="Search keyword" />
+        </span>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th pSortableColumn="VesselName">
+          Vessel <p-sortIcon field="VesselName"></p-sortIcon>
+        </th>
+        <th pSortableColumn="VoyageCommenceDate">
+          Cleaning Started Date<p-sortIcon field="VoyageCommenceDate"></p-sortIcon>
+        </th>
+        <th pSortableColumn="VesselVoyageCompletingDate">
+          Expected Completed Date<p-sortIcon field="VesselVoyageCompletingDate"></p-sortIcon>
+        </th>
+        <th pSortableColumn="LoadToPort">
+          Load Port<p-sortIcon field="LoadToPort"></p-sortIcon>
+        </th>
+        <th pSortableColumn="CargoToLoad">
+          Cargo To Load<p-sortIcon field="CargoToLoad"></p-sortIcon>
+        </th>
+        <th pSortableColumn="PreviousCargo">
+          Previous Load<p-sortIcon field="PreviousCargo"></p-sortIcon>
+        </th>
+
+        <th style="width: 10%">Action</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex" let-product
+      let-editing="editing">
+      <tr [pReorderableRow]="index" [pEditableRow]="product">
+        <td>
+          <div [ngClass]="checkListRecord === false ? 'd-none' : ''">
+            {{ rowData.VesselName }}
+          </div>
+          <ngx-skeleton-loader [ngClass]="checkListRecord === true ? 'd-none' : ''" count="1" appearance="line"
+            animation="pulse">
+          </ngx-skeleton-loader>
+        </td>
+        <td>
+          <div [ngClass]="checkListRecord === false ? 'd-none' : ''">
+            {{ rowData.VoyageCommenceDate | date : "dd-MMM-yyyy" }}
+          </div>
+          <ngx-skeleton-loader [ngClass]="checkListRecord === true ? 'd-none' : ''" count="1" appearance="line"
+            animation="pulse">
+          </ngx-skeleton-loader>
+        </td>
+        <td>
+          <div [ngClass]="checkListRecord === false ? 'd-none' : ''">
+            {{ rowData.VesselVoyageCompletingDate | date : "dd-MMM-yyyy" }}
+          </div>
+          <ngx-skeleton-loader [ngClass]="checkListRecord === true ? 'd-none' : ''" count="1" appearance="line"
+            animation="pulse">
+          </ngx-skeleton-loader>
+        </td>
+        <td>
+          <div [ngClass]="checkListRecord === false ? 'd-none' : ''">
+            {{ rowData.LoadToPort }}
+          </div>
+          <ngx-skeleton-loader [ngClass]="checkListRecord === true ? 'd-none' : ''" count="1" appearance="line"
+            animation="pulse">
+          </ngx-skeleton-loader>
+        </td>
+        <td>
+          <div [ngClass]="checkListRecord === false ? 'd-none' : ''">
+            {{ rowData.CargoToLoad }}
+          </div>
+          <ngx-skeleton-loader [ngClass]="checkListRecord === true ? 'd-none' : ''" count="1" appearance="line"
+            animation="pulse">
+          </ngx-skeleton-loader>
+        </td>
+        <td>
+          <div [ngClass]="checkListRecord === false ? 'd-none' : ''">
+            {{ rowData.PreviousCargo }}
+          </div>
+          <ngx-skeleton-loader [ngClass]="checkListRecord === true ? 'd-none' : ''" count="1" appearance="line"
+            animation="pulse">
+          </ngx-skeleton-loader>
+        </td>
+        <!-- <td>
+                  <div [ngClass]="checkListRecord===false ? 'd-none' : ''">
+                      <button nbButton outline status="primary" (click)="moveArchived(product)"><nb-icon
+                              [icon]="rowData.IsArchived ? 'arrow-back-outline' : 'arrow-forward-outline'"></nb-icon>{{messageArchived}}</button>
+                  </div>
+                  <ngx-skeleton-loader [ngClass]="checkListRecord===true ? 'd-none' : ''" count="1" appearance="line"
+                      animation="pulse">
+                  </ngx-skeleton-loader>
+              </td> -->
+        <td>
+          <div [ngClass]="
+              checkListRecord === false ? 'd-none' : 'd-flex border-none'
+            " class="" style="border-width: 0px 0px 0px 0px !important">
+            <button pButton pRipple icon="pi pi-eye" nbTooltip="View" nbTooltipPlacement="top"
+              class="p-button-primary mr-2" (click)="viewLog(product.VoyageId)"></button>
+          </div>
+          <ngx-skeleton-loader [ngClass]="checkListRecord === true ? 'd-none' : ''" count="1" appearance="line"
+            animation="pulse">
+          </ngx-skeleton-loader>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="7">{{ emptymessage }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</nb-card>
+<p-toast></p-toast>
+
+<p-dialog header="Voyage Details" [resizable]="false" [modal]="true" [maximizable]="true" appendTo="body"
+  [(visible)]="dialogVisible" [style]="{ width: '75vw' }" [contentStyle]="{ height: '300px' }">
+  <div class="row justify-content-between align-items-center">
+    <div class="col-4">
+      <label><strong>Vessel Name</strong></label>
+      <p *ngIf="selectedItem">{{ selectedItem.VesselName }}</p>
+    </div>
+    <div class="col-4">
+      <label><strong>LTC/MUR Name</strong></label>
+      <p *ngIf="selectedItem">{{ selectedItem.LTCMURName }}</p>
+    </div>
+    <div class="col-4">
+      <label><strong>Owner Name</strong></label>
+      <p *ngIf="selectedItem">{{ selectedItem.OwnerName }}</p>
+    </div>
+    <div class="col-4">
+      <label><strong>Trade Area Name</strong></label>
+      <p *ngIf="selectedItem">{{ selectedItem.TradeAreaName }}</p>
+    </div>
+    <div class="col-4">
+      <label><strong>Voyage Number </strong></label>
+      <p *ngIf="selectedItem">{{ selectedItem.VayageNo }}</p>
+    </div>
+    <div class="col-4">
+      <label><strong>Voyage Commence Date</strong></label>
+      <p *ngIf="selectedItem">
+        {{ selectedItem.VoyageCommenceDate | date : "dd/MM/yyyy" }}
+      </p>
+    </div>
+    <div class="col-4">
+      <label><strong>Vessel Voyage Completed Date</strong></label>
+      <p *ngIf="selectedItem">
+        {{ selectedItem.VesselVoyageCompletedDate | date : "dd/MM/yyyy" }}
+      </p>
+    </div>
+    <div class="col-4">
+      <label><strong>Veson Entry Date</strong></label>
+      <p *ngIf="selectedItem">
+        {{ selectedItem.VesselVoyageCompletingDate | date : "dd/MM/yyyy" }}
+      </p>
+    </div>
+
+    <div class="col-4">
+      <label><strong>Fixture</strong></label>
+      <p *ngIf="selectedItem">{{ selectedItem.Fixture }}</p>
+    </div>
+    <div class="col-4">
+      <label><strong>Opr</strong></label>
+      <p *ngIf="selectedItem">{{ selectedItem.OprTypeName }}</p>
+    </div>
+    <div class="col-4">
+      <label><strong>Load To Port Name</strong></label>
+      <p *ngIf="selectedItem">{{ selectedItem.LoadToPortName }}</p>
+    </div>
+    <div class="col-4">
+      <label><strong>Discharge Port Name</strong></label>
+      <p *ngIf="selectedItem">{{ selectedItem.DischargePortName }}</p>
+    </div>
+    <div class="col-4">
+      <label><strong>Cargo To Load Name</strong></label>
+      <p *ngIf="selectedItem">{{ selectedItem.CargoToLoadName }}</p>
+    </div>
+    <div class="col-4">
+      <label><strong>Previous Cargo Name</strong></label>
+      <p *ngIf="selectedItem">{{ selectedItem.PreviousCargoName }}</p>
+    </div>
+    <div class="col-4">
+      <label><strong>Hold Pass/Fail Name</strong></label>
+      <p *ngIf="selectedItem">{{ selectedItem.HoldPassName }}</p>
+    </div>
+    <div class="col-4">
+      <label><strong>TCC Budget USD</strong></label>
+      <p *ngIf="selectedItem">{{ selectedItem.TCCBudgetUSD }}</p>
+    </div>
+    <div class="col-4">
+      <label><strong>TCC Actual</strong></label>
+      <p *ngIf="selectedItem">{{ selectedItem.TCCActual }}</p>
+    </div>
+    <div class="col-4">
+      <label><strong>TCC Difference</strong></label>
+      <p *ngIf="selectedItem">
+        {{ selectedItem.TCCBudgetUSD - selectedItem.TCCActual }}
+      </p>
+    </div>
+
+    <div class="col-4">
+      <label><strong>ITD Status</strong></label>
+      <p *ngIf="selectedItem">{{ selectedItem.PlanStatusName }}</p>
+    </div>
+
+    <div class="col-4">
+      <label><strong>ITD Budget</strong></label>
+      <p *ngIf="selectedItem">{{ selectedItem.ITDBudget }}</p>
+    </div>
+    <div class="col-4">
+      <label><strong>ITD Actual</strong></label>
+      <p *ngIf="selectedItem">{{ selectedItem.ITDActual }}</p>
+    </div>
+    <div class="col-4">
+      <label><strong>ITD Difference</strong></label>
+      <p *ngIf="selectedItem">
+        {{ selectedItem.ITDBudget - selectedItem.ITDActual }}
+      </p>
+    </div>
+
+    <div class="col-4">
+      <label><strong>ITC Budget </strong></label>
+      <p *ngIf="selectedItem">{{ selectedItem.ITCBudget }}</p>
+    </div>
+    <div class="col-4">
+      <label><strong>ITC Actual</strong></label>
+      <p *ngIf="selectedItem">{{ selectedItem.ITCActual }}</p>
+    </div>
+    <div class="col-4">
+      <label><strong>ITC Difference</strong></label>
+      <p *ngIf="selectedItem">
+        {{ selectedItem.ITCBudget - selectedItem.ITCActual }}
+      </p>
+    </div>
+
+    <div class="col-4">
+      <label><strong>ITB Budget </strong></label>
+      <p *ngIf="selectedItem">{{ selectedItem.ITBBudget }}</p>
+    </div>
+    <div class="col-4">
+      <label><strong>ITB Actual</strong></label>
+      <p *ngIf="selectedItem">{{ selectedItem.ITBActual }}</p>
+    </div>
+    <div class="col-4">
+      <label><strong>ITB Difference</strong></label>
+      <p *ngIf="selectedItem">
+        {{ selectedItem.ITBBudget - selectedItem.ITBActual }}
+      </p>
+    </div>
+
+    <div class="col-4">
+      <label><strong>HCB Budget </strong></label>
+      <p *ngIf="selectedItem">{{ selectedItem.HCBBudget }}</p>
+    </div>
+    <div class="col-4">
+      <label><strong>HCB Actual</strong></label>
+      <p *ngIf="selectedItem">{{ selectedItem.HCBActual }}</p>
+    </div>
+    <div class="col-4">
+      <label><strong>HCB Difference</strong></label>
+      <p *ngIf="selectedItem">
+        {{ selectedItem.HCBBudget - selectedItem.HCBActual }}
+      </p>
+    </div>
+
+    <div class="col-4">
+      <label><strong>SCG Status</strong></label>
+      <p *ngIf="selectedItem">{{ selectedItem.PlanStatusName }}</p>
+    </div>
+
+    <div class="col-4">
+      <label><strong>SCG Budget</strong></label>
+      <p *ngIf="selectedItem">{{ selectedItem.SCGBudget }}</p>
+    </div>
+    <div class="col-4">
+      <label><strong>SCG Actual</strong></label>
+      <p *ngIf="selectedItem">{{ selectedItem.SCGActual }}</p>
+    </div>
+    <div class="col-4">
+      <label><strong>SCG Difference</strong></label>
+      <p *ngIf="selectedItem">
+        {{ selectedItem.SCGBudget - selectedItem.SCGActual }}
+      </p>
+    </div>
+
+    <div class="col-4">
+      <label><strong>SHA Budget </strong></label>
+      <p *ngIf="selectedItem">{{ selectedItem.SHABudget }}</p>
+    </div>
+    <div class="col-4">
+      <label><strong>SHA Actual</strong></label>
+      <p *ngIf="selectedItem">{{ selectedItem.SHAActual }}</p>
+    </div>
+    <div class="col-4">
+      <label><strong>SHA Difference</strong></label>
+      <p *ngIf="selectedItem">
+        {{ selectedItem.SHABudget - selectedItem.SHAActual }}
+      </p>
+    </div>
+
+    <div class="col-4">
+      <label><strong>HCE Budget </strong></label>
+      <p *ngIf="selectedItem">{{ selectedItem.HCEBudget }}</p>
+    </div>
+    <div class="col-4">
+      <label><strong>HCE Actual</strong></label>
+      <p *ngIf="selectedItem">{{ selectedItem.HCEActual }}</p>
+    </div>
+    <div class="col-4">
+      <label><strong>HCE Difference</strong></label>
+      <p *ngIf="selectedItem">
+        {{ selectedItem.HCEBudget - selectedItem.HCEActual }}
+      </p>
+    </div>
+
+    <div class="col-4">
+      <label><strong>HCC Budget </strong></label>
+      <p *ngIf="selectedItem">{{ selectedItem.HCCBudget }}</p>
+    </div>
+    <div class="col-4">
+      <label><strong>HCC Actual</strong></label>
+      <p *ngIf="selectedItem">{{ selectedItem.HCCActual }}</p>
+    </div>
+    <div class="col-4">
+      <label><strong>HCC Difference</strong></label>
+      <p *ngIf="selectedItem">
+        {{ selectedItem.HCCBudget - selectedItem.HCCActual }}
+      </p>
+    </div>
+
+    <div class="col-4">
+      <label><strong>HCX Budget </strong></label>
+      <p *ngIf="selectedItem">{{ selectedItem.HCXBudget }}</p>
+    </div>
+    <div class="col-4">
+      <label><strong>HCX Actual</strong></label>
+      <p *ngIf="selectedItem">{{ selectedItem.HCXActual }}</p>
+    </div>
+    <div class="col-4">
+      <label><strong>HCX Difference</strong></label>
+      <p *ngIf="selectedItem">
+        {{ selectedItem.HCXBudget - selectedItem.HCXActual }}
+      </p>
+    </div>
+    <ng-container *ngIf="selectedItem">
+      <div class="col-12" *ngIf="selectedItem.BudgetedDetailsDate !== ''">
+        <label>
+          <!-- <strong>As per Capt Shailey mail -Budgeted details date</strong> -->
+          <strong>Budgeted details date</strong>
+        </label>
+        <p>{{ selectedItem.BudgetedDetailsDate | date : "dd/MM/yyyy" }}</p>
+      </div>
+
+      <div class="col-12" *ngIf="selectedItem.Remark !== ''">
+        <label><strong>Remarks</strong></label>
+        <p *ngIf="selectedItem">{{ selectedItem.Remark }}</p>
+      </div>
+      <div class="col-12" *ngIf="selectedItem.FinalRemarks !== ''">
+        <label><strong>Final Remarks</strong></label>
+        <p *ngIf="selectedItem">{{ selectedItem.FinalRemarks }}</p>
+      </div>
+
+      <div class="col-12" *ngIf="selectedItem.BudgetedDetailsDate === ''">
+        <label>
+          <!-- <strong>As per Capt Shailey mail -Budgeted details date</strong> -->
+          <strong>Budgeted details date</strong>
+        </label>
+        <p>...</p>
+      </div>
+
+      <div class="col-12" *ngIf="selectedItem.Remark === ''">
+        <label><strong>Remarks</strong></label>
+        <p>...</p>
+      </div>
+      <div class="col-12" *ngIf="selectedItem.FinalRemarks === ''">
+        <label><strong>Final Remarks</strong></label>
+        <p>...</p>
+      </div>
+    </ng-container>
+  </div>
+
+  <ng-template pTemplate="footer">
+    <button type="button" pButton pRipple icon="pi pi-times" (click)="dialogVisible = false" label="Dismiss"
+      class="p-button-text"></button>
+  </ng-template>
+</p-dialog>

@@ -1,0 +1,124 @@
+@import './themes';
+
+@mixin nb-overrides() {
+  nb-select.size-medium button {
+    padding: 0.4375rem 2.2rem 0.4375rem 1.125rem !important;
+
+    nb-icon {
+      right: 0.41rem !important;
+    }
+
+  }
+}
+
+
+
+//  For Light Theme Code Write Bellow
+
+.nb-theme-default {
+  .nb-bgchange {
+    background-color: #edf1f7;
+  }
+
+  .footer-table-bg{
+    background-color: #f4f4f4 !important;
+    font-weight: 600;
+    border-color: var(--input-basic-border-color);
+    color: #6c6c6c;
+  }
+
+
+  .ng-select-container {
+    background-color: var(--input-basic-background-color);
+    border-color: var(--input-basic-border-color);
+    color: var(--input-basic-text-color);
+
+  }
+  .ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-placeholder{
+    top: 8px;
+  }
+  .ng-select .ng-select-container {
+
+    min-height: 39px;
+
+  }
+
+
+  nb-menu .menu-item > .menu-items > .menu-item a {
+    border-color: var(--menu-submenu-item-border-color);
+    border-style: var(--menu-submenu-item-border-style);
+    border-width: var(--menu-submenu-item-border-width);
+    padding: 0.75rem 2rem;
+  }
+}
+
+
+
+
+
+//  For Dark Theme Code Write Bellow
+
+
+.nb-theme-dark {
+  .nb-bgchange {
+    background-color: #151a30;
+  }
+  .footer-table-bg{
+    background-color: var(--input-basic-background-color);
+    border-color: var(--input-basic-border-color);
+    color: var(--input-basic-text-color);
+    font-weight: 600;
+  }
+  .ng-select-container {
+    background-color: var(--input-basic-background-color);
+    border-color: var(--input-basic-border-color);
+    color: var(--input-basic-text-color);
+    // padding:  0.4375rem 1rem;
+
+  }
+  .ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-placeholder{
+    top: 8px;
+  }
+  .ng-select .ng-select-container {
+
+    min-height: 39px;
+
+  }
+
+
+}
+
+// Overrides Code For Both theme
+
+
+.nb-invalid {
+  color: red;
+}
+.ng-select{
+  font-weight: 600;
+  .ng-placeholder{
+    font-weight: 500;
+
+  }
+}
+
+.cdk-global-overlay-wrapper {
+
+  background: #04040480;
+
+}
+nb-dialog-container nb-card-header{
+  position: sticky;
+  top: 0px;
+  left: 0px;
+  opacity: 1;
+  z-index: 99;
+  background:var(--card-background-color);
+}
+.card {
+  border: none !important;
+}
+
+.p-paginator {
+  border: none !important;
+}

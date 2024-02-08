@@ -1,0 +1,53 @@
+{
+  "data": [
+  {
+ "EquipmentCategoryId": 1002,
+   "EquipmentCategoryName": "Paint",
+   "Equipmentlist": [
+    {
+      "EquipmentId": 1,
+      "MinOrderQty": 20,
+      "units": "KGS",
+      "EquipmentName": "Chemical 123"
+    },
+   {
+      "EquipmentId": 2,
+      "MinOrderQty": 10,
+      "units": "KGS",
+      "EquipmentName": "Chemical XYZ"
+    },
+   {
+      "EquipmentId": 3,
+      "MinOrderQty": 40,
+      "units": "KGS",
+      "EquipmentName": "Chemical ABC"
+    }
+   ]
+},
+{
+  "EquipmentCategoryId": 1000,
+    "EquipmentCategoryName": "Wood",
+    "Equipmentlist": [
+    {
+      "EquipmentId": 1,
+      "MinOrderQty": 20,
+      "units": "KGS",
+      "EquipmentName": "Wood 123"
+    },
+   {
+      "EquipmentId": 2,
+      "MinOrderQty": 10,
+      "units": "KGS",
+      "EquipmentName": "Wood XYZ"
+    },
+   {
+      "EquipmentId": 3,
+      "MinOrderQty": 40,
+      "units": "KGS",
+      "EquipmentName": "Wood ABC"
+    }
+   ]
+}
+]
+}
+

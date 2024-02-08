@@ -1,0 +1,189 @@
+<nb-card class="px-2">
+  <nb-card-header class="row align-items-center justify-content-between">
+    <div class="col-md-6 col-9 ">
+      <h5>Vessel Management</h5>
+    </div>
+    <div class="col-md-6 col-3 d-flex justify-content-end align-items-center">
+      <button nbButton (click)="openWithoutBackdrop()" class=" d-md-flex d-none">Add Vessel </button>
+      <nb-icon icon="plus" class=" d-md-none d-flex" (click)="openWithoutBackdrop()"></nb-icon>
+    </div>
+
+  </nb-card-header>
+</nb-card>
+<nb-card class=" mt-4">
+  <nb-card-body>
+    <div class="row  p-3 justify-content-end align-items-center">
+
+      <div class="col-3 p-0 text-right"><input type="text" fullWidth (keyup)="filterBy($event)"
+          placeholder="Search By Vessel Name" nbInput [(ngModel)]="filterTableValue" /></div>
+    </div>
+    <p-table #dt1 [value]="vessel" dataKey="id" [tableStyle]="{ 'min-width': '50rem' }" [columns]="cols"
+      [showCurrentPageReport]="true">
+
+
+
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+
+          <!-- <th *ngFor="let col of columns" pReorderableColumn  [pSortableColumn]="[col.field]">
+          {{ col.header }} <p-sortIcon [field]="[col.field]"></p-sortIcon>
+        </th> -->
+
+          <th pSortableColumn="VesselName">
+            Vessel Name <p-sortIcon field="VesselName"></p-sortIcon>
+
+
+          </th>
+          <th pSortableColumn="IMONumber">
+            IMO Number <p-sortIcon field="IMONumber"></p-sortIcon>
+          </th>
+          <th pSortableColumn="FleetTypeName">
+            Fleet Type Name<p-sortIcon field="FleetTypeName"></p-sortIcon>
+          </th>
+          <th pSortableColumn="FleetName">
+            Fleet Name<p-sortIcon field="FleetName"></p-sortIcon>
+          </th>
+          <th pSortableColumn="DWT_T">
+            DWT(T)<p-sortIcon field="DWT_T"></p-sortIcon>
+          </th>
+          <th pSortableColumn="LicenseStartDate">
+            Licence Start Date<p-sortIcon field="LicenseStartDate"></p-sortIcon>
+          </th>
+          <th pSortableColumn="LicenseEndDate">
+            Licence End Date<p-sortIcon field="LicenseEndDate"></p-sortIcon>
+          </th>
+
+
+
+          <!-- <th>License Log</th>
+        <th>Manage License</th> -->
+          <th>Action</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex" let-product
+        let-editing="editing">
+        <tr [pReorderableRow]="index" [pEditableRow]="product">
+          <!-- <td *ngFor="let col of columns">
+          {{ rowData[col.field]}}
+        </td> -->
+
+          <!--     this.cols = [
+      { field: "VesselName", header: "Vessel Name" },
+      { field: "IMONumber", header: `IMO Number` },
+      { field: "FleetTypeName", header: "Fleet Type" },
+      { field: "FleetName", header: "Fleet Name" },
+      { field: "DWT_T", header: "DWT(T)" },
+      { field: "LicenseStartDate", header: "License Start" },
+      { field: "LicenseEndDate", header: "License Expiring " },
+
+    ]; -->
+          <td>
+            <div [ngClass]="checkListRecord===false ? 'd-none' : ''">
+              {{ rowData.VesselName }}
+            </div>
+            <ngx-skeleton-loader [ngClass]="checkListRecord===true ? 'd-none' : ''" count="1" appearance="line"
+              animation="pulse">
+            </ngx-skeleton-loader>
+
+          </td>
+
+          <td>
+            <div [ngClass]="checkListRecord===false ? 'd-none' : ''">
+              {{ rowData.IMONumber }}
+            </div>
+            <ngx-skeleton-loader [ngClass]="checkListRecord===true ? 'd-none' : ''" count="1" appearance="line"
+              animation="pulse">
+            </ngx-skeleton-loader>
+
+          </td>
+
+          <td>
+            <div [ngClass]="checkListRecord===false ? 'd-none' : ''">
+              {{ rowData.FleetTypeName }}
+            </div>
+            <ngx-skeleton-loader [ngClass]="checkListRecord===true ? 'd-none' : ''" count="1" appearance="line"
+              animation="pulse">
+            </ngx-skeleton-loader>
+
+          </td>
+
+
+          <td>
+            <div [ngClass]="checkListRecord===false ? 'd-none' : ''">
+              {{ rowData.FleetName }}
+            </div>
+            <ngx-skeleton-loader [ngClass]="checkListRecord===true ? 'd-none' : ''" count="1" appearance="line"
+              animation="pulse">
+            </ngx-skeleton-loader>
+
+          </td>
+          <td>
+            <div [ngClass]="checkListRecord===false ? 'd-none' : ''">
+              {{ rowData.DWT_T }}
+            </div>
+            <ngx-skeleton-loader [ngClass]="checkListRecord===true ? 'd-none' : ''" count="1" appearance="line"
+              animation="pulse">
+            </ngx-skeleton-loader>
+
+          </td>
+          <td>
+            <div [ngClass]="checkListRecord===false ? 'd-none' : ''">
+              {{ rowData.LicenseStartDate | date:'dd/MM/yyyy' }}
+            </div>
+            <ngx-skeleton-loader [ngClass]="checkListRecord===true ? 'd-none' : ''" count="1" appearance="line"
+              animation="pulse">
+            </ngx-skeleton-loader>
+
+          </td>
+          <td>
+            <div [ngClass]="checkListRecord===false ? 'd-none' : ''">
+              {{ rowData.LicenseEndDate | date:'dd/MM/yyyy' }}
+            </div>
+            <ngx-skeleton-loader [ngClass]="checkListRecord===true ? 'd-none' : ''" count="1" appearance="line"
+              animation="pulse">
+            </ngx-skeleton-loader>
+
+          </td>
+
+
+
+          <td>
+            <div [ngClass]="checkListRecord===false ? 'd-none' : 'd-flex border-none'" class=""
+              style="border-width: 0px 0px 0px 0px !important;">
+              <button pButton pRipple icon="pi pi-eye" nbTooltip="View" nbTooltipPlacement="top"
+                class=" p-button-primary  mr-2" (click)="viewLog(rowData)"></button>
+              <button pButton pRipple icon="pi pi-plus" nbTooltip="Add Licence" nbTooltipPlacement="top"
+                class=" p-button-primary  mr-2" (click)="manageLicense(rowData)"></button>
+              <button pButton pRipple icon="pi pi-pencil" nbTooltip="Edit" nbTooltipPlacement="top"
+                class=" p-button-primary  mr-2" (click)="editDetails(product)"></button>
+              <button pButton nbTooltip="Delete" nbTooltipPlacement="top" pRipple icon="pi pi-trash"
+                class=" p-button-primary" (click)="deleteDetails(product)"></button>
+            </div>
+            <ngx-skeleton-loader [ngClass]="checkListRecord===true ? 'd-none' : ''" count="1" appearance="line"
+              animation="pulse">
+            </ngx-skeleton-loader>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="7">{{emptymessage}}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+    <p-toast></p-toast>
+
+
+    <div *ngIf="countValue !== 0" class="row align-items-center justify-content-center ">
+      <span
+        style="color: --card-text-color; font-family: Poppins, sans-serif; font-weight: normal; font-size: 0.8125rem;">Showing
+        {{firstCount}} to {{nextCount}} of {{totalCount}} entries</span>
+      <p-paginator [rows]="selectedRows" [totalRecords]="totalCount" (onPageChange)="paginate($event)"></p-paginator>
+      <nb-select placeholder="" (selectedChange)="getChangeRows($event)" [(selected)]="selectedRows">
+        <nb-option value="25">25</nb-option>
+        <nb-option value="50">50</nb-option>
+        <nb-option value="100">100</nb-option>
+      </nb-select>
+    </div>
+  </nb-card-body>
+</nb-card>

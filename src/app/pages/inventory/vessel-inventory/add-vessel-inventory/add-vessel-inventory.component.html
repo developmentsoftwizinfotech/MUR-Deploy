@@ -1,0 +1,327 @@
+<nb-card class="px-3 container"[nbSpinner]="loading" nbSpinnerStatus="primary"
+nbSpinnerSize="large" nbSpinnerMessage="">
+  <form [formGroup]="nbForm" (ngSubmit)="submit()">
+    <nb-card-header class="row align-items-center justify-content-between">
+      <div>
+        <h5>{{ formTitle }} Vessel Inventory Form</h5>
+      </div>
+      <div>
+        <button
+          type="button"
+          nbButton
+          status="danger"
+          (click)="close()"
+          class="mr-2"
+        >
+          Cancel
+        </button>
+        <button type="button" nbButton status="basic" (click)="clearForm()" type="reset" class="mr-2">
+          Clear Form
+        </button>
+        <button type="submit" nbButton status="primary" class="mr-2">
+          Submit
+        </button>
+      </div>
+    </nb-card-header>
+    <nb-card-body class="example-items-rows">
+      <div class="row px-2">
+        <div class="mb-3 col-6">
+          <label for="VesselId" class="form-label"
+            >Vessel<span style="color: red">*</span></label
+          >
+          <ng-select
+            class="dropdown-top"
+            formControlName="VesselId"
+            [appendTo]="'body'"
+            placeholder="Select Vessel"
+            (change)="getVessel($event)"
+            (keyup)="getVesselListRecords(1, 100, $event.target.value)"
+            fullWidth
+            fieldSize="medium"
+          >
+            <ng-option
+              *ngFor="let option of vesselDropdown"
+              [value]="option.VesselId"
+            >
+              {{ option.VesselName }}</ng-option
+            >
+          </ng-select>
+          <small
+            *ngIf="
+              nbForm.get('VesselId')?.invalid &&
+              (nbForm.get('VesselId')?.touched || nbForm.get('VesselId')?.dirty)
+            "
+          >
+            <nb-hint
+              style="color: red"
+              *ngIf=" nbForm.get('VesselId')?.errors?.['required']"
+            >
+              Required</nb-hint
+            >
+          </small>
+        </div>
+        <div class="mb-3 col-6">
+          <!--    MinimumLevelsMaintained: ['', [Validators.required,Validators.minLength(3),Validators.maxLength(50)]],
+                VendorAddress: ['', Validators.required],
+                CountryId: [null, Validators.required],
+                VendorPrimaryEmail: ['', [Validators.required,Validators.email]],
+                VendorSecondaryEmail: [''],
+                VendorPhonelines: ['', [Validators.required,Validators.pattern(/^\d{3}\d{3}\d{4}$/)]],
+                VendorPIC: ['',  [Validators.required,Validators.minLength(3),Validators.maxLength(50)]], -->
+          <label for="MinimumLevelsMaintained" class="form-label"
+            >Minimum Levels Maintained <span style="color: red">*</span></label
+          >
+          <input
+            type="text"
+            formControlName="MinimumLevelsMaintained"
+            nbInput
+            fullWidth
+            fieldSize="medium"
+            placeholder=" Minimum Levels Maintained "
+          />
+          <small
+                        *ngIf="nbForm.get('MinimumLevelsMaintained')?.invalid && (nbForm.get('MinimumLevelsMaintained')?.touched || nbForm.get('MinimumLevelsMaintained')?.dirty)">
+                        <nb-hint style="color: red;" *ngIf=" nbForm.get('MinimumLevelsMaintained')?.errors?.['required']">
+                            Required</nb-hint>
+                        <nb-hint style="color: red;" *ngIf="  nbForm.get('MinimumLevelsMaintained')?.errors?.['maxlength']">
+                            Vendor Name should have at most 50 characters</nb-hint>
+                        <nb-hint style="color: red;"
+                            *ngIf=" nbForm.get('MinimumLevelsMaintained')?.dirty && nbForm.get('MinimumLevelsMaintained')?.touched && nbForm.get('MinimumLevelsMaintained')?.errors?.['minlength']">
+                            Vendor Name should have at least 3 characters</nb-hint>
+
+                    </small>
+        </div>
+
+        <div class="mb-3 col-6">
+          <label class="form-label"
+            >Supply Date<span style="color: red">*</span></label
+          ><br />
+          <input
+            nbInput
+            formControlName="LastSupplyDate"
+            placeholder="Pick Date"
+            fullWidth
+            fieldSize="medium"
+            [nbDatepicker]="dateTimePicker3"
+          />
+          <nb-datepicker #dateTimePicker3></nb-datepicker>
+          <small
+            *ngIf="
+              nbForm.get('LastSupplyDate')?.invalid &&
+              (nbForm.get('LastSupplyDate')?.touched ||
+                nbForm.get('LastSupplyDate')?.dirty)
+            "
+          >
+            <nb-hint
+              style="color: red"
+              *ngIf=" nbForm.get('LastSupplyDate')?.errors?.['required']"
+            >
+              Required</nb-hint
+            >
+          </small>
+        </div>
+
+        <div class="mb-3 col-6">
+          <label for="ActiveInventoryCost" class="form-label"
+            >Inventory Cost<span style="color: red">*</span></label
+          >
+          <input
+            type="number"
+            formControlName="ActiveInventoryCost"
+            nbInput
+            fullWidth
+            fieldSize="medium"
+            placeholder=" Inventory Cost"
+          />
+          <small
+                        *ngIf="nbForm.get('ActiveInventoryCost')?.invalid && (nbForm.get('ActiveInventoryCost')?.touched || nbForm.get('ActiveInventoryCost')?.dirty)">
+                        <nb-hint style="color: red;" *ngIf="nbForm.get('ActiveInventoryCost')?.errors?.['required']">Required</nb-hint>
+                        <!-- <nb-hint style="color: red;" *ngIf="nbForm.get('ActiveInventoryCost')?.touched  && nbForm.get('ActiveInventoryCost')?.errors?.['pattern']">IMO Number is Fixed 7 digit</nb-hint>
+                        <nb-hint style="color: red;"
+                        *ngIf=" nbForm.get('ActiveInventoryCost')?.dirty && nbForm.get('ActiveInventoryCost')?.touched && nbForm.get('ActiveInventoryCost')?.errors?.duplicateValue">IMO Number
+                         is duplicate</nb-hint> -->
+                    </small>
+        </div>
+      </div>
+    </nb-card-body>
+
+
+  </form>
+  <nb-accordion class="mb-3">
+    <nb-accordion-item *ngFor="let listEquipment of equipmentField" >
+      <nb-accordion-item-header> {{listEquipment.EquipmentCategoryName}} </nb-accordion-item-header>
+      <nb-accordion-item-body>
+        <div class="row">
+          <div class="mb-3 col-4" *ngIf="listEquipment.Maker">
+            <label for="Maker" class="form-label"
+              >Maker</label
+            >
+
+            <ng-select
+              class="dropdown-top"
+              [(ngModel)]="listEquipment.MakerId"
+              [appendTo]="'body'"
+              placeholder="Select Maker"
+              fullWidth
+              fieldSize="medium"
+            >
+
+              <ng-option
+                *ngFor="let option of makerDropdown"
+                [value]="option.MakerId"
+              >
+                {{ option.MakerName }}</ng-option
+              >
+            </ng-select>
+            <!-- <small
+              *ngIf="
+                nbForm.get('VesselId')?.invalid &&
+                (nbForm.get('VesselId')?.touched ||
+                  nbForm.get('VesselId')?.dirty)
+              "
+            >
+              <nb-hint
+                style="color: red"
+                *ngIf=" nbForm.get('VesselId')?.errors?.['required']"
+              >
+                Required</nb-hint
+              >
+            </small> -->
+          </div>
+          <div class="mb-3 col-4" *ngIf="listEquipment.DateSupplied">
+            <label class="form-label"
+              >Date Supplied</label
+            ><br />
+            <input
+              nbInput
+              [(ngModel)]="listEquipment.InventoryDateSupplied"
+              placeholder="Pick Date"
+              fullWidth
+              fieldSize="medium"
+              [nbDatepicker]="dateTimePicker3"
+            />
+            <nb-datepicker #dateTimePicker3></nb-datepicker>
+            <!-- <small
+              *ngIf="
+                nbForm.get('LastSupplyDate')?.invalid &&
+                (nbForm.get('LastSupplyDate')?.touched ||
+                  nbForm.get('LastSupplyDate')?.dirty)
+              "
+            >
+              <nb-hint
+                style="color: red"
+                *ngIf=" nbForm.get('LastSupplyDate')?.errors?.['required']"
+              >
+                Required</nb-hint
+              >
+            </small> -->
+          </div>
+
+          <div class="mb-3 col-4" *ngIf="listEquipment.PortSupplied">
+            <label for="VesselId" class="form-label"
+              >Port</label
+            >
+            <ng-select
+              class="dropdown-top"
+              [(ngModel)]="listEquipment.PortSuppliedId"
+              [appendTo]="'body'"
+              placeholder="Select Vessel"
+              (keyup)="getPortListRecords(1, 100, $event.target.value)"
+              fullWidth
+              fieldSize="medium"
+            >
+              <ng-option
+                *ngFor="let option of portDropdown"
+                [value]="option.PortId"
+              >
+                {{ option.PortName }}</ng-option
+              >
+
+            </ng-select>
+            <!-- <small
+              *ngIf="
+                nbForm.get('VesselId')?.invalid &&
+                (nbForm.get('VesselId')?.touched ||
+                  nbForm.get('VesselId')?.dirty)
+              "
+            >
+              <nb-hint
+                style="color: red"
+                *ngIf=" nbForm.get('VesselId')?.errors?.['required']"
+              >
+                Required</nb-hint
+              >
+            </small> -->
+          </div>
+
+          <div class="mb-3 col-4" *ngIf="listEquipment.ConditionId">
+            <label for="ActiveInventoryCost" class="form-label"
+              >Condition</label
+            >
+            <input
+              type="number"
+              [(ngModel)]="listEquipment.Condition"
+              nbInput
+              fullWidth
+              fieldSize="medium"
+              placeholder=" Inventory Cost"
+            />
+            <!-- <small
+                    *ngIf="nbForm.get('ActiveInventoryCost')?.invalid && (nbForm.get('ActiveInventoryCost')?.touched || nbForm.get('ActiveInventoryCost')?.dirty)">
+                    <nb-hint style="color: red;" *ngIf="nbForm.get('ActiveInventoryCost')?.errors?.['required']">Required</nb-hint>
+                    <nb-hint style="color: red;" *ngIf="nbForm.get('ActiveInventoryCost')?.touched  && nbForm.get('ActiveInventoryCost')?.errors?.['pattern']">IMO Number is Fixed 7 digit</nb-hint>
+                    <nb-hint style="color: red;"
+                    *ngIf=" nbForm.get('ActiveInventoryCost')?.dirty && nbForm.get('ActiveInventoryCost')?.touched && nbForm.get('ActiveInventoryCost')?.errors?.duplicateValue">IMO Number
+                     is duplicate</nb-hint>
+                </small> -->
+          </div>
+
+          <div class="mb-3 col-4" *ngIf="listEquipment.DateofExpiry">
+            <label class="form-label"
+              >Date of Expiry</label
+            ><br />
+            <input
+              nbInput
+              [(ngModel)]="listEquipment.InventoryDateofExpiry"
+              placeholder="Pick Date"
+              fullWidth
+              fieldSize="medium"
+              [nbDatepicker]="dateTimePicker3"
+            />
+            <nb-datepicker #dateTimePicker3></nb-datepicker>
+            <!-- <small
+              *ngIf="
+                nbForm.get('LastSupplyDate')?.invalid &&
+                (nbForm.get('LastSupplyDate')?.touched ||
+                  nbForm.get('LastSupplyDate')?.dirty)
+              "
+            >
+              <nb-hint
+                style="color: red"
+                *ngIf=" nbForm.get('LastSupplyDate')?.errors?.['required']"
+              >
+                Required</nb-hint
+              >
+            </small> -->
+          </div>
+
+          <!-- <div class="mb-3 col-4">
+                <label for="ActiveInventoryCost" class="form-label">Condition<span style="color: red;">*</span></label>
+                <input type="number" formControlName="ActiveInventoryCost" nbInput fullWidth fieldSize="medium"
+                    placeholder=" Inventory Cost">
+
+            </div>
+            <div class="mb-3 col-4">
+                <label for="ActiveInventoryCost" class="form-label">Condition<span style="color: red;">*</span></label>
+                <input type="number" formControlName="ActiveInventoryCost" nbInput fullWidth fieldSize="medium"
+                    placeholder=" Inventory Cost">
+
+            </div> -->
+        </div>
+      </nb-accordion-item-body>
+    </nb-accordion-item>
+
+
+  </nb-accordion>
+</nb-card>
+<p-toast></p-toast>

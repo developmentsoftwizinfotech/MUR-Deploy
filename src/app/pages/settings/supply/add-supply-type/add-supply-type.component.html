@@ -1,0 +1,43 @@
+<p-toast></p-toast>
+<nb-card class="px-3 container" 
+[nbSpinner]="loading" nbSpinnerStatus="primary"
+nbSpinnerSize="large" nbSpinnerMessage="">
+    <form [formGroup]="nbForm" (ngSubmit)="submit()">
+        <nb-card-header class="row justify-content-between">
+            <div>
+                <h5>{{formTitle}} Supply Name</h5>
+            </div>
+            <div>
+                <button type="button" nbButton status="danger" (click)="close()" class="mr-2">Cancel</button>
+                <button type="button" nbButton status="basic" type="reset" class=" mr-2">Clear Form</button>
+                <button type="submit" nbButton status="primary" class=" mr-2">Submit</button>
+            </div>
+        </nb-card-header>
+        <nb-card-body class="example-items-rows">
+
+                <div class=" col">
+                    <label for="firstName" class="form-label">Supply Name<span style="color: red;">*</span></label>
+                    <input type="text"  formControlName="SupplyTypeName" nbInput fullWidth fieldSize="medium" placeholder=" Supply Name">
+                    <small
+                    *ngIf="nbForm.get('SupplyTypeName')?.invalid && (nbForm.get('SupplyTypeName')?.touched || nbForm.get('SupplyTypeName')?.dirty)">
+                    <nb-hint style="color: red;" *ngIf=" nbForm.get('SupplyTypeName')?.errors?.['required']">Required</nb-hint>
+                    <nb-hint style="color: red;" *ngIf="  nbForm.get('SupplyTypeName')?.errors?.['maxlength']">
+                        Supply Name should have at most 50 characters</nb-hint>
+                    <nb-hint style="color: red;"
+                        *ngIf=" nbForm.get('SupplyTypeName')?.dirty && nbForm.get('SupplyTypeName')?.touched && nbForm.get('SupplyTypeName')?.errors?.['minlength']">Supply
+                        Name should have at least 3 characters</nb-hint>
+                    <nb-hint style="color: red;"
+                        *ngIf=" nbForm.get('SupplyTypeName')?.dirty && nbForm.get('SupplyTypeName')?.touched && nbForm.get('SupplyTypeName')?.errors?.duplicateValue">Supply
+                        Name is duplicate</nb-hint>
+
+
+                </small>
+                <!-- <div *ngIf="nbForm.get('SupplyTypeName').errors.duplicate">
+                    Duplicate SupplyTypeName Please enter a different name.
+                  </div> -->
+                </div>
+
+
+        </nb-card-body>
+    </form>
+</nb-card>

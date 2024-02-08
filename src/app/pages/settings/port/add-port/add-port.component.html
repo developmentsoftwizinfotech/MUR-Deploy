@@ -1,0 +1,210 @@
+<p-toast></p-toast>
+<nb-card class="px-3 container" 
+[nbSpinner]="loading" nbSpinnerStatus="primary"
+nbSpinnerSize="large" nbSpinnerMessage="">
+    <form [formGroup]="nbForm" (ngSubmit)="submit()">
+        <nb-card-header class="row  align-items-center justify-content-between">
+            <div>
+                <h5>{{formTitle}} Port Details</h5>
+            </div>
+            <div>
+                <button type="button" nbButton status="danger" (click)="close()" class="mr-2">Cancel</button>
+                <button (click)="clearForm()" nbButton status="basic" type="reset" class=" mr-2">Clear Form</button>
+                <button type="submit" nbButton status="primary" class=" mr-2">Submit</button>
+            </div>
+        </nb-card-header>
+        <nb-card-body class="example-items-rows">
+            <div class="row px-2">
+                <div class="mb-3 col-6">
+                    <label for="Country" class="form-label">Country<span style="color: red;">*</span></label>
+                    <ng-select fullWidth formControlName="CountryId"
+                        (keyup)="getDropdownList(1,100,$event.target.value)" placeholder="Country located in">
+                        <ng-option *ngFor="let option of dropDownCountrylist" [value]="option.CountryId">{{
+                            option.CountryName }}</ng-option>
+                    </ng-select>
+                    <small
+                        *ngIf="nbForm.get('CountryId')?.invalid && (nbForm.get('CountryId')?.touched || nbForm.get('CountryId')?.dirty)">
+                        <nb-hint style="color: red;"
+                            *ngIf=" nbForm.get('CountryId')?.errors?.['required']">Required</nb-hint>
+                    </small>
+                </div>
+                <div class="mb-3 col-6">
+                    <label for="PortName" class="form-label">Port Name<span style="color: red;">*</span></label>
+                    <input type="text" formControlName="PortName" nbInput fullWidth fieldSize="medium"
+                        placeholder=" Port Name">
+                    <small
+                        *ngIf="nbForm.get('PortName')?.invalid && (nbForm.get('PortName')?.touched || nbForm.get('PortName')?.dirty)">
+                        <nb-hint style="color: red;"
+                            *ngIf=" nbForm.get('PortName')?.errors?.['required']">Required</nb-hint>
+                        <nb-hint style="color: red;" *ngIf="  nbForm.get('PortName')?.errors?.['maxlength']">
+                            Port Name should have at most 50 characters</nb-hint>
+                        <nb-hint style="color: red;"
+                            *ngIf=" nbForm.get('PortName')?.dirty && nbForm.get('PortName')?.touched && nbForm.get('PortName')?.errors?.['minlength']">Port
+                            Name should have at least 3 characters</nb-hint>
+                        <nb-hint style="color: red;"
+                            *ngIf=" nbForm.get('PortName')?.dirty && nbForm.get('PortName')?.touched && nbForm.get('PortName')?.errors?.duplicateValue">Port
+                            Name
+                            is duplicate</nb-hint>
+                    </small>
+                </div>
+                <div class="mb-3 col-6">
+                    <label for="PortLatitude" class="form-label">Port Latitude<span style="color: red;">*</span>
+                    </label>
+                    <div class="row align-items-start">
+                        <div class="col-3">
+                            <input type="number" (blur)="calculateDegrees()" formControlName="DegreesLat" nbInput
+                                fullWidth fieldSize="medium" placeholder="Degrees">
+                                <small
+                                *ngIf="nbForm.get('DegreesLat')?.invalid && (nbForm.get('DegreesLat')?.touched || nbForm.get('DegreesLat')?.dirty)">
+                                <nb-hint style="color: red;" *ngIf=" nbForm.get('DegreesLat')?.errors?.['required']">
+                                    Required</nb-hint>
+                                </small>
+                        </div>
+                        <div class=" col-3">
+                            <input type="number" (blur)="calculateDegrees()" formControlName="MinutesLat" nbInput
+                                fullWidth fieldSize="medium" placeholder="Minutes">
+                            <small
+                                *ngIf="nbForm.get('MinutesLat')?.invalid && (nbForm.get('MinutesLat')?.touched || nbForm.get('MinutesLat')?.dirty)">
+                                <nb-hint style="color: red;" *ngIf=" nbForm.get('MinutesLat')?.errors?.['required']">
+                                    Required</nb-hint>
+                                <nb-hint style="color: red;" *ngIf="  nbForm.get('MinutesLat')?.errors?.['pattern']">
+                                    ITB Actual Max 6 digits - 2 Decimal places</nb-hint>
+                            </small>
+                        </div>
+                        <div class=" col-3">
+
+                            <input type="number" (blur)="calculateDegrees()" formControlName="SecondsLat" nbInput
+                                fullWidth fieldSize="medium" placeholder="Seconds">
+                            <small
+                                *ngIf="nbForm.get('SecondsLat')?.invalid && (nbForm.get('SecondsLat')?.touched || nbForm.get('SecondsLat')?.dirty)">
+                                <nb-hint style="color: red;" *ngIf=" nbForm.get('SecondsLat')?.errors?.['required']">
+                                    Required</nb-hint>
+                            </small>
+                        </div>
+                        <div class=" col-3">
+
+                            <ng-select class="dropdown-top" (blur)="calculateDegrees()" [attr.id]="'DirectionLat'"
+                                [appendTo]="'body'" fullWidth formControlName="DirectionLat" placeholder="Direction">
+                                <ng-option *ngFor="let option of dropdownDirection" [value]="option.id">{{
+                                    option.name }}</ng-option>
+                            </ng-select>
+                            <small
+                            *ngIf="nbForm.get('DirectionLat')?.invalid && (nbForm.get('DirectionLat')?.touched || nbForm.get('DirectionLat')?.dirty)">
+                            <nb-hint style="color: red;" *ngIf=" nbForm.get('DirectionLat')?.errors?.['required']">
+                                Required</nb-hint>
+                        </small>
+                        </div>
+                        <!-- <small style="color: red;" *ngIf="nbForm.hasError('required', ['DegreesLat', 'MinutesLat', 'SecondsLat', 'DirectionLat']) && nbForm.touched" >
+                            All fields are required.
+                          </small> -->
+                           <!-- <div *ngIf="nbForm.invalid && nbForm.touched" class="error-message">
+    All fields are required.
+  </div> -->
+                          
+                        <!-- <small style="color: red;" *ngIf="(nbForm.get('DegreesLat' ).value === '' || nbForm.get('DegreesLat').value === null)  && (nbForm.get('DegreesLat').touched || nbForm.get('DegreesLat').dirty)">Required</small> -->
+                        <!-- <small style="color: red;" *ngIf="(nbForm.get(['DegreesLat','MinutesLat'] ).value === '' || nbForm.get(['DegreesLat','MinutesLat']).value === null)  && (nbForm.get(['DegreesLat','MinutesLat']).touched || nbForm.get(['DegreesLat','MinutesLat']).dirty)">Required</small> -->
+
+                        <!-- <small
+                        *ngIf="nbForm.get('DegreesLat')?.invalid && (nbForm.get('CountryId')?.touched || nbForm.get('CountryId')?.dirty)">
+                        <nb-hint style="color: red;"
+                            *ngIf=" nbForm.get('CountryId')?.errors?.['required']">Required</nb-hint>
+                    </small> -->
+                    </div>
+                  
+                </div>
+
+<!--    DegreesLat: [''],
+      MinutesLat: [''],
+      SecondsLat: [''],
+      DirectionLat: [null], -->
+
+
+
+                <div class="mb-3 col-6">
+                    <label class="form-label">Port Longitude<span style="color: red;">*</span></label>
+                    <div class="row align-items-start">
+                        <div class="col-3">
+                            <!-- <label for="DegreesLong" class="form-label">ITB Budget<span style="color: red;">*</span></label> -->
+                            <input type="number" (blur)="calculateDegrees()" formControlName="DegreesLong" nbInput
+                                fullWidth fieldSize="medium" placeholder="Degrees">
+                            <small
+                                *ngIf="nbForm.get('DegreesLong')?.invalid && (nbForm.get('DegreesLong')?.touched || nbForm.get('DegreesLong')?.dirty)">
+                                <nb-hint style="color: red;" *ngIf=" nbForm.get('DegreesLong')?.errors?.['required']">
+                                    Required</nb-hint>
+                                <!-- <nb-hint style="color: red;" *ngIf="  nbForm.get('DegreesLong')?.errors?.['pattern']">
+                                    ITD Budget Max 6 digits - 2 Decimal places</nb-hint> -->
+                            </small>
+                        </div>
+                        <div class=" col-3">
+                            <!-- <label for="MinutesLong" class="form-label">ITB Actual<span style="color: red;">{{statusValue ==
+                                    "Completed"?'*':''}}</span></label> -->
+                            <input type="number" (blur)="calculateDegrees()" formControlName="MinutesLong" nbInput
+                                fullWidth fieldSize="medium" placeholder="Minutes">
+                            <small
+                                *ngIf="nbForm.get('MinutesLong')?.invalid && (nbForm.get('MinutesLong')?.touched || nbForm.get('MinutesLong')?.dirty)">
+                                <nb-hint style="color: red;" *ngIf=" nbForm.get('MinutesLong')?.errors?.['required']">
+                                    Required</nb-hint>
+                                <nb-hint style="color: red;" *ngIf="  nbForm.get('MinutesLong')?.errors?.['pattern']">
+                                    ITB Actual Max 6 digits - 2 Decimal places</nb-hint>
+                            </small>
+                        </div>
+                        <div class=" col-3">
+                            <!-- <label for="SecondsLong" class="form-label">ITB Provisions<span
+                                    style="color: red;">*</span></label> -->
+                            <input type="number" (blur)="calculateDegrees()" formControlName="SecondsLong" nbInput
+                                fullWidth fieldSize="medium" placeholder="Seconds">
+                            <small
+                                *ngIf="nbForm.get('SecondsLong')?.invalid && (nbForm.get('SecondsLong')?.touched || nbForm.get('SecondsLong')?.dirty)">
+                                <nb-hint style="color: red;" *ngIf=" nbForm.get('SecondsLong')?.errors?.['required']">
+                                    Required</nb-hint>
+                            </small>
+                        </div>
+                        <div class=" col-3">
+                            <!-- <label for="DirectionLong" class="form-label">ITB Provisions<span
+                                    style="color: red;">*</span></label> -->
+                            <ng-select class="dropdown-top" (blur)="calculateDegrees()" [attr.id]="'DirectionLong'"
+                                [appendTo]="'body'" fullWidth formControlName="DirectionLong" placeholder="Direction">
+                                <ng-option *ngFor="let option of dropdownDirection" [value]="option.id">{{
+                                    option.name }}</ng-option>
+                            </ng-select>
+                            <small
+                            *ngIf="nbForm.get('DirectionLong')?.invalid && (nbForm.get('DirectionLong')?.touched || nbForm.get('DirectionLong')?.dirty)">
+                            <nb-hint style="color: red;" *ngIf=" nbForm.get('DirectionLong')?.errors?.['required']">
+                                Required</nb-hint>
+                        </small>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3 col-6">
+                    <label for="PortLongitude" class="form-label">Decimal Degrees Latitude</label>
+                    <input formControlName="LatituteDD" readonly type="text" nbInput fullWidth fieldSize="medium"
+                        placeholder="Decimal Degrees Latitude">
+                    <small
+                        *ngIf="nbForm.get('LatituteDD')?.invalid && (nbForm.get('LatituteDD')?.touched || nbForm.get('LatituteDD')?.dirty)">
+                        <nb-hint style="color: red;"
+                            *ngIf=" nbForm.get('LatituteDD')?.errors?.['required']">Required</nb-hint>
+                        <nb-hint style="color: red;" *ngIf=" nbForm.get('LatituteDD')?.errors?.['pattern']">Invalid
+                            Longitude value.</nb-hint>
+
+
+                    </small>
+
+                </div>
+                <div class="mb-3 col-6">
+                    <label for="LongitudeDD" class="form-label">Decimal Degrees Longitude</label>
+                    <input formControlName="LongitudeDD" readonly type="text" nbInput fullWidth fieldSize="medium"
+                        placeholder="Decimal Degrees Longitude">
+                    <small
+                        *ngIf="nbForm.get('LongitudeDD')?.invalid && (nbForm.get('LongitudeDD')?.touched || nbForm.get('LongitudeDD')?.dirty)">
+                        <nb-hint style="color: red;"
+                            *ngIf=" nbForm.get('LongitudeDD')?.errors?.['required']">Required</nb-hint>
+                        <nb-hint style="color: red;" *ngIf=" nbForm.get('LongitudeDD')?.errors?.['pattern']">Invalid
+                            Longitude value.</nb-hint>
+
+
+                    </small>
+                </div>
+            </div>
+        </nb-card-body>
+    </form>
+</nb-card>

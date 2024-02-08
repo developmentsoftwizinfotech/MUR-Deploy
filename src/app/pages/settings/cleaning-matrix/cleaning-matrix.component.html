@@ -1,0 +1,113 @@
+
+<nb-card class="px-2">
+    <nb-card-header class="row align-items-center justify-content-between">
+      <div class="col-md-6 col-9 ">
+        <h5>Cleaning Matrix </h5>
+      </div>
+      <div class="col-md-6 col-3 d-flex justify-content-end align-items-center">
+        <button nbButton (click)="submitRecords()" class=" d-md-flex d-none">Save Matrix  </button>
+        <nb-icon icon="plus" class=" d-md-none d-flex" (click)="submitRecords()"></nb-icon>
+      </div>
+    
+    </nb-card-header>
+  </nb-card>
+
+<div class="grid row" [formGroup]="nbForm">
+	<div class="col-12 col-md-4">
+		<p-table [value]="availableList" responsiveLayout="scroll">
+			<ng-template pTemplate="header">
+				<tr>
+					<th>Cleaning Stages List</th>
+
+				</tr>
+			</ng-template>
+			<ng-template pTemplate="body" let-person>
+				<tr pDraggable="products" (onDragStart)="dragStart(person);" (onDragEnd)="dragEnd()">
+					<td>{{person.CleaningStageName}}</td>
+
+				</tr>
+			</ng-template>
+		</p-table>
+	</div>
+
+	<div class="col-12 col-md-4" pDroppable="products" (onDrop)="drop('previousArr')" (onDragEnter)="dragEnter()"
+		(onDragLeave)="dragLeave()" responsiveLayout="scroll">
+		<div class="mb-3 col-12 p-0">
+			<label for="firstName" class="form-label">Previous Cargo</label>
+			<ng-select class="dropdown-top" (change)="getMatrixList()"  (keyup)="getCargoListRecord(1,100,$event.target.value)"  [appendTo]="'body'" fullWidth formControlName="PreviousCargo"
+				placeholder="Select Cargo Name ">
+				<ng-option *ngFor="let option of dropDownCargo" [value]="option.CargoId">{{
+					option.CargoName }}</ng-option>
+			</ng-select>
+			<!-- <small
+				*ngIf="nbForm.get('Previous CargoId')?.invalid && (nbForm.get('Previous CargoId')?.touched || nbForm.get('Previous CargoId')?.dirty)">
+				<nb-hint style="color: red;"
+					*ngIf=" nbForm.get('Previous CargoId')?.errors?.['required']">Required</nb-hint>
+			</small> -->
+		</div>
+		<p-table [value]="previousArr">
+			
+			<ng-template pTemplate="header">
+				<tr>
+					<th>Cleaning Stages Previous Cargo</th>
+
+				</tr>
+			</ng-template>
+			<ng-template pTemplate="body" let-person>
+				<tr>
+					<td><span (click)="deleteDetails(person,'previousArr')" class="pt-1"
+							style="background-color: #e7e7e7;"> <nb-icon icon="close-outline"
+								status="basic"></nb-icon></span> {{person.CleaningStageName}}</td>
+
+				</tr>
+				
+			</ng-template>
+			<ng-template pTemplate="emptymessage">
+				<tr>
+		  
+				  <td colspan="1">{{emptymessage}}</td>
+				</tr>
+			  </ng-template>
+
+		</p-table>
+	</div>
+	<div class="col-12 col-md-4" pDroppable="products" (onDrop)="drop('loadToNext')" (onDragEnter)="dragEnter()"
+		(onDragLeave)="dragLeave()" responsiveLayout="scroll">
+		<div class="mb-3 col-12 p-0">
+			<label for="firstName" class="form-label">Cargo To Load</label>
+			<ng-select class="dropdown-top" (change)="getMatrixList()" (keyup)="getCargoListRecord(1,100,$event.target.value)" [appendTo]="'body'" fullWidth formControlName="CargoToLoad"
+				placeholder="Select Cargo Name ">
+				<ng-option *ngFor="let option of dropDownCargo" [value]="option.CargoId">{{
+					option.CargoName }}</ng-option>
+			</ng-select>
+			<!-- <small
+				*ngIf="nbForm.get('Previous CargoId')?.invalid && (nbForm.get('Previous CargoId')?.touched || nbForm.get('Previous CargoId')?.dirty)">
+				<nb-hint style="color: red;"
+					*ngIf=" nbForm.get('Previous CargoId')?.errors?.['required']">Required</nb-hint>
+			</small> -->
+		</div>
+		<p-table [value]="loadToNext">
+			<ng-template pTemplate="header">
+				<tr>
+					<th>Cleaning Stages Load to Cargo</th>
+
+				</tr>
+			</ng-template>
+			<ng-template pTemplate="body" let-person>
+				<tr>
+					<td><span (click)="deleteDetails(person,'loadToNext')" class="pt-1"
+							style="background-color: #e7e7e7;"> <nb-icon icon="close-outline"
+								status="basic"></nb-icon></span> {{person.CleaningStageName}}</td>
+
+				</tr>
+			</ng-template>
+			<ng-template pTemplate="emptymessage">
+				<tr>
+		  
+				  <td >{{emptymessage1}}</td>
+				</tr>
+			  </ng-template>
+		</p-table>
+	</div>
+</div>
+<p-toast [preventOpenDuplicates]="true"></p-toast>

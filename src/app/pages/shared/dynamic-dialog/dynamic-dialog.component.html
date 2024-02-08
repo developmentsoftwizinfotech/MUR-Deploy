@@ -1,0 +1,13 @@
+<nb-card class="dialogBox mb-0 p-4">
+    <!-- <nb-card-header>
+      <h4>{{ title }}</h4>
+    </nb-card-header> -->
+    <nb-card-body>
+      <h6 class="text-center">{{ message }}</h6><br><br>
+      <div class="button-container text-center">
+        <button class="ml-2" nbButton *ngFor="let button of buttons" [status]="button.status" (click)="closeDialog(button.value)">
+          {{ button.label }}
+        </button>
+      </div>
+    </nb-card-body>
+  </nb-card>

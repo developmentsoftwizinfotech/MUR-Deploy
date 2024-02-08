@@ -1,0 +1,13 @@
+:host ::ng-deep .uploader-wrapper .file-drop-wrapper{
+    background-color: transparent !important;
+    file-drop{
+        padding: 0px;
+    }
+    #dropZone{
+        background-color: transparent !important;
+    }
+   
+}
+:host ::ng-deep file-preview-container{
+    margin-top: 20px;
+}

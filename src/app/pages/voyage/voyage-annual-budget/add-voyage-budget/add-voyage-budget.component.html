@@ -1,0 +1,75 @@
+<p-toast></p-toast>
+<nb-card class="px-3 container" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large"
+  nbSpinnerMessage="">
+  <form [formGroup]="nbForm" (ngSubmit)="submit()">
+    <nb-card-header class="row align-items-center justify-content-between">
+      <div>
+        <h5>{{ formTitle }} Annually Budget</h5>
+      </div>
+      <div>
+        <button type="button" nbButton status="danger" (click)="close()" class="mr-2">
+          Cancel
+        </button>
+        <button type="button" nbButton status="basic" type="reset" class="mr-2">
+          Clear Form
+        </button>
+        <button type="submit" nbButton status="primary" class="mr-2">
+          Submit
+        </button>
+      </div>
+    </nb-card-header>
+    <nb-card-body class="example-items-rows">
+      <div class="row px-3">
+        <div class="col-6 mb-3">
+          <label for="BudgetYear" class="form-label">Select Year<span style="color: red">*</span></label>
+          <p-calendar view="year" formControlName="BudgetYear" class="py-3" dateFormat="yy" placeholder="Select Year"
+            [readonlyInput]="true"></p-calendar>
+          <small *ngIf="
+              nbForm.get('BudgetYear')?.invalid &&
+              (nbForm.get('BudgetYear')?.touched ||
+                nbForm.get('BudgetYear')?.dirty)
+            ">
+            <nb-hint style="color: red" *ngIf=" nbForm.get('BudgetYear')?.errors?.['required']">Required</nb-hint>
+
+          </small>
+        </div>
+        <div class="col-6 mb-3">
+          <label for="TotalBudgetCost" class="form-label">Annual Budget (in $)<span style="color: red">*</span></label>
+          <input type="text" formControlName="TotalBudgetCost" nbInput fullWidth fieldSize="medium"
+            placeholder="Enter Annual Budget" />
+          <small *ngIf="
+              nbForm.get('TotalBudgetCost')?.invalid &&
+              (nbForm.get('TotalBudgetCost')?.touched ||
+                nbForm.get('TotalBudgetCost')?.dirty)
+            ">
+            <nb-hint style="color: red" *ngIf=" nbForm.get('TotalBudgetCost')?.errors?.['required']">Required</nb-hint>
+
+          </small>
+        </div>
+        <div class="col-12 mb-3">
+          <label for="CostHeadId" class="form-label">Cost Heads<span style="color: red">*</span></label>
+          <ng-select formControlName="CostHeadId"
+          class="dropdown-top"
+          class="fixed-dropdown-size"
+          [appendTo]="'body'"
+          placeholder="Select Cost Heads"
+          fullWidth
+          fieldSize="medium"
+        >
+          <ng-option *ngFor="let option of costDropDown" [value]="option.CostHeadId">{{
+            option?.CostHeadName
+          }}</ng-option>
+        </ng-select>
+          <small *ngIf="
+              nbForm.get('CostHeadId')?.invalid &&
+              (nbForm.get('CostHeadId')?.touched ||
+                nbForm.get('CostHeadId')?.dirty)
+            ">
+            <nb-hint style="color: red" *ngIf=" nbForm.get('CostHeadId')?.errors?.['required']">Required</nb-hint>
+
+          </small>
+        </div>
+      </div>
+    </nb-card-body>
+  </form>
+</nb-card>

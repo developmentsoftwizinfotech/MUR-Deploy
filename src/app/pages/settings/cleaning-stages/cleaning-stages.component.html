@@ -1,0 +1,211 @@
+<form [formGroup]="cleaningForm" (ngSubmit)="(cleaningForm)">
+  <nb-card>
+    <nb-card-header>{{items[0].label}}</nb-card-header>
+    <nb-card-body class="">
+      <div class="row">
+        <div class="col-7 col-md-4">
+          <input type="text" id="firstName" class="form-control" formControlName="CleaningStageName" placeholder="Cleaning Stage"
+             nbInput fullWidth />
+          <small class="block p-error" *ngIf="
+              cleaningForm.get('CleaningStageName').invalid &&
+              cleaningForm.get('CleaningStageName').touched
+            ">
+            <div *ngIf="cleaningForm.get('CleaningStageName').errors.required">
+              Required
+            </div>
+            <div
+            *ngIf=" cleaningForm.get('CleaningStageName')?.dirty && cleaningForm.get('CleaningStageName')?.touched && cleaningForm.get('CleaningStageName')?.errors?.duplicateValue">Cleaning Stage Name
+             duplicate</div>
+             <div
+             *ngIf="cleaningForm.get('CleaningStageName')?.dirty && cleaningForm.get('CleaningStageName')?.touched && cleaningForm.get('CleaningStageName')?.errors?.['minlength']">
+             Progres sWeightage should have at least 3 digit</div>
+             <div
+             *ngIf="cleaningForm.get('CleaningStageName')?.dirty && cleaningForm.get('CleaningStageName')?.touched && cleaningForm.get('CleaningStageName')?.errors?.['maxlength']">
+             Progres sWeightage should have at most 250 digit</div>
+
+          </small>
+
+        </div>
+        <div class="col-2">
+          <input class="form-control" type="number" id="LastName" formControlName="ProgressWeightage" placeholder="Weightage"
+            nbInput />
+          <small class="block p-error" *ngIf="
+              cleaningForm.get('ProgressWeightage').invalid &&
+              cleaningForm.get('ProgressWeightage').touched
+            ">
+            <div *ngIf="cleaningForm.get('ProgressWeightage').errors.required">
+              Required
+            </div>
+<!--
+            <div  *ngIf="cleaningForm.get('ProgressWeightage')?.errors?.['maxlength']">
+              ProgressWeightage should have at most 3 digit</div>
+          <div
+              *ngIf=" cleaningForm.get('ProgressWeightage')?.dirty && cleaningForm.get('ProgressWeightage')?.touched && cleaningForm.get('ProgressWeightage').errors.min">
+              Progress Weightage should have at least 1 digit</div> -->
+              <nb-hint style="color: red;" *ngIf="cleaningForm.get('ProgressWeightage')?.errors?.['min']">
+              Value should be 1 to 100</nb-hint>
+              <nb-hint style="color: red;" *ngIf="cleaningForm.get('ProgressWeightage')?.errors?.['max']">
+              Value should be 1 to 100</nb-hint>
+          </small>
+        </div>
+        <div class="col-2">
+          <!-- <input class="form-control" type="number" id="LastName" formControlName="EstimatedCleaningTime"
+            [placeholder]="plasceholder[2].header" required nbInput /> -->
+
+            <!-- <label for="firstName" class="form-label">Charterer<span style="color: red;">*</span></label> -->
+            <ng-select class="dropdown-top" [appendTo]="'body'"  fullWidth  formControlName="EstimatedCleaningTime"  placeholder="Time in Hours">
+                <ng-option *ngFor="let option of estimatedCleaningTime" [value]="option">{{
+                    option }}</ng-option>
+            </ng-select>
+          <small class="block p-error" *ngIf="
+              cleaningForm.get('EstimatedCleaningTime').invalid &&
+              cleaningForm.get('EstimatedCleaningTime').touched
+            ">
+            <div *ngIf="cleaningForm.get('EstimatedCleaningTime').errors.required">
+              Required
+            </div>
+          </small>
+        </div>
+        <div class="col-3 col-md-4 text-right">
+          <button type="button" nbButton status="basic" type="reset" class=" mr-2">CLEAR</button>
+          <button type="submit" nbButton status="danger" (click)="submit()" class="mr-2">INSERT</button>
+          <button type="button" nbButton status="primary" (click)="finalData()" class=" mr-2">Save</button>
+        </div>
+      </div>
+    </nb-card-body>
+  </nb-card>
+</form>
+
+
+
+<div class="card mt-4">
+
+  <p-table dataKey="CleaningStageId" editMode="row" [value]="products"  (onRowReorder)="onRowReorder($event)" [columns]="cols" [reorderableColumns]="true" #dt1 [rows]="5"
+    [showCurrentPageReport]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [globalFilterFields]="['CleaningStageName', 'ProgressWeightage', 'EstimatedCleaningTime']"
+ >
+    <ng-template pTemplate="caption">
+      <div class="d-flex">
+        <span class=" ml-auto">
+          <input type="text" nbInput (input)="dt1.filterGlobal($event.target.value, 'contains')"
+            placeholder="Search keyword" />
+        </span>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th style="width: 3rem"></th>
+        <th pSortableColumn="CleaningStageName" style="width:40%">Cleaning Stage <p-sortIcon field="CleaningStageName"></p-sortIcon></th>
+        <th pSortableColumn="ProgressWeightage" style="width:20%">Progress weightage in % where <br> total of all stages = 100%"
+          <p-sortIcon field="ProgressWeightage"></p-sortIcon>
+        </th>
+        <th pSortableColumn="EstimatedCleaningTime" style="width:20%">Estimated Cleaning Time <br> for individual hold (in hours)
+          <p-sortIcon field="EstimatedCleaningTime"></p-sortIcon>
+        </th>
+        <th style="width:10%">Action</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex" let-product
+      let-editing="editing">
+      <tr [pReorderableRow]="index" [pEditableRow]="product">
+        <td>
+          <span class="pi pi-bars" pReorderableRowHandle></span>
+        </td>
+        <td>
+          <p-cellEditor>
+            <ng-template pTemplate="input">
+              <input  nbInput type="text" [formControl]="updatecleaningForm.get('CleaningStageName')"  fullWidth [(ngModel)]="product.CleaningStageName">
+              <small class="block p-error" *ngIf="
+              updatecleaningForm.get('CleaningStageName').invalid &&
+              updatecleaningForm.get('CleaningStageName').touched
+            ">
+            <div *ngIf="updatecleaningForm.get('CleaningStageName').errors.required">
+              Required
+            </div>
+            <div
+            *ngIf=" updatecleaningForm.get('CleaningStageName')?.dirty && updatecleaningForm.get('CleaningStageName')?.touched && updatecleaningForm.get('CleaningStageName')?.errors?.duplicateValue">Cleaning Stage Name
+             duplicate</div>
+             <div
+             *ngIf="updatecleaningForm.get('CleaningStageName')?.dirty && updatecleaningForm.get('CleaningStageName')?.touched && updatecleaningForm.get('CleaningStageName')?.errors?.['minlength']">
+             Cleaning Stage Name should have at least 3 digit</div>
+             <div
+             *ngIf="updatecleaningForm.get('CleaningStageName')?.dirty && updatecleaningForm.get('CleaningStageName')?.touched && updatecleaningForm.get('CleaningStageName')?.errors?.['maxlength']">
+             Cleaning Stage Name should have at most 250 digit</div>
+
+          </small>
+
+
+            </ng-template>
+            <ng-template pTemplate="output">
+              {{ product.CleaningStageName }}
+            </ng-template>
+          </p-cellEditor>
+        </td>
+
+        <td>
+          <p-cellEditor>
+            <ng-template pTemplate="input" let-rowData let-editing="editing">
+              <input nbInput type="number" fullWidth [formControl]="updatecleaningForm.get('ProgressWeightage')"  [(ngModel)]="product.ProgressWeightage" required  />
+              <small class="block p-error" *ngIf="updatecleaningForm.get('ProgressWeightage').invalid && updatecleaningForm.get('ProgressWeightage').touched">
+                <div *ngIf="updatecleaningForm.get('ProgressWeightage').errors.required">
+                  Required
+                </div>
+                <nb-hint style="color: red;" *ngIf="updatecleaningForm.get('ProgressWeightage')?.errors?.['min']">
+                  Value should be 1 to 100</nb-hint>
+                  <nb-hint style="color: red;" *ngIf="updatecleaningForm.get('ProgressWeightage')?.errors?.['max']">
+                  Value should be 1 to 100</nb-hint>
+              </small>
+            </ng-template>
+            <ng-template pTemplate="output">
+              {{ product.ProgressWeightage }}
+            </ng-template>
+          </p-cellEditor>
+        </td>
+
+        <td>
+          <p-cellEditor>
+            <ng-template pTemplate="input">
+
+              <ng-select [formControl]="updatecleaningForm.get('EstimatedCleaningTime')" class="dropdown-top" [appendTo]="'body'"  fullWidth  [(ngModel)]="product.EstimatedCleaningTime"  placeholder="Time in Hours" >
+                <ng-option *ngFor="let option of estimatedCleaningTime" [value]="option">{{
+                    option }}</ng-option>
+
+            </ng-select>
+            <small class="block p-error" *ngIf="
+            updatecleaningForm.get('EstimatedCleaningTime').invalid &&
+            updatecleaningForm.get('EstimatedCleaningTime').touched
+          ">
+          <div *ngIf="updatecleaningForm.get('EstimatedCleaningTime').errors.required">
+            Required
+          </div></small>
+            </ng-template>
+            <ng-template pTemplate="output">
+              {{ product.EstimatedCleaningTime }}
+            </ng-template>
+          </p-cellEditor>
+        </td>
+        <td>
+
+          <div class="d-flex align-items-center justify-content-center">
+            <button *ngIf="!editing" pButton pRipple nbTooltip="Edit" [disabled]="editModeOn"  nbTooltipPlacement="top" pInitEditableRow
+              icon="pi pi-pencil" (click)="onRowEditInit(product)" class=" p-button-primary  mr-2"></button>
+            <button *ngIf="editing" pButton pRipple pSaveEditableRow icon="pi pi-check"  (click)="onRowEditSave(product)"
+              class="mr-2" nbTooltip="Save" nbTooltipPlacement="top"></button>
+            <button *ngIf="editing" pButton pRipple pCancelEditableRow icon="pi pi-times"
+              (click)="onRowEditCancel(product, index)" nbTooltip="Cancel" nbTooltipPlacement="top"
+              class="mr-2"></button>
+            <button  pButton pRipple icon="pi pi-trash" class=" p-button-primary"
+              nbTooltip="Delete" nbTooltipPlacement="top" (click)="deleteDetails(product)"></button>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="7">{{emptymessage}}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+<p-toast></p-toast>
