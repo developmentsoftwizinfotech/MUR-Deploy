@@ -3961,45 +3961,43 @@ _class.ɵfac = function VendorLoginComponent_Factory(t) {
 _class.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵdefineComponent"]({
   type: _class,
   selectors: [["ngx-vendor-login"]],
-  decls: 20,
+  decls: 19,
   vars: 2,
   consts: [[1, "container", "col-8"], [1, "row", "col-12", "justify-content-center", "align-items-center", "vh-100"], [1, "col-6", "d-flex", "justify-content-center", "align-items-center", "p-5", 2, "box-shadow", "0px 3px 6px rgba(255,255,255,0.45), 0px 3px 6px rgba(94,104,121,0.3)"], [1, "col-11"], [3, "ngSubmit"], [1, "text-center", "m-3", "col-12", 2, "font-weight", "100"], [1, "form-outline", "mb-4"], ["for", "form2Example1", 1, "form-label"], ["type", "email", "name", "email", "placeholder", "User Name", "required", "", "id", "form2Example1", 1, "form-control", 3, "ngModel", "ngModelChange"], ["for", "form2Example2", 1, "form-label"], ["type", "password", "id", "form2Example2", "name", "Password", "placeholder", "Password", "required", "", 1, "form-control", 3, "ngModel", "ngModelChange"], [1, "row", "mb-4"], [1, "col", "d-flex", "justify-content-center"], ["type", "submit", 1, "btn", "btn-primary", "btn-block", "mb-4"]],
   template: function VendorLoginComponent_Template(rf, ctx) {
     if (rf & 1) {
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](0, "div", 0)(1, "div", 1);
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](2, " login ");
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](3, "div", 2)(4, "div", 3)(5, "form", 4);
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵlistener"]("ngSubmit", function VendorLoginComponent_Template_form_ngSubmit_5_listener() {
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](0, "div", 0)(1, "div", 1)(2, "div", 2)(3, "div", 3)(4, "form", 4);
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵlistener"]("ngSubmit", function VendorLoginComponent_Template_form_ngSubmit_4_listener() {
         return ctx.Vendorlogin();
       });
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](6, "h3", 5);
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](7, "VENDOR LOGIN");
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](5, "h3", 5);
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](6, "VENDOR LOGIN");
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](8, "div", 6)(9, "label", 7);
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](10, "User Name");
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](7, "div", 6)(8, "label", 7);
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](9, "User Name");
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](11, "input", 8);
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵlistener"]("ngModelChange", function VendorLoginComponent_Template_input_ngModelChange_11_listener($event) {
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](10, "input", 8);
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵlistener"]("ngModelChange", function VendorLoginComponent_Template_input_ngModelChange_10_listener($event) {
         return ctx.email = $event;
       });
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()();
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](12, "div", 6)(13, "label", 9);
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](14, "Password");
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](11, "div", 6)(12, "label", 9);
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](13, "Password");
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](15, "input", 10);
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵlistener"]("ngModelChange", function VendorLoginComponent_Template_input_ngModelChange_15_listener($event) {
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](14, "input", 10);
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵlistener"]("ngModelChange", function VendorLoginComponent_Template_input_ngModelChange_14_listener($event) {
         return ctx.password = $event;
       });
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()();
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](16, "div", 11);
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelement"](17, "div", 12);
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](15, "div", 11);
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelement"](16, "div", 12);
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](18, "button", 13);
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](19, "Login");
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](17, "button", 13);
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](18, "Login");
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()()()()()();
     }
     if (rf & 2) {
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"](11);
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"](10);
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("ngModel", ctx.email);
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"](4);
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("ngModel", ctx.password);
