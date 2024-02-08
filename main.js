@@ -3560,27 +3560,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _home_runner_work_MUR_Deploy_MUR_Deploy_node_modules_angular_devkit_build_angular_node_modules_babel_runtime_helpers_esm_createClass_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@angular-devkit/build-angular/node_modules/@babel/runtime/helpers/esm/createClass.js */ 28551);
 /* harmony import */ var _home_runner_work_MUR_Deploy_MUR_Deploy_node_modules_angular_devkit_build_angular_node_modules_babel_runtime_helpers_esm_classCallCheck_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./node_modules/@angular-devkit/build-angular/node_modules/@babel/runtime/helpers/esm/classCallCheck.js */ 56213);
-/* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/platform-browser */ 11481);
-/* harmony import */ var _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/platform-browser/animations */ 84934);
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/common/http */ 80529);
+/* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/platform-browser */ 11481);
+/* harmony import */ var _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/platform-browser/animations */ 84934);
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/common/http */ 80529);
 /* harmony import */ var _core_core_module__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./@core/core.module */ 43127);
 /* harmony import */ var _theme_theme_module__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./@theme/theme.module */ 80268);
 /* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./app.component */ 55041);
 /* harmony import */ var _app_routing_module__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./app-routing.module */ 90158);
-/* harmony import */ var _nebular_theme__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @nebular/theme */ 23243);
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/common */ 36895);
-/* harmony import */ var _ng_select_ng_select__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @ng-select/ng-select */ 88796);
-/* harmony import */ var _nebular_auth__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @nebular/auth */ 29766);
+/* harmony import */ var _nebular_theme__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @nebular/theme */ 23243);
+/* harmony import */ var _ng_select_ng_select__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @ng-select/ng-select */ 88796);
+/* harmony import */ var _nebular_auth__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @nebular/auth */ 29766);
 /* harmony import */ var _auth_login_login_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./auth/login/login.component */ 78146);
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @angular/forms */ 24006);
-/* harmony import */ var primeng_dropdown__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! primeng/dropdown */ 82210);
-/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ 65765);
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @angular/forms */ 24006);
+/* harmony import */ var primeng_dropdown__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! primeng/dropdown */ 82210);
+/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ 65765);
 /* harmony import */ var _vendor_login_vendor_login_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./vendor-login/vendor-login.component */ 73805);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/core */ 94650);
 
 
 var _class;
-
 
 
 
@@ -3615,31 +3613,18 @@ _class.ɵmod = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdefi
   bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_4__.AppComponent]
 });
 _class.ɵinj = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdefineInjector"]({
-  providers: [{
-    provide: _angular_common__WEBPACK_IMPORTED_MODULE_9__.LocationStrategy,
-    useClass: _angular_common__WEBPACK_IMPORTED_MODULE_9__.HashLocationStrategy
-  }, {
-    provide: 'useHash',
-    useValue: false
-  }
-  // {
-  //   provide: HTTP_INTERCEPTORS,
-  //   useClass: CacheInterceptor,
-  //   multi: true
-  // }
-  ],
-  imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_10__.BrowserModule, _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_11__.BrowserAnimationsModule, _angular_common_http__WEBPACK_IMPORTED_MODULE_12__.HttpClientModule, _app_routing_module__WEBPACK_IMPORTED_MODULE_5__.AppRoutingModule, _ng_select_ng_select__WEBPACK_IMPORTED_MODULE_13__.NgSelectModule, primeng_dropdown__WEBPACK_IMPORTED_MODULE_14__.DropdownModule, _nebular_theme__WEBPACK_IMPORTED_MODULE_15__.NbSidebarModule.forRoot(), _nebular_theme__WEBPACK_IMPORTED_MODULE_15__.NbMenuModule.forRoot(), _nebular_theme__WEBPACK_IMPORTED_MODULE_15__.NbDialogModule.forRoot(), _nebular_theme__WEBPACK_IMPORTED_MODULE_15__.NbDatepickerModule.forRoot(), _nebular_theme__WEBPACK_IMPORTED_MODULE_15__.NbWindowModule.forRoot(), _nebular_theme__WEBPACK_IMPORTED_MODULE_15__.NbToastrModule.forRoot(), _angular_forms__WEBPACK_IMPORTED_MODULE_16__.FormsModule, _nebular_theme__WEBPACK_IMPORTED_MODULE_15__.NbChatModule.forRoot({
+  imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_9__.BrowserModule, _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_10__.BrowserAnimationsModule, _angular_common_http__WEBPACK_IMPORTED_MODULE_11__.HttpClientModule, _app_routing_module__WEBPACK_IMPORTED_MODULE_5__.AppRoutingModule, _ng_select_ng_select__WEBPACK_IMPORTED_MODULE_12__.NgSelectModule, primeng_dropdown__WEBPACK_IMPORTED_MODULE_13__.DropdownModule, _nebular_theme__WEBPACK_IMPORTED_MODULE_14__.NbSidebarModule.forRoot(), _nebular_theme__WEBPACK_IMPORTED_MODULE_14__.NbMenuModule.forRoot(), _nebular_theme__WEBPACK_IMPORTED_MODULE_14__.NbDialogModule.forRoot(), _nebular_theme__WEBPACK_IMPORTED_MODULE_14__.NbDatepickerModule.forRoot(), _nebular_theme__WEBPACK_IMPORTED_MODULE_14__.NbWindowModule.forRoot(), _nebular_theme__WEBPACK_IMPORTED_MODULE_14__.NbToastrModule.forRoot(), _angular_forms__WEBPACK_IMPORTED_MODULE_15__.FormsModule, _nebular_theme__WEBPACK_IMPORTED_MODULE_14__.NbChatModule.forRoot({
     messageGoogleMapKey: 'AIzaSyA_wNuCzia92MAmdLRzmqitRGvCF7wCZPY'
-  }), _core_core_module__WEBPACK_IMPORTED_MODULE_2__.CoreModule.forRoot(), _theme_theme_module__WEBPACK_IMPORTED_MODULE_3__.ThemeModule.forRoot(), _nebular_auth__WEBPACK_IMPORTED_MODULE_17__.NbAuthModule.forRoot({
-    strategies: [_nebular_auth__WEBPACK_IMPORTED_MODULE_17__.NbPasswordAuthStrategy.setup({
+  }), _core_core_module__WEBPACK_IMPORTED_MODULE_2__.CoreModule.forRoot(), _theme_theme_module__WEBPACK_IMPORTED_MODULE_3__.ThemeModule.forRoot(), _nebular_auth__WEBPACK_IMPORTED_MODULE_16__.NbAuthModule.forRoot({
+    strategies: [_nebular_auth__WEBPACK_IMPORTED_MODULE_16__.NbPasswordAuthStrategy.setup({
       name: 'email'
     })]
-  }), _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_18__.NgbModule]
+  }), _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_17__.NgbModule]
 });
 (function () {
   (typeof ngJitMode === "undefined" || ngJitMode) && _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵsetNgModuleScope"](AppModule, {
     declarations: [_app_component__WEBPACK_IMPORTED_MODULE_4__.AppComponent, _auth_login_login_component__WEBPACK_IMPORTED_MODULE_6__.LoginComponent, _vendor_login_vendor_login_component__WEBPACK_IMPORTED_MODULE_7__.VendorLoginComponent],
-    imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_10__.BrowserModule, _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_11__.BrowserAnimationsModule, _angular_common_http__WEBPACK_IMPORTED_MODULE_12__.HttpClientModule, _app_routing_module__WEBPACK_IMPORTED_MODULE_5__.AppRoutingModule, _ng_select_ng_select__WEBPACK_IMPORTED_MODULE_13__.NgSelectModule, primeng_dropdown__WEBPACK_IMPORTED_MODULE_14__.DropdownModule, _nebular_theme__WEBPACK_IMPORTED_MODULE_15__.NbSidebarModule, _nebular_theme__WEBPACK_IMPORTED_MODULE_15__.NbMenuModule, _nebular_theme__WEBPACK_IMPORTED_MODULE_15__.NbDialogModule, _nebular_theme__WEBPACK_IMPORTED_MODULE_15__.NbDatepickerModule, _nebular_theme__WEBPACK_IMPORTED_MODULE_15__.NbWindowModule, _nebular_theme__WEBPACK_IMPORTED_MODULE_15__.NbToastrModule, _angular_forms__WEBPACK_IMPORTED_MODULE_16__.FormsModule, _nebular_theme__WEBPACK_IMPORTED_MODULE_15__.NbChatModule, _core_core_module__WEBPACK_IMPORTED_MODULE_2__.CoreModule, _theme_theme_module__WEBPACK_IMPORTED_MODULE_3__.ThemeModule, _nebular_auth__WEBPACK_IMPORTED_MODULE_17__.NbAuthModule, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_18__.NgbModule]
+    imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_9__.BrowserModule, _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_10__.BrowserAnimationsModule, _angular_common_http__WEBPACK_IMPORTED_MODULE_11__.HttpClientModule, _app_routing_module__WEBPACK_IMPORTED_MODULE_5__.AppRoutingModule, _ng_select_ng_select__WEBPACK_IMPORTED_MODULE_12__.NgSelectModule, primeng_dropdown__WEBPACK_IMPORTED_MODULE_13__.DropdownModule, _nebular_theme__WEBPACK_IMPORTED_MODULE_14__.NbSidebarModule, _nebular_theme__WEBPACK_IMPORTED_MODULE_14__.NbMenuModule, _nebular_theme__WEBPACK_IMPORTED_MODULE_14__.NbDialogModule, _nebular_theme__WEBPACK_IMPORTED_MODULE_14__.NbDatepickerModule, _nebular_theme__WEBPACK_IMPORTED_MODULE_14__.NbWindowModule, _nebular_theme__WEBPACK_IMPORTED_MODULE_14__.NbToastrModule, _angular_forms__WEBPACK_IMPORTED_MODULE_15__.FormsModule, _nebular_theme__WEBPACK_IMPORTED_MODULE_14__.NbChatModule, _core_core_module__WEBPACK_IMPORTED_MODULE_2__.CoreModule, _theme_theme_module__WEBPACK_IMPORTED_MODULE_3__.ThemeModule, _nebular_auth__WEBPACK_IMPORTED_MODULE_16__.NbAuthModule, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_17__.NgbModule]
   });
 })();
 
