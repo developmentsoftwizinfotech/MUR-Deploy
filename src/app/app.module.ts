@@ -31,8 +31,7 @@ import { VendorLoginComponent } from './vendor-login/vendor-login.component';
 
 @NgModule({
   providers: [
-    { provide: LocationStrategy, useClass: HashLocationStrategy},
-    { provide: 'useHash', useValue: false },
+
     // {
     //   provide: HTTP_INTERCEPTORS,
     //   useClass: CacheInterceptor,
