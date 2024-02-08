@@ -55,6 +55,9 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+        - name: Global Angular CLI dependencies
+        run: npm install -g @angular/cli@15.2.8
+
       - name: Build project
         run: ng build --base-href "https://developmentsoftwizinfotech.github.io/MUR-Deploy/"
 
